@@ -23,7 +23,7 @@ public class Drivetrain extends Subsystem {
     private Encoder leftEnc;
     private Encoder rightEnc;
     RobotDrive driveTrain;
-
+    public final static double MAX_VOLTAGE = 5.0;
     //private PIDController leftEncPID, rightEncPID;
     public void initDefaultCommand() {
         setDefaultCommand(new DriveWithJoystick ());
@@ -36,14 +36,16 @@ public class Drivetrain extends Subsystem {
         try {
             left = new CANJaguar(RobotMap.LEFT_DRIVE_MOTOR); // ID number of jaguar
             right = new CANJaguar(RobotMap.RIGHT_DRIVE_MOTOR);
-
-
+            left.configMaxOutputVoltage(MAX_VOLTAGE);
+            right.configMaxOutputVoltage(MAX_VOLTAGE);
+            //driveTrain.setInvertedMotor(RobotDrive.MotorType.kRearLeft, false);
+            //driveTrain.setInvertedMotor(RobotDrive.MotorType.kRearRight, false);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
 
         // Create a robot using standard right/left robot drive on the CAN bus
-        driveTrain = new RobotDrive(right, left);
+        driveTrain = new RobotDrive( left,right);
 
         
         //driveTrain.setSafetyEnabled(false);

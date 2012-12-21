@@ -34,7 +34,12 @@ public class DriveWithJoystick extends CommandBase {
         
         //}
         //drivetrain.drive((oi.getJoystick().getY()*throttle),(oi.getJoystick().getX()*throttle), true);
+        //throttle = oi.getJoystick().getThrottle();
+        //if(throttle < 0){throttle = throttle * -1;}
+        
+      //  drivetrain.setMaxVoltages(throttle*12.0);
         drivetrain.drive(oi.getJoystick());
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()
