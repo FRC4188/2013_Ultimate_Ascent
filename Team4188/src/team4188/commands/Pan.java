@@ -6,7 +6,7 @@ package team4188.commands;
 
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import team4188.subsystems.Vision;
-import edu.wpi.first.wpilibj.Servo;
+import team4188.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import team4188.OI;
@@ -18,15 +18,16 @@ import team4188.CorpsServo;
 public class Pan extends CommandBase {
     private ParticleAnalysisReport target;
     CorpsServo panY, panX; 
-    final double X_RANGE = 116;
-    double TOLERANCE = 1.0;
+    final static double 
+            xMin = 0,
+            xMax = 116,
+            TOLERANCE = 1.0,
+            //BoardDistance = 60.0, //60.0 inches 
+            X_RANGE = 116;
     static double position = 90;
     boolean isTargeted = false;
     boolean aimed = false;
     double TargetDistance = 0.0;
-    int x = 1, y = 2;
-    int mid = 29;
-    double BoardDistance = 60.0; //board x inches away
     double angleX = 0.0, angleY = 0.0;
     int input = 0;
     Timer timer = new Timer();
@@ -38,9 +39,11 @@ public class Pan extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         System.out.println("Pan Initializing");
-        panX = new CorpsServo(0,58, x);
-        panY = new CorpsServo(0, 100, y);
+        panX = new CorpsServo(xMin,xMax, RobotMap.panX);
+        panY = new CorpsServo(0, 100, RobotMap.panY);
         panX.goToAngle(90.0);
+        aimed = false;
+        isTargeted = false;
        // panX.setAngle(input);
         
     }
@@ -70,7 +73,7 @@ public class Pan extends CommandBase {
             angleY = vision.calculateTiltTop(TargetDistance);
             isAimed();
             System.out.println("Angle X: "+ angleX);
-            System.out.println("Angle Y: " + angleY);
+           // System.out.println("Angle Y: " + angleY);
             if(aimed == false)
             {
              aim();
@@ -104,6 +107,7 @@ public class Pan extends CommandBase {
     private void aim(){
         //double servoAngle = panX.getAngle();
         //double servoPos = panX.get();
+        vision.getReports();
         target = vision.getTopTarget();
         TargetDistance = vision.getTopDistance();      
         angleX = vision.calculateHorizontalAngle(target, TargetDistance);
@@ -113,6 +117,24 @@ public class Pan extends CommandBase {
         aimed = true;
         position = position - angleX;
         System.out.println("Position: " + position);
+    }
+    private double getAverageAngle(){
+        double average = 0, a = 0, b = 0, c = 0;
+        vision.getReports();
+        target = vision.getTopTarget();
+        TargetDistance = vision.getTopDistance();
+        a = vision.calculateHorizontalAngle(target, TargetDistance);
+        vision.getReports();
+        target = vision.getTopTarget();
+        TargetDistance = vision.getTopDistance();
+        b = vision.calculateHorizontalAngle(target, TargetDistance); 
+        vision.getReports();
+        target = vision.getTopTarget();
+        TargetDistance = vision.getTopDistance();
+        c = vision.calculateHorizontalAngle(target, TargetDistance); 
+        average = (a + b +c)/3;
+        System.out.println("Average Horizontal Angle: " + average );
+        return average;
     }
     private void isAimed(){
         //double sAngle = panX.getAngle();
