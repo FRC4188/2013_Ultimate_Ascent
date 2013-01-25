@@ -16,19 +16,25 @@ public abstract class CommandBase extends Command {
     public static OI oi;
     public static Vision vision;
     public static Pan pan;
+    public static Drivetrain drivetrain;
+    
+   
     // Create a single static instance of all of your subsystems
    
 
     public static void init() {
+         vision = new Vision();
+          pan = new Pan();
+          drivetrain = new Drivetrain();
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
-        vision = new Vision();
+        drivetrain.init();
         vision.init();
-        pan = new Pan();
+        //pan = new Pan();
         
         
         // Show what command your subsystem is running on the SmartDashboard

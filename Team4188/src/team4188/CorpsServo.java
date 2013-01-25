@@ -5,13 +5,14 @@
 package team4188;
 import edu.wpi.first.wpilibj.Servo;
 
+
 /**
  *
  * @author toboretasker
  */
 public class CorpsServo extends Servo{
    
-    double low, high, range;
+    double low, high, range, position;
     
     public CorpsServo(double min, double max, int port)
     {
@@ -19,10 +20,11 @@ public class CorpsServo extends Servo{
         super(port);
         high = max;
         low = min;
-        range = high - low;
+        range = Math.abs(high - low);
     }
     public CorpsServo(double min, double max, int port, int mid)
     {
+        
         super(port);
         high = max;
         low = min;
@@ -34,19 +36,41 @@ public class CorpsServo extends Servo{
         super.setAngle(input*adjust + low);
     }
     public void goToPosition(double input){
-        double adjustRange, high, low; 
+        double adjustRange; 
         adjustRange = (range - (range/2));
-        if(input > 0){
-            super.setAngle(adjustRange * input + adjustRange);
-        }
-        if(input < 0){
-            super.setAngle(adjustRange * input + adjustRange);
-        }
-        if(input == 0){
+        
+       if(input != 0){
+        super.setAngle(adjustRange * input + adjustRange);
+        
+        position = adjustRange * input + adjustRange;
+       }
+       else{
             
-            super.setAngle(adjustRange);
+        super.setAngle(adjustRange);
+        position = adjustRange;
+        
         }
             
+    }
+    public void moveToPosition(double input){
+        double  pos, in;
+        
+        if(input != 0){
+            pos = getPosition();
+            in = pos + (input*2);
+            super.setAngle(in);
+            setPosition(in);
+        }
+       
+ 
+    }
+    public double getPosition(){
+        return position;
+    }
+    public double getAngle(){
+        double angle = 0;
+        angle = getPosition() * (180/range);
+        return angle;
     }
     public double getRange()
     {

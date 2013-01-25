@@ -8,7 +8,11 @@ import team4188.commands.*;
 import edu.wpi.first.wpilibj.image.*;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 import edu.wpi.first.wpilibj.image.NIVision.Rect;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
 import team4188.RobotMap;
+import team4188.OI;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * Sample program to use NIVision to find rectangles in the scene that are illuminated
@@ -40,7 +44,9 @@ public class Vision extends Subsystem {
     final int YMAXSIZE = 24;
     final int YMINSIZE = 48;
     final double TOP_HEIGHT = 104.125,
-            BOTTOM_HEIGHT = 88.625;
+            BOTTOM_HEIGHT = 88.625,
+            ERROR =  -1.0513,
+            B = 124.76;
     final double xMax[] = {1, 1, 1, 1, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1, 1, 1, 1};
     final double xMin[] = {.4, .6, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, .1, 0.6, 0};
     final double yMax[] = {1, 1, 1, 1, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1, 1, 1, 1};
@@ -51,22 +57,38 @@ public class Vision extends Subsystem {
     
     ParticleAnalysisReport toptarget = null, lowtarget = null;
     int top = 0, bottom = 0;
-    final double FOV_RADS = 0.94199; // ~41 degrees
+    final static double 
+            REAL_TARGET_WIDTH = 1.3716,         // 24 inches converted to meters
+            REAL_TARGET_HEIGHT = 0.6096,
+            topGoalWidth = 387,
+            FOV_RADS = 0.92729,
+            DIST_FULL_VIEW_W = (REAL_TARGET_WIDTH/2.0)/Math.tan(FOV_RADS/2.0),
+            DIST_FULL_VIEW_H = (REAL_TARGET_HEIGHT/2.0)/Math.tan(FOV_RADS*0.75/2.0),
+            DIS_H = 4,
+            DIS_W = 14,
+            DIS_MID = 14;
+                  
+   
     final int HUE_LOW = 10, HUE_HIGH = 255 , SAT_LOW = 182, SAT_HIGH = 255, VALUE_HIGH = 255, VALUE_LOW = 200; 
-    double topdistance = 0; 
-    double lowdistance = 0;
+    double 
+            topdistance = 0,
+            tiltAngle = 0,
+            lowdistance = 0;
     final int RECTANGULARITY_LIMIT = 60;
     final int ASPECT_RATIO_LIMIT = 75;
     final int X_EDGE_LIMIT = 40;
     final int Y_EDGE_LIMIT = 60;
     final int PARTICLE_ANALYSIS_REPORTS = 20;
     ParticleAnalysisReport[] reports = null;
-    final int X_IMAGE_RES = 320;          //X Image resolution in pixels, should be 160, 320 or 640
+    final int X_IMAGE_RES = 640;          //X Image resolution in pixels, should be 160, 320 or 640
     final double VIEW_ANGLE = 54.0;       //Axis 206 camera
     //final double VIEW_ANGLE = 48;       //Axis M1011 camera
-    double distance = 0.0;
+    double 
+            distance = 0.0,
+            position = 90.0;
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
+
     
     public class Scores {
         double rectangularity;
@@ -75,15 +97,17 @@ public class Vision extends Subsystem {
         double xEdge;
         double yEdge;
     }
-    
+
     public void init() {
+
+        
         reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
         System.out.println("Initializing Vision");
         camera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
-        System.out.println("Vision Initialized");
         camera.writeCompression(30);
+        System.out.println("Vision Initialized");
     }
 
     public ParticleAnalysisReport[] getReports() {
@@ -119,10 +143,12 @@ public class Vision extends Subsystem {
                 if(scoreCompare(scores[i], false))
                 {
                     System.out.println("particle: " + i + "is a High Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                    distance = computeDistance(thresholdImage, report, i, false);
+                    //distance = computeDistance(thresholdImage, report, i, false);
+                    distance = getDistanceToTarget(report);
                     System.out.println("Distance: " + distance);
                      //if(topdistance == 0) distance = topdistance;
                     targeted = true;
+                    tiltAngle = arcTan(report.center_mass_y_normalized/report.center_mass_x_normalized);
                     
                     
                     
@@ -138,12 +164,15 @@ public class Vision extends Subsystem {
                         found++;
                     }                    
                 } else {
-                    targeted = false;
+                   // targeted = false;
                     //System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                 }
                     //System.out.println("rect: " + scores[i].rectangularity + "ARinner: " + scores[i].aspectRatioInner);
                     //System.out.println("ARouter: " + scores[i].aspectRatioOuter + "xEdge: " + scores[i].xEdge + "yEdge: " + scores[i].yEdge);	
                 }
+            if(reports != null){
+             //   displayTargets();
+            }
 
             /**
              * all images in Java must be freed after they are used since they are allocated out
@@ -166,7 +195,7 @@ public class Vision extends Subsystem {
 
     
     public void initDefaultCommand() {
-        setDefaultCommand(new Pan());
+         //setDefaultCommand(new Manual());
     }
 
     
@@ -179,6 +208,41 @@ public class Vision extends Subsystem {
      * @param outer True if the particle should be treated as an outer target, false to treat it as a center target
      * @return The estimated distance to the target in Inches.
      */
+   /*
+    public double getDistanceToTarget(ParticleAnalysisReport target) {
+        double targetPixelWidth, targetPixelHeight, diagonal, answer;
+        double theta;
+        targetPixelWidth = target.boundingRectWidth;
+        targetPixelHeight = target.boundingRectHeight;
+            //CorpsLog.log("Target width",targetPixelWidth,false,true);
+      //      CorpsLog.log("Target height",targetPixelHeight,false,true);
+            //CorpsLog.log("Image width",target.imageWidth);
+        System.out.println("Target Width: " + target.boundingRectWidth);
+        theta = FOV_RADS*(target.boundingRectWidth/topGoalWidth);
+            //CorpsLog.log("FOV angle of target",theta);
+        //diagonal = (target.imageWidth/targetPixelWidth)*DIST_FULL_VIEW_W;
+        diagonal = (target.imageHeight/targetPixelHeight)*DIST_FULL_VIEW_H;
+        //System.out.println("Theta: " + theta * (180/3.14));
+        
+
+          //CorpsLog.log("Distance to target that takes up whole FOV",DIST_FULL_VIEW);
+        //    CorpsLog.log("Diagonal distance to target",diagonal,false,true);
+       answer = Math.sqrt((diagonal*diagonal)-(REAL_TARGET_HEIGHT*REAL_TARGET_HEIGHT));//-BACKBOARD_DISTANCE;
+            //CorpsLog.log("Distance to target Luther's way",answer1);
+         
+        return answer;
+    }*/
+   
+    public double getDistanceToTarget(ParticleAnalysisReport target) {
+        double targetPixelHeight, answer;
+        targetPixelHeight = target.boundingRectHeight;
+        System.out.println(target.boundingRectHeight);
+        answer = targetPixelHeight * ERROR + B;
+        return answer;
+    }  
+    public double getTiltAngle(){
+        return tiltAngle;
+    }
     public boolean getTargeted(){
         return targeted;
     }
@@ -225,15 +289,16 @@ public class Vision extends Subsystem {
         angle = Math.toDegrees(angle);
         return angle;
     }
-    
+    /*
     public double calculateVerticalAngle(ParticleAnalysisReport target, double distanceToTopTarget) 
     {
-        double center_center = target.center_mass_y;
+        double center_center = target.boundin;
         double image_height = target.imageHeight;
-        double angle = FOV_RADS*((center_center-(image_height/2))/image_height);
+        double angle = 
+                
         angle = Math.toDegrees(angle);
         return angle;
-    }
+    }*/
     
     double computeDistance (BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean outer) throws NIVisionException {
             double rectShort, height;
@@ -401,4 +466,27 @@ public class Vision extends Subsystem {
     private double arcTan(double x) {
         return x-((x*x*x)/3)+((x*x*x*x*x)/5);//-((x*x*x*x*x*x*x)/7);
     }
+    public void displayTargets() {
+        setNetworkTable(reports);
+    }
+    
+    private void setNetworkTable(ParticleAnalysisReport[] r) {
+        int length = 0;
+        System.out.println("r.lenght = " + r.length);
+        for(int i = 0; i < r.length; i++){
+           if(r[i] == null)break;
+           length++;
+        }
+        
+        for(int i = 0; i < length; i++) {
+            System.out.println("r[" + i + "] = " + r[i]);
+            //if(r[i] == null)break;
+            NetworkTable nt = NetworkTable.getTable("vision"+i);
+            nt.putInt("count",length);
+            nt.putInt("centerx",r[i].center_mass_x);
+            nt.putInt("centery",r[i].center_mass_y);
+            nt.putInt("width",r[i].boundingRectWidth);
+            nt.putInt("height",r[i].boundingRectHeight);
+        }
+    }    
 }
