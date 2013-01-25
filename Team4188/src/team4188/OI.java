@@ -2,8 +2,10 @@
 package team4188;
 
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.DigitalIOButton;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import team4188.commands.*;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -13,11 +15,21 @@ public class OI {
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
     // number it is.
-     Joystick stick = new Joystick(1);
-    // Button button = new JoystickButton(stick, buttonNumber);
-    public Joystick getJoystick(){
-        return stick;
+    public CorpsJoystick stick;
+    public Button aim;
+    public OI(){ 
+         stick = new
+                CorpsJoystick(1,3,11,-1.5,1.5,1,1,-1.5,1.5,1,1,0,0,0,0);
+       
+        //Joystick stick = new Joystick(1);
+        Button aim = new JoystickButton(stick, 1);
+        Button pan = new JoystickButton(stick, 2);
+        pan.whileHeld(new Manual());
+        aim.whileHeld(new Pan());
     }
+    // Button button = new JoystickButton(stick, buttonNumber);
+
+
     // Another type of button you can create is a DigitalIOButton, which is
     // a button or switch hooked up to the cypress module. These are useful if
     // you want to build a customized operator interface.
