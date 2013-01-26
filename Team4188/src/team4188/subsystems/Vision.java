@@ -58,7 +58,8 @@ public class Vision extends Subsystem {
     ParticleAnalysisReport toptarget = null, lowtarget = null;
     int top = 0, bottom = 0;
     final static double 
-            REAL_TARGET_WIDTH = 1.3716,         // 24 inches converted to meters
+            REAL_TARGET_WIDTH = 62, 
+            //REAL_TARGET_WIDTH = 1.3716, 
             REAL_TARGET_HEIGHT = 0.6096,
             topGoalWidth = 387,
             FOV_RADS = 0.92729,
@@ -107,6 +108,7 @@ public class Vision extends Subsystem {
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
         camera.writeCompression(30);
+        camera.writeResolution(AxisCamera.ResolutionT.k640x480);
         System.out.println("Vision Initialized");
     }
 
@@ -130,9 +132,11 @@ public class Vision extends Subsystem {
 
             //iterate through each particle and score to see if it is a target
             Scores scores[] = new Scores[filteredImage.getNumberParticles()];
+            int j = 0;
             for (int i = 0; i < scores.length; i++) {
+                
                 ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
-                reports[i] = report;
+                
                 scores[i] = new Scores();
                 scores[i].rectangularity = scoreRectangularity(report);
                 scores[i].aspectRatioOuter = scoreAspectRatio(filteredImage,report, i, true);
@@ -142,14 +146,18 @@ public class Vision extends Subsystem {
 
                 if(scoreCompare(scores[i], false))
                 {
-                    System.out.println("particle: " + i + "is a High Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                    
+                    reports[j++] = report;
+                   
+                    System.out.println("particle: " + i + " is a High Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                     //distance = computeDistance(thresholdImage, report, i, false);
                     distance = getDistanceToTarget(report);
                     System.out.println("Distance: " + distance);
-                     //if(topdistance == 0) distance = topdistance;
+                   // if(topdistance == 0) distance = topDistance;
+                    //if(topdistance < distance) distance = topDistance;
                     targeted = true;
                     tiltAngle = arcTan(report.center_mass_y_normalized/report.center_mass_x_normalized);
-                    
+                    top = j;
                     
                     
                     
@@ -164,14 +172,14 @@ public class Vision extends Subsystem {
                         found++;
                     }                    
                 } else {
-                   // targeted = false;
+                    //targeted = false;
                     //System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
                 }
                     //System.out.println("rect: " + scores[i].rectangularity + "ARinner: " + scores[i].aspectRatioInner);
                     //System.out.println("ARouter: " + scores[i].aspectRatioOuter + "xEdge: " + scores[i].xEdge + "yEdge: " + scores[i].yEdge);	
                 }
             if(reports != null){
-             //   displayTargets();
+                displayTargets();
             }
 
             /**
@@ -208,7 +216,7 @@ public class Vision extends Subsystem {
      * @param outer True if the particle should be treated as an outer target, false to treat it as a center target
      * @return The estimated distance to the target in Inches.
      */
-   /*
+   
     public double getDistanceToTarget(ParticleAnalysisReport target) {
         double targetPixelWidth, targetPixelHeight, diagonal, answer;
         double theta;
@@ -219,27 +227,29 @@ public class Vision extends Subsystem {
             //CorpsLog.log("Image width",target.imageWidth);
         System.out.println("Target Width: " + target.boundingRectWidth);
         theta = FOV_RADS*(target.boundingRectWidth/topGoalWidth);
-            //CorpsLog.log("FOV angle of target",theta);
+            
+        //CorpsLog.log("FOV angle of target",theta);
+        diagonal = REAL_TARGET_WIDTH/theta;
         //diagonal = (target.imageWidth/targetPixelWidth)*DIST_FULL_VIEW_W;
-        diagonal = (target.imageHeight/targetPixelHeight)*DIST_FULL_VIEW_H;
-        //System.out.println("Theta: " + theta * (180/3.14));
+        //diagonal = (target.imageHeight/targetPixelHeight)*DIST_FULL_VIEW_H;
+        
         
 
           //CorpsLog.log("Distance to target that takes up whole FOV",DIST_FULL_VIEW);
         //    CorpsLog.log("Diagonal distance to target",diagonal,false,true);
-       answer = Math.sqrt((diagonal*diagonal)-(REAL_TARGET_HEIGHT*REAL_TARGET_HEIGHT));//-BACKBOARD_DISTANCE;
+       //answer = Math.sqrt((diagonal*diagonal)-(REAL_TARGET_HEIGHT*REAL_TARGET_HEIGHT));//-BACKBOARD_DISTANCE;
             //CorpsLog.log("Distance to target Luther's way",answer1);
          
-        return answer;
-    }*/
-   
+        return diagonal;
+    }
+    /*
     public double getDistanceToTarget(ParticleAnalysisReport target) {
         double targetPixelHeight, answer;
         targetPixelHeight = target.boundingRectHeight;
         System.out.println(target.boundingRectHeight);
         answer = targetPixelHeight * ERROR + B;
         return answer;
-    }  
+    }  */
     public double getTiltAngle(){
         return tiltAngle;
     }
@@ -472,9 +482,12 @@ public class Vision extends Subsystem {
     
     private void setNetworkTable(ParticleAnalysisReport[] r) {
         int length = 0;
-        System.out.println("r.lenght = " + r.length);
+        System.out.println("r.length = " + r.length);
         for(int i = 0; i < r.length; i++){
-           if(r[i] == null)break;
+           if(r[i] == null){
+               System.out.println("r[" + i + "] is null!");
+               break;
+           }
            length++;
         }
         
