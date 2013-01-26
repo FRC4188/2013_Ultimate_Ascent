@@ -30,7 +30,7 @@ public class Pan extends CommandBase {
     
     boolean isTargeted = false, aimed = false;
     double 
-        TargetDistance = 0.0, angleX = 0.0, angleY = 0.0;
+        targetDistance = 0.0, angleX = 0.0, angleY = 0.0;
     int input = 0;
     Timer timer = new Timer();
   
@@ -70,14 +70,17 @@ public class Pan extends CommandBase {
         if(isTargeted == false){
            // SmartDashboard.putString("Pan", "Looking...");
             System.out.println("Looking for targets...");
+            angleX = 0.0;
+            angleY = 0.0;
+            targetDistance = 0.0;
          
         }
         
         else{
            System.out.println("Aiming...");
            target = vision.getTopTarget();
-           TargetDistance = vision.getDistance();
-           angleX = vision.calculateHorizontalAngle(target, TargetDistance);
+           targetDistance = vision.getDistance();
+           angleX = vision.calculateHorizontalAngle(target, targetDistance);
            angleY = vision.getTiltAngle();
             isAimed();
             //System.out.println("Angle X: "+ angleX);
@@ -139,8 +142,8 @@ public class Pan extends CommandBase {
         double average = 0, a = 0, b = 0, c = 0;
         vision.getReports();
         target = vision.getTopTarget();
-        TargetDistance = vision.getDistance();
-        a = vision.calculateHorizontalAngle(target, TargetDistance);
+        targetDistance = vision.getDistance();
+        a = vision.calculateHorizontalAngle(target, targetDistance);
         /*
         vision.getReports();
         target = vision.getTopTarget();
