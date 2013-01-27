@@ -37,14 +37,16 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 
 public class Vision extends Subsystem {
-    int found = 0;
+    
     boolean targeted = false;
-    final int XMAXSIZE = 24;
-    final int XMINSIZE = 24;
-    final int YMAXSIZE = 24;
-    final int YMINSIZE = 48;
-    final double TOP_HEIGHT = 104.125,
-            BOTTOM_HEIGHT = 88.625,
+    final int 
+            XMAXSIZE = 24,
+            XMINSIZE = 24,
+            YMAXSIZE = 24,
+            YMINSIZE = 48;
+    final double
+            TOP_HEIGHT = 104.125, // height above the ground, in inches, of top of top target
+            BOTTOM_HEIGHT = 88.625, // height above the ground, in inches, of bottom of top target
             ERROR =  -1.0513,
             B = 124.76;
     final double xMax[] = {1, 1, 1, 1, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, 1, 1, 1, 1};
@@ -53,40 +55,62 @@ public class Vision extends Subsystem {
     final double yMin[] = {.4, .6, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05,
                      								.05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05, .05,
     								.05, .05, .6, 0};
-    
-    
-    ParticleAnalysisReport toptarget = null, lowtarget = null;
-    int top = 0, bottom = 0;
+    ParticleAnalysisReport 
+            toptarget = null, 
+            lowtarget = null;
+    int 
+            top = 0, 
+            bottom = 0,
+            found = 0;
     final static double 
             REAL_TARGET_WIDTH = 62, 
             //REAL_TARGET_WIDTH = 1.3716, 
             REAL_TARGET_HEIGHT = 0.6096,
-            topGoalWidth = 387,
+            topGoalWidth = 387, //adjust
+            topGoalHeight = 640, //adjust
             FOV_RADS = 0.92729,
             DIST_FULL_VIEW_W = (REAL_TARGET_WIDTH/2.0)/Math.tan(FOV_RADS/2.0),
             DIST_FULL_VIEW_H = (REAL_TARGET_HEIGHT/2.0)/Math.tan(FOV_RADS*0.75/2.0),
             DIS_H = 4,
             DIS_W = 14,
-            DIS_MID = 14;
+            DIS_MID = 14,
+           // VIEW_ANGLE = 48,        //Axis M1011 camera
+            VIEW_ANGLE = 54.0;       //Axis 206 camera;
                   
    
-    final int HUE_LOW = 10, HUE_HIGH = 255 , SAT_LOW = 182, SAT_HIGH = 255, VALUE_HIGH = 255, VALUE_LOW = 200; 
+    final int 
+            X_IMAGE_RES = 640,          //X Image resolution in pixels, should be 160, 320 or 640
+            /*HUE_LOW = 10, 
+            HUE_HIGH = 255 , 
+            SAT_LOW = 182, 
+            SAT_HIGH = 255,  //for test target with one ring of LED's
+            VALUE_HIGH = 255, 
+            VALUE_LOW = 200, */
+             /*HUE_LOW = 50, 
+            HUE_HIGH = 238 ,
+            SAT_LOW = 41,
+            SAT_HIGH = 255,   //with only one ring of LED's
+            VALUE_LOW = 148,
+            VALUE_HIGH = 203;*/
+            HUE_LOW = 0, 
+            HUE_HIGH = 255 ,
+            SAT_LOW = 222,  //with three rings of LED's
+            SAT_HIGH = 255,  
+            VALUE_LOW = 224,
+            VALUE_HIGH = 255;
     double 
             topdistance = 0,
             tiltAngle = 0,
-            lowdistance = 0;
-    final int RECTANGULARITY_LIMIT = 60;
-    final int ASPECT_RATIO_LIMIT = 75;
-    final int X_EDGE_LIMIT = 40;
-    final int Y_EDGE_LIMIT = 60;
-    final int PARTICLE_ANALYSIS_REPORTS = 20;
-    ParticleAnalysisReport[] reports = null;
-    final int X_IMAGE_RES = 640;          //X Image resolution in pixels, should be 160, 320 or 640
-    final double VIEW_ANGLE = 54.0;       //Axis 206 camera
-    //final double VIEW_ANGLE = 48;       //Axis M1011 camera
-    double 
             distance = 0.0,
-            position = 90.0;
+            lowdistance = 0;
+    final static int 
+            RECTANGULARITY_LIMIT = 60,
+            ASPECT_RATIO_LIMIT = 75,
+            X_EDGE_LIMIT = 40,
+            Y_EDGE_LIMIT = 60,
+            PARTICLE_ANALYSIS_REPORTS = 20;
+    
+    ParticleAnalysisReport[] reports = null;
     AxisCamera camera;          // the axis camera object (connected to the switch)
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 
@@ -101,14 +125,13 @@ public class Vision extends Subsystem {
 
     public void init() {
 
-        
-        reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
         System.out.println("Initializing Vision");
+        reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS]; //new targets array
         camera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
         cc.addCriteria(MeasurementType.IMAQ_MT_AREA, 500, 65535, false);
-        camera.writeCompression(30);
-        camera.writeResolution(AxisCamera.ResolutionT.k640x480);
+        camera.writeCompression(30); // write camera resolution 0 - 100
+        camera.writeResolution(AxisCamera.ResolutionT.k640x480); // write camera resolution
         System.out.println("Vision Initialized");
     }
 
@@ -120,6 +143,7 @@ public class Vision extends Subsystem {
              * level directory in the flash memory on the cRIO. The file name in this case is "testImage.jpg"
              * 
              */
+            reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
             ColorImage image = camera.getImage();     // comment if using stored images
             //ColorImage image;                           // next 2 lines read image from flash on cRIO
             //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
@@ -148,16 +172,16 @@ public class Vision extends Subsystem {
                 {
                     
                     reports[j++] = report;
-                   
-                    System.out.println("particle: " + i + " is a High Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                    
+                    System.out.println("particle: " + (j -1)  + " is a High Goal  centerX: " + report.center_mass_x + " centerY: " + report.center_mass_y);
                     //distance = computeDistance(thresholdImage, report, i, false);
                     distance = getDistanceToTarget(report);
                     System.out.println("Distance: " + distance);
                    // if(topdistance == 0) distance = topDistance;
                     //if(topdistance < distance) distance = topDistance;
                     targeted = true;
-                    tiltAngle = arcTan(report.center_mass_y_normalized/report.center_mass_x_normalized);
-                    top = j;
+                    
+                    top = (j-1);
                     
                     
                     
@@ -180,6 +204,10 @@ public class Vision extends Subsystem {
                 }
             if(reports != null){
                 displayTargets();
+            }
+            if(reports[top] == null){
+                targeted = false;
+                top = 0;
             }
 
             /**
@@ -216,7 +244,7 @@ public class Vision extends Subsystem {
      * @param outer True if the particle should be treated as an outer target, false to treat it as a center target
      * @return The estimated distance to the target in Inches.
      */
-   
+   //copied from Erin's code, then edited. 
     public double getDistanceToTarget(ParticleAnalysisReport target) {
         double targetPixelWidth, targetPixelHeight, diagonal, answer;
         double theta;
@@ -250,47 +278,23 @@ public class Vision extends Subsystem {
         answer = targetPixelHeight * ERROR + B;
         return answer;
     }  */
-    public double getTiltAngle(){
-        return tiltAngle;
-    }
-    public boolean getTargeted(){
-        return targeted;
-    }
-    public int getFound(){
-        return found;
-    }
-    public ParticleAnalysisReport getTopTarget() {
-        return reports[top];
-    }
-    public ParticleAnalysisReport getbottomTarget() {
-        return reports[bottom];
-    }
-    public double getTopDistance()
-    {
-        return topdistance;
-    }
-    public double getLowDistance()
-    {
-        return lowdistance;
-    }
-    public double getDistance()
-    {
-        return distance;
-    }
-    
-    public double calculateTiltTop(double distance)
-    {
-        double angle = 0.0;
-        angle = arcTan(TOP_HEIGHT/distance);
+    public double calculateTiltAngle(ParticleAnalysisReport target, double distance){
+        double targetPixelHeight, centerHeight, opposite, angle;
+        centerHeight = target.imageHeight/2;
+        targetPixelHeight = target.boundingRectHeight;
+        opposite = targetPixelHeight - centerHeight;
+        angle = arcTan(opposite/distance);
         angle = Math.toDegrees(angle);
         return angle;
-        
     }
+
+    
+
      /**
      * @param target Particle of the top goal target from the camera.
      * @return Returns angle (in degrees) to which the DriveTrain needs to pan.
      */
-    //Copied from Erin's Code
+    //Copied from Erin's Code, unedited.
     public double calculateHorizontalAngle(ParticleAnalysisReport target, double distanceToTopTarget) 
     {
         double center_center = target.center_mass_x;
@@ -299,16 +303,7 @@ public class Vision extends Subsystem {
         angle = Math.toDegrees(angle);
         return angle;
     }
-    /*
-    public double calculateVerticalAngle(ParticleAnalysisReport target, double distanceToTopTarget) 
-    {
-        double center_center = target.boundin;
-        double image_height = target.imageHeight;
-        double angle = 
-                
-        angle = Math.toDegrees(angle);
-        return angle;
-    }*/
+
     
     double computeDistance (BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean outer) throws NIVisionException {
             double rectShort, height;
@@ -323,35 +318,7 @@ public class Vision extends Subsystem {
             return X_IMAGE_RES * targetHeight / (height * 12 * 2 * Math.tan(VIEW_ANGLE*Math.PI/(180*2)));
     }
     
-    /**
-     * Computes a score (0-100) comparing the aspect ratio to the ideal aspect ratio for the target. This method uses
-     * the equivalent rectangle sides to determine aspect ratio as it performs better as the target gets skewed by moving
-     * to the left or right. The equivalent rectangle is the rectangle with sides x and y where particle area= x*y
-     * and particle perimeter= 2x+2y
-     * 
-     * @param image The image containing the particle to score, needed to perform additional measurements
-     * @param report The Particle Analysis Report for the particle, used for the width, height, and particle number
-     * @param outer	Indicates whether the particle aspect ratio should be compared to the ratio for the inner target or the outer
-     * @return The aspect ratio score (0-100)
-     */
-    
-     /**
-     * @param target Particle of the top goal target from the camera.
-     * @return Returns angle (in degrees) to which the DriveTrain needs to pan.
-     */
-    //FROM ERIN'S CODE
-    public double calculatePanTargetAngle(ParticleAnalysisReport target,
-            double distanceToTopTarget, ParticleAnalysisReport otherTarget) {
-        double center_center = target.center_mass_x;
-        
-        double image_width = target.imageWidth;
-        double angle = FOV_RADS*((center_center-(image_width/2))/image_width);
 
-        angle = Math.toDegrees(angle);
-
-        
-        return angle;
-    }
     
     public double scoreAspectRatio(BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean outer) throws NIVisionException
     {
@@ -500,6 +467,37 @@ public class Vision extends Subsystem {
             nt.putInt("centery",r[i].center_mass_y);
             nt.putInt("width",r[i].boundingRectWidth);
             nt.putInt("height",r[i].boundingRectHeight);
+            
         }
+    } 
+        public boolean getTargeted(){
+        return targeted;
+    }
+    public int getFound(){
+        return found;
+    }
+    public ParticleAnalysisReport getTopTarget() {
+        return reports[top];
+    }
+    public ParticleAnalysisReport getbottomTarget() {
+        return reports[bottom];
+    }
+    public double getTopDistance()
+    {
+        return topdistance;
+    }
+    public double getLowDistance()
+    {
+        return lowdistance;
+    }
+    public double getDistance()
+    {
+        return distance;
+    }
+    public double arcCos(double x) {
+        double answer;
+        answer  = (-0.69813170079773212 * x * x - 0.87266462599716477) * x + 1.5707963267948966;
+        answer = Math.toDegrees(answer);
+        return answer;
     }    
 }

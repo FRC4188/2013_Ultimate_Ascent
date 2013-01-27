@@ -62,7 +62,7 @@ public class CorpsServo extends Servo{
         adjustRange = (range - (range/2));
         
        if(input != 0){
-        super.setAngle(adjustRange * input + adjustRange);
+        setAngle(adjustRange * input + adjustRange);
         
         position = adjustRange * input + adjustRange;
        }
@@ -74,18 +74,18 @@ public class CorpsServo extends Servo{
         }
             
     }
-//    public void moveToPosition(double input){
-//        double  pos, in;
-//        
-//        if(input != 0){
-//            pos = getPosition();
-//            in = pos + (input*2);
-//            super.setAngle(in);
-//            setPosition(in);
-//        }
-//       
-// 
-//    }
+    public void moveToPosition(double input){
+        double adjustRange;
+        adjustRange = (range - (range/2));
+     
+        if(input != 0){
+            set(adjustRange * input + adjustRange);
+        }
+        else{
+            set(adjustRange);
+        }
+ 
+    }
     /*Get position of servo in degrees
      */
     public double getPosition(){

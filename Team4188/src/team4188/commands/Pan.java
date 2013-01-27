@@ -81,7 +81,7 @@ public class Pan extends CommandBase {
            target = vision.getTopTarget();
            targetDistance = vision.getDistance();
            angleX = vision.calculateHorizontalAngle(target, targetDistance);
-           angleY = vision.getTiltAngle();
+           angleY = vision.calculateTiltAngle(target, targetDistance);
             isAimed();
             //System.out.println("Angle X: "+ angleX);
            System.out.println("Angle Y: " + angleY);
@@ -185,7 +185,5 @@ public class Pan extends CommandBase {
     protected void interrupted() {
     }
 
-    public double acos(double x) {
-       return (-0.69813170079773212 * x * x - 0.87266462599716477) * x + 1.5707963267948966;
-    }
+
 }

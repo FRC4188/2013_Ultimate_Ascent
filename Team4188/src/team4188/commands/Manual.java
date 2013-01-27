@@ -30,7 +30,8 @@ public class Manual extends CommandBase {
         
          drivetrain.manualControl(-oi.stick.getX()*throttle,1);
          drivetrain.manualControl(oi.stick.getY()*throttle,2);
-         //drivetrain.panY.set(0);
+          //drivetrain.panY.set(.5);
+         
     }
 
     // Make this return true when this Command no longer needs to run execute()
