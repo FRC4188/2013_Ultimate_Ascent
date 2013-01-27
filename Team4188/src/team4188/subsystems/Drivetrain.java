@@ -23,7 +23,7 @@ public class Drivetrain extends Subsystem {
             panXMin = 0,
             panXMax = 58,
             panYMin = 0,
-            panYMax = 30,
+            panYMax = 1,
             TOLERANCE = 5.0,
             //BoardDistance = 60.0, //60.0 inches 
             X_RANGE = 116;
@@ -37,10 +37,10 @@ public class Drivetrain extends Subsystem {
     }
     public void manualControl(double input, int x){
         if(x == 1)panX.goToPosition(input);
-        if(x==2)panY.goToPosition(input);
+        if(x==2)panY.moveToPosition(input);
       
         setPosition(panX.getAngle());
-        System.out.println(panX.getAngle());
+       // System.out.println(panX.getAngle());
     }
     public void setPosition(double angle){
         position = angle;
