@@ -158,7 +158,7 @@ public class Vision extends Subsystem {
             Scores scores[] = new Scores[filteredImage.getNumberParticles()];
             int j = 0;
             for (int i = 0; i < scores.length; i++) {
-                
+                System.out.println("Scoring particles...");
                 ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
                 
                 scores[i] = new Scores();

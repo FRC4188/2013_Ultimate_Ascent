@@ -30,6 +30,7 @@ public class Drivetrain extends Subsystem {
  
     
     public void init(){
+        System.out.println("Initializing Drivetrain");
         panX = new CorpsServo(panXMin, panXMax, RobotMap.panX);
         panY = new CorpsServo(panYMin, panYMax, RobotMap.panY);    
         panX.goToAngle(position);
