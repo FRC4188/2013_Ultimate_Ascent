@@ -17,6 +17,7 @@ public abstract class CommandBase extends Command {
     public static Vision vision;
     public static Pan pan;
     public static Drivetrain drivetrain;
+    public static Shooter shooter;
     
    
     // Create a single static instance of all of your subsystems
@@ -26,6 +27,7 @@ public abstract class CommandBase extends Command {
          vision = new Vision();
           pan = new Pan();
           drivetrain = new Drivetrain();
+          shooter = new Shooter();
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
@@ -34,6 +36,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
         drivetrain.init();
         vision.init();
+        shooter.init();
         //pan = new Pan();
         
         

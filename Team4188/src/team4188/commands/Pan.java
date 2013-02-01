@@ -26,7 +26,7 @@ public class Pan extends CommandBase {
             TOLERANCE = 1.0,
             //BoardDistance = 60.0, //60.0 inches 
             X_RANGE = 116;
-    static double position = 90.0;
+  //  static double position = 90.0;
     
     boolean isTargeted = false, aimed = false;
     double 
@@ -62,58 +62,59 @@ public class Pan extends CommandBase {
          //panY.goToPosition(-oi.getJoystick().getY());
          
         
-        vision.getReports();
-        //SmartDashboard.putInt("Targets", vision.getFound());
-        //TargetDistance = vision.getDistance();
-        isTargeted = vision.getTargeted();
-        System.out.println("isTargeted: " + isTargeted);
-        if(isTargeted == false){
-           // SmartDashboard.putString("Pan", "Looking...");
-            System.out.println("Looking for targets...");
-            angleX = 0.0;
-            angleY = 0.0;
-            targetDistance = 0.0;
-         
-        }
-        
-        else{
-           System.out.println("Aiming...");
-           target = vision.getTopTarget();
-           targetDistance = vision.getDistance();
-           angleX = vision.calculateHorizontalAngle(target, targetDistance);
-           angleY = vision.calculateTiltAngle(target, targetDistance);
-            isAimed();
-            //System.out.println("Angle X: "+ angleX);
-           System.out.println("Angle Y: " + angleY);
-            if(aimed == false)
-            {
-             aim();
-            }
-            //TargetDistance = 0.0;
-            //panY.setAngle(((angleY)+1)/2);
-           // System.out.println("Titling");
-            
-            //panX.setAngle(((angleX)+1)/4);
-            //System.out.println("panning..");
-           // SmartDashboard.putString("pan", "Panning");
-        }        
-        
-        
-        
-        
-        
-        /*
-        for(int i = 0; i < 18; i++)
-        {
-            System.out.println(input);
-            panX.goToAngle(input);
-            input += 10;
-            timer.delay(1);
-            
-        }
-        */
-    }
+         if(vision.getReports())
+         {   
+            //SmartDashboard.putInt("Targets", vision.getFound());
+            //TargetDistance = vision.getDistance();
+            isTargeted = vision.getTargeted();
+            System.out.println("isTargeted: " + isTargeted);
+            if(isTargeted == false){
+               // SmartDashboard.putString("Pan", "Looking...");
+                System.out.println("Looking for targets...");
+                angleX = 0.0;
+                angleY = 0.0;
+                targetDistance = 0.0;
 
+            }
+
+            else{
+               System.out.println("Aiming...");
+               target = vision.getTopTarget();
+               targetDistance = vision.getDistance();
+               angleX = vision.calculateHorizontalAngle(target, targetDistance);
+               angleY = vision.calculateTiltAngle(target, targetDistance);
+                isAimed();
+                //System.out.println("Angle X: "+ angleX);
+               System.out.println("Angle Y: " + angleY);
+                if(aimed == false)
+                {
+                 aim();
+                }
+                //TargetDistance = 0.0;
+                //panY.setAngle(((angleY)+1)/2);
+               // System.out.println("Titling");
+
+                //panX.setAngle(((angleX)+1)/4);
+                //System.out.println("panning..");
+               // SmartDashboard.putString("pan", "Panning");
+            }        
+
+
+
+
+
+            /*
+            for(int i = 0; i < 18; i++)
+            {
+                System.out.println(input);
+                panX.goToAngle(input);
+                input += 10;
+                timer.delay(1);
+
+            }
+            */
+        }
+    }
     
     private void aim(){
         double move = 0;
@@ -129,6 +130,7 @@ public class Pan extends CommandBase {
         System.out.println("Angle: " + angleX);
         move = angleX/5;
         drivetrain.panX.goToAngle(drivetrain.getPosition() - (move));
+        
         //vision.panX.goToAngle(position - (move/2));
        // System.out.println("Panning Angle: "+ servoAngle);
         //System.out.println("Panning Position: "+ servoPos);

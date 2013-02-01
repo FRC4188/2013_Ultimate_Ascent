@@ -7,6 +7,7 @@ import team4188.CorpsServo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team4188.RobotMap;
 import team4188.commands.*;
+import edu.wpi.first.wpilibj.*;
 
 /**
  *
@@ -17,6 +18,7 @@ import team4188.commands.*;
 public class Drivetrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    private PIDController servoX;
     public CorpsServo panY , panX ;
     double position = 90.0;
     final static double 
@@ -31,9 +33,11 @@ public class Drivetrain extends Subsystem {
     
     public void init(){
         System.out.println("Initializing Drivetrain");
+        
         panX = new CorpsServo(panXMin, panXMax, RobotMap.panX);
         panY = new CorpsServo(panYMin, panYMax, RobotMap.panY);    
         panX.goToAngle(position);
+        //servoX = new PIDController(2.0, .005, 0.0, position, panX, .05);
         
     }
     public void manualControl(double input, int x){
