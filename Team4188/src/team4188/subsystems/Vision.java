@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Vision extends Subsystem {
     
     boolean targeted = false;
+    boolean hasRun = false;
     final int 
             XMAXSIZE = 24,
             XMINSIZE = 24,
@@ -58,6 +59,10 @@ public class Vision extends Subsystem {
     ParticleAnalysisReport 
             toptarget = null, 
             lowtarget = null;
+    private ColorImage image;
+    private BinaryImage thresholdImage, convexHullImage, filteredImage;    
+    long lastReportComplete = 0L;
+    long THRESHOLD = 400L;
     int 
             top = 0, 
             bottom = 0,
@@ -65,9 +70,10 @@ public class Vision extends Subsystem {
     final static double 
             REAL_TARGET_WIDTH = 62, 
             //REAL_TARGET_WIDTH = 1.3716, 
-            REAL_TARGET_HEIGHT = 0.6096,
-            topGoalWidth = 387, //adjust
-            topGoalHeight = 640, //adjust
+            REAL_TARGET_HEIGHT = 104.125,
+            CAMERA_HEIGHT = 35,
+            topGoalWidth = 550,            //adjust! 
+            topGoalHeight = 640,           //adjust!
             FOV_RADS = 0.92729,
             DIST_FULL_VIEW_W = (REAL_TARGET_WIDTH/2.0)/Math.tan(FOV_RADS/2.0),
             DIST_FULL_VIEW_H = (REAL_TARGET_HEIGHT/2.0)/Math.tan(FOV_RADS*0.75/2.0),
@@ -89,12 +95,12 @@ public class Vision extends Subsystem {
              /*HUE_LOW = 50, 
             HUE_HIGH = 238 ,
             SAT_LOW = 41,
-            SAT_HIGH = 255,   //with only one ring of LED's
+            SAT_HIGH = 255,   //with only one ring of LED's on real target
             VALUE_LOW = 148,
             VALUE_HIGH = 203;*/
             HUE_LOW = 0, 
             HUE_HIGH = 255 ,
-            SAT_LOW = 222,  //with three rings of LED's
+            SAT_LOW = 222,  //with three rings of LED's on real target
             SAT_HIGH = 255,  
             VALUE_LOW = 224,
             VALUE_HIGH = 255;
@@ -115,6 +121,9 @@ public class Vision extends Subsystem {
     CriteriaCollection cc;      // the criteria for doing the particle filter operation
 
     
+    /**
+     *
+     */
     public class Scores {
         double rectangularity;
         double aspectRatioInner;
@@ -123,6 +132,9 @@ public class Vision extends Subsystem {
         double yEdge;
     }
 
+    /**
+     *
+     */
     public void init() {
 
         System.out.println("Initializing Vision");
@@ -135,101 +147,129 @@ public class Vision extends Subsystem {
         System.out.println("Vision Initialized");
     }
 
-    public ParticleAnalysisReport[] getReports() {
-        try {
-            /**
-             * Do the image capture with the camera and apply the algorithm described above. This
-             * sample will either get images from the camera or from an image file stored in the top
-             * level directory in the flash memory on the cRIO. The file name in this case is "testImage.jpg"
-             * 
-             */
-            reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
-            ColorImage image = camera.getImage();     // comment if using stored images
-            //ColorImage image;                           // next 2 lines read image from flash on cRIO
-            //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
-            BinaryImage thresholdImage = image.thresholdHSV(HUE_LOW, HUE_HIGH , SAT_LOW, SAT_HIGH,  VALUE_LOW, VALUE_HIGH);   // keep only red objects
-            //thresholdImage.write("/threshold.bmp");
-            BinaryImage convexHullImage = thresholdImage.convexHull(false);          // fill in occluded rectangles
-            //convexHullImage.write("/convexHull.bmp");
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);           // filter out small particles
-            //filteredImage.write("/filteredImage.bmp");
+    /**
+     *
+     * @return
+     */
+    public boolean getReports() {
+        long now = System.currentTimeMillis();
+        
+        if(now - lastReportComplete > THRESHOLD){
 
-            //iterate through each particle and score to see if it is a target
-            Scores scores[] = new Scores[filteredImage.getNumberParticles()];
-            int j = 0;
-            for (int i = 0; i < scores.length; i++) {
-                System.out.println("Scoring particles...");
-                ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
-                
-                scores[i] = new Scores();
-                scores[i].rectangularity = scoreRectangularity(report);
-                scores[i].aspectRatioOuter = scoreAspectRatio(filteredImage,report, i, true);
-                scores[i].aspectRatioInner = scoreAspectRatio(filteredImage, report, i, false);
-                scores[i].xEdge = scoreXEdge(thresholdImage, report);
-                scores[i].yEdge = scoreYEdge(thresholdImage, report);
 
-                if(scoreCompare(scores[i], false))
-                {
-                    
-                    reports[j++] = report;
-                    
-                    System.out.println("particle: " + (j -1)  + " is a High Goal  centerX: " + report.center_mass_x + " centerY: " + report.center_mass_y);
-                    //distance = computeDistance(thresholdImage, report, i, false);
-                    distance = getDistanceToTarget(report);
-                    System.out.println("Distance: " + distance);
-                   // if(topdistance == 0) distance = topDistance;
-                    //if(topdistance < distance) distance = topDistance;
-                    targeted = true;
-                    
-                    top = (j-1);
-                    
-                    
-                    
-                } else if (scoreCompare(scores[i], true)) {
-                    System.out.println("particle: " + i + "is a Middle Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
-                    distance = computeDistance(thresholdImage, report, i, false);
-                    System.out.println("Distance: " + distance);
-                    if(lowdistance == 0) distance = lowdistance;
-                    if(distance < lowdistance){
-                        lowdistance = distance;
-                        bottom = i;
-                        found++;
-                    }                    
-                } else {
-                    //targeted = false;
-                    //System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+            try {
+                /**
+                 * Do the image capture with the camera and apply the algorithm described above. This
+                 * sample will either get images from the camera or from an image file stored in the top
+                 * level directory in the flash memory on the cRIO. The file name in this case is "testImage.jpg"
+                 * 
+                 */
+
+                reports = null;
+                reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
+
+                camera = AxisCamera.getInstance(); 
+                image = camera.getImage();     // comment if using stored images
+                System.out.println("Image = " + image);
+                //ColorImage image;                           // next 2 lines read image from flash on cRIO
+                //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
+                thresholdImage = image.thresholdHSV(HUE_LOW, HUE_HIGH , SAT_LOW, SAT_HIGH,  VALUE_LOW, VALUE_HIGH);   // keep only red objects
+                //thresholdImage.write("/threshold.bmp");
+                convexHullImage = thresholdImage.convexHull(false);          // fill in occluded rectangles
+                //convexHullImage.write("/convexHull.bmp");
+                filteredImage = convexHullImage.particleFilter(cc);           // filter out small particles
+                //filteredImage.write("/filteredImage.bmp");
+
+                //iterate through each particle and score to see if it is a target
+                Scores scores[] = new Scores[filteredImage.getNumberParticles()];
+              //  System.out.println("Number of Particles: " + filteredImage.getNumberParticles());
+                int j = 0;
+                for (int i = 0; i < scores.length; i++) {
+                 //   System.out.println("Scoring particle " + i);
+                    ParticleAnalysisReport report = filteredImage.getParticleAnalysisReport(i);
+
+                    scores[i] = new Scores();
+                    scores[i].rectangularity = scoreRectangularity(report);
+                  //  System.out.println("Rectangularity: " + scoreRectangularity(report));
+                    scores[i].aspectRatioOuter = scoreAspectRatio(filteredImage,report, i, true);
+                   // System.out.println("Outer Aspect Ratio: " + scoreAspectRatio(filteredImage,report, i, true));
+                    scores[i].aspectRatioInner = scoreAspectRatio(filteredImage, report, i, false);
+                    scores[i].xEdge = scoreXEdge(thresholdImage, report);
+                  //  System.out.println("X Edge: " + scoreXEdge(thresholdImage, report));
+                    scores[i].yEdge = scoreYEdge(thresholdImage, report);
+                  //  System.out.println("Y Edge: " + scoreYEdge(thresholdImage, report));
+
+                    if(scoreCompare(scores[i], false))
+                    {
+
+                        reports[j++] = report;
+                       // System.out.println("This is i target: " + i);
+                        System.out.println("particle: " + (j -1)  + " is a High Goal  centerX: " + report.center_mass_x + " centerY: " + report.center_mass_y);
+                        //distance = computeDistance(thresholdImage, report, i, false);
+                        distance = getDistanceToTarget(report);
+                        System.out.println("Distance: " + distance);
+
+                        // if(topdistance == 0) distance = topDistance;
+                        //if(topdistance < distance) distance = topDistance;
+                        targeted = true;
+
+                        top = (j-1);
+
+
+
+                    } else if (scoreCompare(scores[i], true)) {
+                        System.out.println("particle: " + i + "is a Middle Goal  centerX: " + report.center_mass_x_normalized + "centerY: " + report.center_mass_y_normalized);
+                        distance = computeDistance(thresholdImage, report, i, false);
+                        System.out.println("Distance: " + distance);
+                        if(lowdistance == 0) distance = lowdistance;
+                        if(distance < lowdistance){
+                            lowdistance = distance;
+                            bottom = i;
+                            found++;
+                        }                    
+                    } else {
+                        //targeted = false;
+                        System.out.println("particle: " + i + "is not a goal  centerX: " + report.center_mass_x + "centerY: " + report.center_mass_y);
+                    }
+                        //System.out.println("rect: " + scores[i].rectangularity + "ARinner: " + scores[i].aspectRatioInner);
+                        //System.out.println("ARouter: " + scores[i].aspectRatioOuter + "xEdge: " + scores[i].xEdge + "yEdge: " + scores[i].yEdge);	
+                    }
+                if(reports != null){
+                    displayTargets();
                 }
-                    //System.out.println("rect: " + scores[i].rectangularity + "ARinner: " + scores[i].aspectRatioInner);
-                    //System.out.println("ARouter: " + scores[i].aspectRatioOuter + "xEdge: " + scores[i].xEdge + "yEdge: " + scores[i].yEdge);	
+                if(reports[top] == null){
+                    targeted = false;
+                    top = 0;
                 }
-            if(reports != null){
-                displayTargets();
-            }
-            if(reports[top] == null){
-                targeted = false;
-                top = 0;
-            }
 
-            /**
-             * all images in Java must be freed after they are used since they are allocated out
-             * of C data structures. Not calling free() will cause the memory to accumulate over
-             * each pass of this loop.
-             */
-            filteredImage.free();
-            convexHullImage.free();
-            thresholdImage.free();
-            image.free();
+                /**
+                 * all images in Java must be freed after they are used since they are allocated out
+                 * of C data structures. Not calling free() will cause the memory to accumulate over
+                 * each pass of this loop.
+                 */
+                if(filteredImage != null)filteredImage.free();
+                if(convexHullImage != null)convexHullImage.free();
+                if(thresholdImage != null)thresholdImage.free();
+                if(image != null)image.free();
 
-            } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
-            ex.printStackTrace();
-        } catch (NIVisionException ex) {
-            ex.printStackTrace();
+                } catch (AxisCameraException ex) {        // this is needed if the camera.getImage() is called
+                ex.printStackTrace();
+            } catch (NIVisionException ex) {
+                ex.printStackTrace();
+            }
+            lastReportComplete = System.currentTimeMillis();
+            return true;
         }
-        return null;
+        
+        return false;
+        
     }
-    
+  
 
     
+    /**
+     *
+     */
     public void initDefaultCommand() {
          //setDefaultCommand(new Manual());
     }
@@ -239,9 +279,7 @@ public class Vision extends Subsystem {
      * Computes the estimated distance to a target using the height of the particle in the image. For more information and graphics
      * showing the math behind this approach see the Vision Processing section of the ScreenStepsLive documentation.
      * 
-     * @param image The image to use for measuring the particle estimated rectangle
-     * @param report The Particle Analysis Report for the particle
-     * @param outer True if the particle should be treated as an outer target, false to treat it as a center target
+     * @param target 
      * @return The estimated distance to the target in Inches.
      */
    //copied from Erin's code, then edited. 
@@ -278,12 +316,26 @@ public class Vision extends Subsystem {
         answer = targetPixelHeight * ERROR + B;
         return answer;
     }  */
+    /**
+     *
+     * @param target
+     * @param distance
+     * @return
+     */
     public double calculateTiltAngle(ParticleAnalysisReport target, double distance){
-        double targetPixelHeight, centerHeight, opposite, angle;
-        centerHeight = target.imageHeight/2;
-        targetPixelHeight = target.boundingRectHeight;
-        opposite = targetPixelHeight - centerHeight;
-        angle = arcTan(opposite/distance);
+        double targetPixelHeight, centerHeight, opposite, angle, ratio, adjacent;
+       // centerHeight = target.imageHeight/2;
+      //  targetPixelHeight = target.boundingRectHeight;
+        
+        
+        //System.out.println("Opposite (pixels) = " + opposite);
+        //ratio =opposite/REAL_TARGET_HEIGHT;
+        //System.out.println("Ratio = " + ratio);
+        //opposite = opposite * ratio;
+        //System.out.println("Opposite (inches) = " + opposite);
+        adjacent = Math.sqrt((distance * distance) - ((REAL_TARGET_HEIGHT-CAMERA_HEIGHT) * (REAL_TARGET_HEIGHT-CAMERA_HEIGHT)));
+        System.out.println("Adjacent= " + adjacent);
+        angle = arcTan((REAL_TARGET_HEIGHT-CAMERA_HEIGHT)/adjacent);
         angle = Math.toDegrees(angle);
         return angle;
     }
@@ -292,6 +344,7 @@ public class Vision extends Subsystem {
 
      /**
      * @param target Particle of the top goal target from the camera.
+     * @param distanceToTopTarget 
      * @return Returns angle (in degrees) to which the DriveTrain needs to pan.
      */
     //Copied from Erin's Code, unedited.
@@ -320,6 +373,15 @@ public class Vision extends Subsystem {
     
 
     
+    /**
+     *
+     * @param image
+     * @param report
+     * @param particleNumber
+     * @param outer
+     * @return
+     * @throws NIVisionException
+     */
     public double scoreAspectRatio(BinaryImage image, ParticleAnalysisReport report, int particleNumber, boolean outer) throws NIVisionException
     {
         double rectLong, rectShort, aspectRatio, idealAspectRatio;
@@ -386,6 +448,7 @@ public class Vision extends Subsystem {
      * @param report The Particle Analysis Report for the particle
      * 
      * @return The X Edge Score (0-100)
+     * @throws NIVisionException  
      */
     public double scoreXEdge(BinaryImage image, ParticleAnalysisReport report) throws NIVisionException
     {
@@ -413,7 +476,8 @@ public class Vision extends Subsystem {
 	 * @param image The image to use, should be the image before the convex hull is performed
 	 * @param report The Particle Analysis Report for the particle
 	 * 
-	 * @return The Y Edge score (0-100)
+         * @return The Y Edge score (0-100)
+         * @throws NIVisionException  
 	 *
     */
 
@@ -443,6 +507,9 @@ public class Vision extends Subsystem {
     private double arcTan(double x) {
         return x-((x*x*x)/3)+((x*x*x*x*x)/5);//-((x*x*x*x*x*x*x)/7);
     }
+    /**
+     *
+     */
     public void displayTargets() {
         setNetworkTable(reports);
     }
@@ -470,34 +537,68 @@ public class Vision extends Subsystem {
             
         }
     } 
-        public boolean getTargeted(){
+        /**
+     *
+     * @return
+     */
+    public boolean getTargeted(){
         return targeted;
     }
+    /**
+     *
+     * @return
+     */
     public int getFound(){
         return found;
     }
+    /**
+     *
+     * @return
+     */
     public ParticleAnalysisReport getTopTarget() {
         return reports[top];
     }
+    /**
+     *
+     * @return
+     */
     public ParticleAnalysisReport getbottomTarget() {
         return reports[bottom];
     }
+    /**
+     *
+     * @return
+     */
     public double getTopDistance()
     {
         return topdistance;
     }
+    /**
+     *
+     * @return
+     */
     public double getLowDistance()
     {
         return lowdistance;
     }
+    /**
+     *
+     * @return
+     */
     public double getDistance()
     {
         return distance;
     }
+    /**
+     *
+     * @param x
+     * @return
+     */
     public double arcCos(double x) {
         double answer;
         answer  = (-0.69813170079773212 * x * x - 0.87266462599716477) * x + 1.5707963267948966;
         answer = Math.toDegrees(answer);
         return answer;
-    }    
+    }
+
 }

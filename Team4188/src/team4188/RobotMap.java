@@ -10,7 +10,9 @@ public class RobotMap {
     public static final int 
             //camera servos
             panX = 1, 
-            panY = 2;
+            panY = 2,
+            FIRST_WHEEL = 1,
+            SECOND_WHEEL = 2;
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static final int rangefinderPort = 1;

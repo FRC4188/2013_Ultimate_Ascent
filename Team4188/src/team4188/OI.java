@@ -16,7 +16,7 @@ public class OI {
     // You create one by telling it which joystick it's on and which button
     // number it is.
     public CorpsJoystick stick;
-    public Button aim;
+    public Button aim, shoot;
     public OI(){ 
          stick = new
                 CorpsJoystick(1,3,11,-1.5,1.5,1,1,-1.5,1.5,1,1,0,0,0,0);
@@ -24,8 +24,10 @@ public class OI {
         //Joystick stick = new Joystick(1);
         Button aim = new JoystickButton(stick, 1);
         Button pan = new JoystickButton(stick, 2);
+        Button shoot = new JoystickButton(stick, 4);
         pan.whileHeld(new Manual());
         aim.whileHeld(new Pan());
+        shoot.whenPressed(new Shoot());
     }
     // Button button = new JoystickButton(stick, buttonNumber);
 
