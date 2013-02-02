@@ -1,4 +1,5 @@
 
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -13,7 +14,7 @@ package team4188;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import team4188.commands.BasicAutonomous;
+import team4188.commands.AutonomousCommand;
 import team4188.commands.CommandBase;
 
 /**
@@ -31,7 +32,7 @@ public class RobotMain extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        autonomousCommand=new BasicAutonomous();
+        autonomousCommand=new AutonomousCommand();
         // instantiate the command used for the autonomous period
         //autonomousCommand = new DriveSquare();
 

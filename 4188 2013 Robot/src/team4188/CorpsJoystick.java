@@ -1,4 +1,5 @@
 
+
 package team4188;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -120,7 +121,8 @@ public class CorpsJoystick extends Joystick {
             // Multiply by max output.
             X*=XMaxSpeedPercent;
         }
-        X*=45;        return X;
+        X*=45;        
+    return X;
     }
 
     /**
@@ -191,7 +193,7 @@ public class CorpsJoystick extends Joystick {
         
         // Convert throttle from [1,-1] to [1,0].
         throttle=((throttle-1)/(-2));
-        throttle=((throttle*0.6)+0.4);
+        throttle=((throttle*throttle*0.8)+0.2);
         
         return throttle;
     }
