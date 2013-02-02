@@ -12,6 +12,8 @@ public class RobotMap {
         FRONT_RIGHT_DRIVE_MOTOR = 12,
         BACK_LEFT_DRIVE_MOTOR=13,
         BACK_RIGHT_DRIVE_MOTOR=14,
+        FIRST_WHEEL=15,
+        SECOND_WHEEL=16,
         GYRO=1;
         public static final double aS=0.25;
     public static final double sS=0.5;

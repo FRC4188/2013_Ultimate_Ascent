@@ -4,7 +4,7 @@ package team4188;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import team4188.commands.turnXDegrees;
+import team4188.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,9 +16,8 @@ public class OI {
     //private static OI instance = null;
     public CorpsJoystick stick;
     //public CorpsJoystick joystick;
-    public JoystickButton autonomousButton;
-    public JoystickButton aimButton;
-    public JoystickButton buttonTester;
+    
+    public JoystickButton autonomousButton, aimButton, buttonTester, shoot;
     public OI(){
         CorpsLog.log("xNegDZ",RobotMap.xNegDeadZone,true,false); 
         CorpsLog.log("xPosDZ",RobotMap.xPosDeadZone,true,false); 
@@ -34,10 +33,12 @@ public class OI {
         //    double XDZMax, int XMult, double XMax, double YDZMin, double YDZMax, int YMult,
         //    double YMax, double twistDZMin, double twistDZMax,
         //    int twistMult, double twistMax)
+        shoot = new JoystickButton(stick, 9);
         aimButton = new JoystickButton(stick, 3);
         aimButton.whenPressed(new turnXDegrees(90));
         buttonTester=new JoystickButton(stick,4);
         buttonTester.whenPressed(new turnXDegrees(-90));
+        shoot.whileHeld(new ShooterOn());
         
         
         //trigger=new JoystickButton(stick, Joystick.ButtonType.kTop.value);  
