@@ -3,35 +3,25 @@
  * and open the template in the editor.
  */
 package team4188.commands;
-import team4188.OI;
-import team4188.CorpsServo;
-import team4188.subsystems.Vision;
 
 /**
  *
  * @author toboretasker
  */
-public class Manual extends CommandBase {
-    private double throttle;
-    public Manual() {
+public class ShooterOff extends CommandBase {
+    
+    public ShooterOff() {
         // Use requires() here to declare subsystem dependencies
-         requires(drivetrain);
+        requires(shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        System.out.println("Manual Intializing");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-         //vision.panX.goToPosition(oi.getJoystick().getX());
-         throttle = ((oi.pilot.getThrottle()));
-        
-         drivetrain.manualControl(-oi.pilot.getX()*throttle,1);
-         drivetrain.manualControl(oi.pilot.getY()*throttle,2);
-          //drivetrain.panY.set(.5);
-         
+        shooter.shooterOff();
     }
 
     // Make this return true when this Command no longer needs to run execute()

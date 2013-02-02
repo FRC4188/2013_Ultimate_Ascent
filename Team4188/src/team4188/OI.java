@@ -15,19 +15,18 @@ public class OI {
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
     // number it is.
-    public CorpsJoystick stick;
+    public CorpsJoystick pilot, copilot;
     public Button aim, shoot;
     public OI(){ 
-         stick = new
-                CorpsJoystick(1,3,11,-1.5,1.5,1,1,-1.5,1.5,1,1,0,0,0,0);
-       
+         pilot = new CorpsJoystick(1,3,11,-1.5,1.5,1,1,-1.5,1.5,1,1,0,0,0,0);
+         copilot = new CorpsJoystick(2,3,11,-5,5,2,1,-3,3,4,-1,0,0,0,0);
         //Joystick stick = new Joystick(1);
-        Button aim = new JoystickButton(stick, 1);
-        Button pan = new JoystickButton(stick, 2);
-        Button shoot = new JoystickButton(stick, 4);
+        Button aim = new JoystickButton(pilot, 1);
+        Button pan = new JoystickButton(pilot, 2);
+        Button shoot = new JoystickButton(copilot, 1);
         pan.whileHeld(new Manual());
         aim.whileHeld(new Pan());
-        shoot.whenPressed(new Shoot());
+        shoot.whileHeld(new ShooterOn());
     }
     // Button button = new JoystickButton(stick, buttonNumber);
 
