@@ -12,10 +12,9 @@ import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc4188.ColumbusCorpsBot.RobotMap;
 import org.usfirst.frc4188.ColumbusCorpsBot.commands.*;
-import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
