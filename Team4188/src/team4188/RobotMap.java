@@ -11,8 +11,12 @@ public class RobotMap {
             //camera servos
             panX = 1, 
             panY = 2,
-            FIRST_WHEEL = 1,
-            SECOND_WHEEL = 2;
+            //Spike Relays
+
+            //CAN Jaguars
+            TILT = 15,
+            FIRST_WHEEL = 16, 
+            SECOND_WHEEL = 17;
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static final int rangefinderPort = 1;

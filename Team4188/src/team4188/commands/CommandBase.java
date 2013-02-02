@@ -18,6 +18,7 @@ public abstract class CommandBase extends Command {
     public static Pan pan;
     public static Drivetrain drivetrain;
     public static Shooter shooter;
+    public static Turret turret;
     
    
     // Create a single static instance of all of your subsystems
@@ -28,12 +29,14 @@ public abstract class CommandBase extends Command {
           pan = new Pan();
           drivetrain = new Drivetrain();
           shooter = new Shooter();
+          turret = new Turret();
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
+        turret.init();
         drivetrain.init();
         vision.init();
         shooter.init();
