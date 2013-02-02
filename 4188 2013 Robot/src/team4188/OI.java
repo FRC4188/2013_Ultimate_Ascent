@@ -4,10 +4,6 @@ package team4188;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import team4188.commands.AutoAim;
-import team4188.commands.BasicAutonomous;
-import team4188.commands.spinDegrees;
-import team4188.commands.spinDegreesGyro;
 import team4188.commands.turnXDegrees;
 
 /**
@@ -24,6 +20,13 @@ public class OI {
     public JoystickButton aimButton;
     public JoystickButton buttonTester;
     public OI(){
+        CorpsLog.log("xNegDZ",RobotMap.xNegDeadZone,true,false); 
+        CorpsLog.log("xPosDZ",RobotMap.xPosDeadZone,true,false); 
+        CorpsLog.log("yNegDZ",RobotMap.yNegDeadZone,true,false); 
+        CorpsLog.log("yPosDZ",RobotMap.yPosDeadZone,true,false); 
+        CorpsLog.log("zNegDZ",RobotMap.zNegDeadZone,true,false); 
+        CorpsLog.log("zPosDZ",RobotMap.zPosDeadZone,true,false); 
+        
         stick = new CorpsJoystick (1,4,12,RobotMap.xNegDeadZone,RobotMap.xPosDeadZone,RobotMap.xMult,1.0,RobotMap.yNegDeadZone,RobotMap.yPosDeadZone,
                 RobotMap.yMult,1.0,RobotMap.zNegDeadZone,RobotMap.zPosDeadZone,RobotMap.twistMult,1.0);
         //joystick = new CorpsJoystick(2,3,12,0.0,0.0,1,1.0,0.0,0.0,1,1.0,0.0,0.0,1,1.0);
@@ -33,9 +36,9 @@ public class OI {
         //    int twistMult, double twistMax)
         aimButton = new JoystickButton(stick, 3);
         aimButton.whenPressed(new turnXDegrees(90));
-        buttonTester=new JoystickButton(stick,5);
-        buttonTester.whenPressed(new spinDegrees(360));
-        SmartDashboard.putData("turnXDegrees",new turnXDegrees(90));
+        buttonTester=new JoystickButton(stick,4);
+        buttonTester.whenPressed(new turnXDegrees(-90));
+        
         
         //trigger=new JoystickButton(stick, Joystick.ButtonType.kTop.value);  
         //trigger.whenPressed(new DriveSquare());   

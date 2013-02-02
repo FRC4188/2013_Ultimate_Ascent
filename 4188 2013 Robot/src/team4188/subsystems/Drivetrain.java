@@ -1,16 +1,16 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package team4188.subsystems;
-import team4188.CorpsRobotDrive;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team4188.CorpsLog;
-import team4188.OI;
+import team4188.CorpsRobotDrive;
 import team4188.RobotMap;
-import team4188.commands.DriveWithJoystick;
+import team4188.commands.ManualDrive;
 
 /**
  *
@@ -24,15 +24,18 @@ public class Drivetrain extends Subsystem {
     private Gyro gyro;
     private Timer timer;
     private boolean timerRunning=false;
-    public static final double gyroTOLERANCE = 0.5,
-            Pg = 0.006, Ig = 0.0002, Dg = 0.0,     // LEAVE THESE CONSTANTS ALONE!
+    public static final double 
+            gyroTOLERANCE = 0.5,
+            Pg = 0.006, 
+            Ig = 0.0002, 
+            Dg = 0.0,     // LEAVE THESE CONSTANTS ALONE!
             PID_LOOP_TIME = .05,
             SETTLED_TIME = 1.0;    // LEAVE THESE CONSTANTS ALONE!;
     private PIDController gyroPID;
     private boolean resetG = false;
     //private PIDController leftEncPID, rightEncPID;
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveWithJoystick ());
+        setDefaultCommand(new ManualDrive ());
 
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -56,6 +59,8 @@ public class Drivetrain extends Subsystem {
         Drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight,false);
         Drive.setInvertedMotor(RobotDrive.MotorType.kRearRight,false);
         Drive.setSafetyEnabled(false);
+ 
+        
         CorpsLog.log("proportion",Pg,true,false); //not entirely sure where these statements should be
         CorpsLog.log("integral",Ig,true,false); //^
         CorpsLog.log("derivative",Dg,true,false);  //^
@@ -93,58 +98,62 @@ public class Drivetrain extends Subsystem {
         if(gyroPID.isEnable()) gyroPID.disable();
         //accelPID.disable();
     }
-   public boolean thereYet(double target) {
-        if(onTarget(target) && !timerRunning) {
+   public boolean thereYet(double target) 
+   {
+        if(onTarget(target) && !timerRunning) 
+        {
             timer.start();
             timerRunning = true;
         }
-        else if (!onTarget(target) && timerRunning) {
+        else if (!onTarget(target) && timerRunning)
+        {
             timer.stop();
             timer.reset();
             timerRunning = false;
         }
         return timer.get() >= SETTLED_TIME;
     }
-   public void DriveStraight(){
-       Drive.mecanumDrive_Cartesian(RobotMap.aS,0.0,0.0,0.0);
-   }
- 
-   public void moveLeft(){
-       Drive.mecanumDrive_Cartesian(0.0,-RobotMap.aS,0.0,0.0);
-   }
-   public void moveRight(){
-       Drive.mecanumDrive_Cartesian(0.0,RobotMap.aS,0.0,0.0);
-   }
-   public void driveBack(){
-       Drive.mecanumDrive_Cartesian(-RobotMap.aS,0.0,0.0,0.0);
-   }
-   public void stop(){
-       Drive.mecanumDrive_Cartesian(0.0,0.0,0.0,0.0);
-   }
-   public void autoSpin(){
-       Drive.mecanumDrive_Cartesian(0.0,0.0,RobotMap.sS,0.0);
-   }
-   public void negAutoSpin(){
-       Drive.mecanumDrive_Cartesian(0.0,0.0,-RobotMap.sS,0.0);
-   }
-   public double getGyroAngle() {
+  
+   public double getGyroAngle() 
+   {
         return gyro.getAngle();
     }
-   public void resetGyro() {
+   public void resetGyro() 
+   {
       gyro.reset();
    }
-   private boolean onTarget(double target) {
+   public void stop()
+   {
+       Drive.mecanumDrive_Cartesian(0.0,0.0,0.0,0.0);
+   }
+   private boolean onTarget(double target) 
+   {
         boolean toReturn=false;
         //switch(RobotMap.getDriveTrainMode()) {
-        
+                if(target<0)
+                {
+                    if(gyro.getAngle()<=(target+((gyroTOLERANCE/100.0)*180.0)) &&
+                            gyro.getAngle()>=(target-((gyroTOLERANCE/100.0)*180.0)))
+                    {
+                        toReturn=true;
+                    }
+                    else
+                    {
+                        toReturn=false;
+                    }
+                }
                 //System.out.println("gyro onTarget...");
                 if(gyro.getAngle()>=(target-((gyroTOLERANCE/100.0)*180.0)) &&
                         gyro.getAngle()<=(target+((gyroTOLERANCE/100.0)*180.0)))
+                {
                     toReturn = true;
-                else toReturn = false;
-        
+                }
+                else
+                {
+                    toReturn = false;
+                }
    return toReturn;
-   }
+}
    
    
   

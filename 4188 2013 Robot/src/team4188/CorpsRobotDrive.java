@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -41,10 +42,12 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
         // NOT - on practice bot...
         System.out.println(output);
         if(Math.abs(output)<0.12){
-            if(output<0){
+            if(output<0)
+            {
                 output=-0.12;
             }
-            else{
+            else
+            {
                 output=0.12;
             }
             System.out.println(" >"+output);
@@ -65,3 +68,7 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
         ////////////////////????????????????????????????????????????????????????
     }
 }
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
