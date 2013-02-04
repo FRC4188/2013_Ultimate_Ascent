@@ -1,0 +1,10 @@
+/build/
+/nbproject/private/
+/dist/
+save*.yml
+*~
+*#
+/test-resources/RobotBuilderTestProject/*
+/.svn/*
+wiring*.html
+*.exec
