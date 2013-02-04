@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<project default="default" name="AxisView" basedir=".">
+  <property file="../common.properties"/>
+  <property name="build" location="build"/>
+
+  <target name="init">
+    <buildnumber/>
+    <tstamp prefix="ts">
+      <format property="timestamp" pattern="yyyy-MM-dd hh:mm:ss"/>
+    </tstamp>
+  </target>
+
+  <target name="default" depends="jar"> </target>
+
+  <path id="compile.classpath">
+    <pathelement location="SmartDashboard2013.jar"/>
+  </path>
+
+  <property name="compile_to" location="build/classes"/>
+
+  <target name="compile" depends="init">
+    <mkdir dir="${compile_to}"/>
+    <javac srcdir="src" destdir="${compile_to}" 
+        classpathref="compile.classpath" debug="on" debuglevel="lines,vars,source"
+        deprecation="yes" includeantruntime="false"
+      >
+      <compilerarg value="-Xlint:all"/>
+      <compilerarg value="-Xmaxerrs"/> <compilerarg value="${error_count.max}"/>
+      <compilerarg value="-Xmaxwarns"/> <compilerarg value="${warning_count.max}"/>
+      <compilerarg value="-version"/>
+    </javac>
+  </target>
+
+
+  <target name="javadoc" depends="compile" description="Runs javadoc on src/*">
+    <javadoc
+      packagenames="*"
+      sourcepath="src"
+      classpathref="compile.classpath"
+      destdir="build/javadoc"
+    />
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="build/classes"/>
+    <copy todir="build/classes">
+      <fileset dir="build/classes">
+        <include name="**/*.class"/>
+      </fileset>
+    </copy>
+    <jar jarfile="build/${ant.project.name}.jar" basedir="build/classes" includes="**/*.class"/>
+  </target>
+
+
+  <property name="lib" location="webapp/WEB-INF/lib"/>
+
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <!--
+    <delete>
+      <fileset dir="${build}" includes="*.war"/>
+    </delete>
+    -->
+  </target>
+
+
+</project>
