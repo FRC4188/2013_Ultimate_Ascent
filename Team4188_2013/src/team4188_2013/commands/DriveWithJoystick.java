@@ -13,8 +13,8 @@ import team4188_2013.Robot;
 /**
  *
  */
-public class  AutonomousCommand extends Command {
-    public AutonomousCommand() {
+public class  DriveWithJoystick extends Command {
+    public DriveWithJoystick() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	

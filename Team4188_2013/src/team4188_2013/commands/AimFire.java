@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AimShooter extends CommandGroup {
+public class AimFire extends CommandGroup {
     
-    public  AimShooter() {
+    public  AimFire() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
