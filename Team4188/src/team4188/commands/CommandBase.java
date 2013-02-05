@@ -19,13 +19,12 @@ public abstract class CommandBase extends Command {
     //public static Servo drivetrain;
     public static Shooter shooter;
     public static Turret turret;
-    
    
     // Create a single static instance of all of your subsystems
    
 
     public static void init() {
-         vision = new Vision();
+         //vision = new Vision();
         drivetrain = new Drivetrain();
          //drivetrain = new Servo();
           //shooter = new Shooter();
@@ -39,7 +38,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
        // turret.init();
         drivetrain.init();
-        vision.init();
+        //vision.init();
        // shooter.init();
         //climber.init();
         
