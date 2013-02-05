@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import team4188_2013.commands.AutonomousCommand;
+import team4188_2013.subsystems.Climber;
+import team4188_2013.subsystems.Pneumatics;
+import team4188_2013.subsystems.Retriever;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot

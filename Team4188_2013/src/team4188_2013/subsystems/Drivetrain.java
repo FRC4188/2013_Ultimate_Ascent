@@ -8,11 +8,12 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package team4188_2013.subsystems;
-import team4188_2013.commands.DrivewithJoystick;
 import team4188_2013.RobotMap;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import team4188_2013.CorpsRobotDrive;
+import team4188_2013.commands.DriveWithJoystick;
 /**
  *
  */
