@@ -115,8 +115,9 @@ public class CorpsJoystick extends Joystick {
         else
         {
             // Multiply inputs.
-            for(int i = 0; i<XScale; i++)
+            for(int i = 0; i<XScale; i++) {
                 X *= Math.abs(X);
+            }
             // Multiply by max output.
             X*=XMaxSpeedPercent;
         }
@@ -142,8 +143,9 @@ public class CorpsJoystick extends Joystick {
         else
         {
             // Multiply inputs.
-            for(int i = 0; i<YScale; i++)
+            for(int i = 0; i<YScale; i++) {
                 Y *= Math.abs(Y);
+            }
             // Multiply by max output, and invert because Y axis is inverted.
             Y*=YMaxSpeedPercent*-1;
         }
@@ -168,8 +170,9 @@ public class CorpsJoystick extends Joystick {
         else
         {
             // Multiply inputs.
-            for(int i = 0; i<twistScale; i++)
+            for(int i = 0; i<twistScale; i++) {
                 twist *= Math.abs(twist);
+            }
             // Multiply by max output.
             twist*=twistMaxSpeedPercent;
         }
