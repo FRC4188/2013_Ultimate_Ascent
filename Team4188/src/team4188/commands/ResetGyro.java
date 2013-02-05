@@ -9,7 +9,7 @@ package team4188.commands;
  * @author toboretasker
  */
 public class ResetGyro extends CommandBase {
-    
+    boolean reset;
     public ResetGyro() {
         // Use requires() here to declare subsystem dependencies
         //requires(drivetrain);
@@ -22,11 +22,12 @@ public class ResetGyro extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         drivetrain.resetGyro();
+        reset = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return reset;
     }
 
     // Called once after isFinished returns true
