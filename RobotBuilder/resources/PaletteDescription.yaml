@@ -145,7 +145,7 @@
 - !TypeSelectionProperty
             name: $Name Command
             type: Command
-            validators: [TypeDropdownSelected]
+#            validators: [TypeDropdownSelected]
             default: None
           - !ChoicesProperty
             name: $Name When to Run
@@ -411,9 +411,14 @@ Palette:
       - !Component
         name: Robot Drive 2
         type: Controller
-        supports: {PIDOutput: 2}
+        supports: {PIDSource: 1, PIDOutput: 2}
         help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
+          - !ChildSelectionProperty
+            name: Input
+            type: PIDSource
+            validators: [ChildDropdownSelected]
+            default: 0
           - !ChildSelectionProperty
             name: Left Motor
             type: PIDOutput
@@ -442,12 +447,56 @@ Palette:
           - !DoubleProperty
             name: Safety Expiration Time
             default: .1
+          - !DoubleProperty
+            name: P
+            default: 1
+          - !DoubleProperty
+            name: I
+            default: 0
+          - !DoubleProperty
+            name: D
+            default: 0
+          - !DoubleProperty
+            name: F
+            default: 0
+          - !DoubleProperty
+            name: Tolerance
+            default: 0.2
+          - !DoubleProperty
+            name: Period
+            default: .02
+          - !BooleanProperty
+            name: Continuous
+            default: false
+          - !BooleanProperty
+            name: Limit Input
+            default: false
+          - !DoubleProperty
+            name: Minimum Input
+            default: 0
+          - !DoubleProperty
+            name: Maximum Input
+            default: 5
+          - !BooleanProperty
+            name: Limit Output
+            default: false
+          - !DoubleProperty
+            name: Minimum Output
+            default: -1
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1
       - !Component
         name: Robot Drive 4
         type: Controller
-        supports: {PIDOutput: 4}
+        supports: {PIDSource: 1, PIDOutput: 4}
         help: RobotDrive handles tank, arcade, holonomic and mecanum drive.
         properties:
+          - !ChildSelectionProperty
+            name: Input
+            type: PIDSource
+            validators: [ChildDropdownSelected]
+            default: 0
           - !ChildSelectionProperty
             name: Left Front Motor
             type: PIDOutput
@@ -492,6 +541,45 @@ Palette:
           - !DoubleProperty
             name: Safety Expiration Time
             default: .1
+          - !DoubleProperty
+            name: P
+            default: 1
+          - !DoubleProperty
+            name: I
+            default: 0
+          - !DoubleProperty
+            name: D
+            default: 0
+          - !DoubleProperty
+            name: F
+            default: 0
+          - !DoubleProperty
+            name: Tolerance
+            default: 0.2
+          - !DoubleProperty
+            name: Period
+            default: .02
+          - !BooleanProperty
+            name: Continuous
+            default: false
+          - !BooleanProperty
+            name: Limit Input
+            default: false
+          - !DoubleProperty
+            name: Minimum Input
+            default: 0
+          - !DoubleProperty
+            name: Maximum Input
+            default: 5
+          - !BooleanProperty
+            name: Limit Output
+            default: false
+          - !DoubleProperty
+            name: Minimum Output
+            default: -1
+          - !DoubleProperty
+            name: Maximum Output
+            default: 1
 
   - Sensors:
       - !Component

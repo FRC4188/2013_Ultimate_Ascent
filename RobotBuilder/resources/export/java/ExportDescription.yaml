@@ -155,7 +155,7 @@ Instructions:
     
   Robot Drive 2:
     Defaults: "Component,None"
-    ClassName: "RobotDrive"
+    ClassName: "CorpsRobotDrive"
     Construction: "#variable($Name) = new ${ClassName}(#variable($Left_Motor), #variable($Right_Motor));"
     Extra: >
       #variable($Name).setSafetyEnabled($Safety_Enabled);
@@ -170,7 +170,7 @@ Instructions:
               
   Robot Drive 4:
     Defaults: "Component,None"
-    ClassName: "RobotDrive"
+    ClassName: "CorpsRobotDrive"
     Construction: >-
       #variable($Name) = new ${ClassName}(#variable($Left_Front_Motor), #variable($Left_Rear_Motor),
                     #variable($Right_Front_Motor), #variable($Right_Rear_Motor));
@@ -293,7 +293,7 @@ Instructions:
 
   Joystick:
     Defaults: "OI,None"
-    ClassName: "Joystick"
+    ClassName: "CorpsJoystick"
     Construction: "#variable($Name) = new ${ClassName}(${Number});"
     Function: >-
       public ${ClassName} get#class($Name)() {
