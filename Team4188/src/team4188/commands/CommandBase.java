@@ -30,6 +30,7 @@ public abstract class CommandBase extends Command {
          //drivetrain = new Servo();
           //shooter = new Shooter();
          // turret = new Turret();
+        // climber = new Climber();
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be
@@ -40,7 +41,7 @@ public abstract class CommandBase extends Command {
         drivetrain.init();
         vision.init();
        // shooter.init();
-        
+        //climber.init();
         
         
         // Show what command your subsystem is running on the SmartDashboard
