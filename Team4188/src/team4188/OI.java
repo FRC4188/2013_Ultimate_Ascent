@@ -11,11 +11,47 @@ import team4188.commands.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+    
+    public static final int JOYSTICK_PORT=1;
+    //private static OI instance = null;
+    public CorpsJoystick pilot, copilot;
+    //public CorpsJoystick joystick;
+    
+    public JoystickButton autonomousButton, aimButton, fieldOrient, shoot, resetGyro;
+    public OI(){
+        CorpsLog.log("xNegDZ",RobotMap.xNegDeadZone,true,false); 
+        CorpsLog.log("xPosDZ",RobotMap.xPosDeadZone,true,false); 
+        CorpsLog.log("yNegDZ",RobotMap.yNegDeadZone,true,false); 
+        CorpsLog.log("yPosDZ",RobotMap.yPosDeadZone,true,false); 
+        CorpsLog.log("zNegDZ",RobotMap.zNegDeadZone,true,false); 
+        CorpsLog.log("zPosDZ",RobotMap.zPosDeadZone,true,false); 
+        
+        pilot = new CorpsJoystick (1,4,12,RobotMap.xNegDeadZone,RobotMap.xPosDeadZone,RobotMap.xMult,1.0,RobotMap.yNegDeadZone,RobotMap.yPosDeadZone,
+                RobotMap.yMult,1.0,RobotMap.zNegDeadZone,RobotMap.zPosDeadZone,RobotMap.twistMult,1.0);
+        copilot = new CorpsJoystick(2,3,11,-5,5,2,1,-3,3,4,-1,0,0,0,0);
+        //joystick = new CorpsJoystick(2,3,12,0.0,0.0,1,1.0,0.0,0.0,1,1.0,0.0,0.0,1,1.0);
+        //public CorpsJoystick(int port, int numAxes, int numButtons, double XDZMin,
+        //    double XDZMax, int XMult, double XMax, double YDZMin, double YDZMax, int YMult,
+        //    double YMax, double twistDZMin, double twistDZMax,
+        //    int twistMult, double twistMax)
+        aimButton = new JoystickButton(pilot, 3);
+        resetGyro = new JoystickButton(pilot, 4);
+        shoot = new JoystickButton(pilot, 9);
+        fieldOrient =new JoystickButton(pilot,11);
+        aimButton.whenPressed(new AutoAim());
+        resetGyro.whenPressed( new ResetGyro());
+        fieldOrient.whenPressed(new FieldOrient());
+        shoot.whileHeld(new ShooterOn());
+        
+        
+        //trigger=new JoystickButton(stick, Joystick.ButtonType.kTop.value);  
+        //trigger.whenPressed(new DriveSquare());   
+    }
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
     // number it is.
-    public CorpsJoystick pilot, copilot;
+/*    public CorpsJoystick pilot, copilot;
     public Button aim, shoot;
     public OI(){ 
          pilot = new CorpsJoystick(1,3,11,-1.5,1.5,1,1,-1.5,1.5,1,1,0,0,0,0);
@@ -27,7 +63,8 @@ public class OI {
         pan.whileHeld(new Manual());
         aim.whileHeld(new Pan());
         shoot.whileHeld(new ShooterOn());
-    }
+    }*/
+    
     // Button button = new JoystickButton(stick, buttonNumber);
 
 

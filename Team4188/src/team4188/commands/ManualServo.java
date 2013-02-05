@@ -11,9 +11,9 @@ import team4188.subsystems.Vision;
  *
  * @author toboretasker
  */
-public class Manual extends CommandBase {
+public class ManualServo extends CommandBase {
     private double throttle;
-    public Manual() {
+    public ManualServo() {
         // Use requires() here to declare subsystem dependencies
          requires(drivetrain);
     }
@@ -28,8 +28,8 @@ public class Manual extends CommandBase {
          //vision.panX.goToPosition(oi.getJoystick().getX());
          throttle = ((oi.pilot.getThrottle()));
         
-         drivetrain.manualControl(-oi.pilot.getX()*throttle,1);
-         drivetrain.manualControl(oi.pilot.getY()*throttle,2);
+         //drivetrain.manualControl(-oi.pilot.getX()*throttle,1);
+        // drivetrain.manualControl(oi.pilot.getY()*throttle,2);
           //drivetrain.panY.set(.5);
          
     }

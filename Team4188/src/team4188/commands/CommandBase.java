@@ -15,8 +15,8 @@ public abstract class CommandBase extends Command {
 
     public static OI oi;
     public static Vision vision;
-    
     public static Drivetrain drivetrain;
+    //public static Servo drivetrain;
     public static Shooter shooter;
     public static Turret turret;
     
@@ -26,7 +26,8 @@ public abstract class CommandBase extends Command {
 
     public static void init() {
          vision = new Vision();
-         drivetrain = new Drivetrain();
+        drivetrain = new Drivetrain();
+         //drivetrain = new Servo();
           //shooter = new Shooter();
          // turret = new Turret();
         // This MUST be here. If the OI creates Commands (which it very likely
