@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import team4188.RobotMap;
+import team4188.commands.*;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Turret extends Subsystem {
     Encoder tiltPosition;
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new TestEncoder());
     }
     public void init(){
         try{
@@ -35,6 +36,8 @@ public class Turret extends Subsystem {
             tilt.configNeutralMode(CANJaguar.NeutralMode.kBrake);
             tilt.configMaxOutputVoltage(MAX_VOLTAGE);
         } catch (CANTimeoutException ex) {ex.printStackTrace();}
+        tiltPosition = new Encoder(RobotMap.lightInputA, RobotMap.lightInputB);
+        tiltPosition.start();
         tiltPID = new PIDController(P,I,D,tiltPosition,tilt,PID_TIME);
         tiltPID.setInputRange(0.0, 90.0);
         tiltPID.setOutputRange(-1.0, 1.0);
@@ -58,6 +61,13 @@ public class Turret extends Subsystem {
     
     public void disablePID() {
         tiltPID.disable();
+    }
+    public double getEncoderRaw()
+    {
+        return tiltPosition.getRaw();
+    }
+    public double getEncoderValue(){
+        return tiltPosition.get();
     }
     
 }
