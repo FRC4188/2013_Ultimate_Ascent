@@ -5,17 +5,17 @@
 package team4188.commands;
 
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-import team4188.subsystems.Vision;
-import team4188.RobotMap;
+import team4188.subsystems.*;
+import team4188.commands.*;
+import team4188.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
-import team4188.OI;
-import team4188.CorpsServo;
+
 /**
  *
  * @author toboretasker
  */
-public class Pan extends CommandBase {
+public class PanServo extends CommandBase {
     private ParticleAnalysisReport target;
 
     final static double 
@@ -34,7 +34,7 @@ public class Pan extends CommandBase {
     int input = 0;
     Timer timer = new Timer();
   
-    public Pan() {
+    public PanServo() {
         // Use requires() here to declare subsystem dependencies
           requires(vision);
 
@@ -117,7 +117,7 @@ public class Pan extends CommandBase {
     }
     
     private void aim(){
-        double move = 0;
+       // double move = 0;
         //double servoAngle = panX.getAngle();
         //double servoPos = panX.get();
         /*
@@ -127,18 +127,18 @@ public class Pan extends CommandBase {
         angleX = vision.calculateHorizontalAngle(target, TargetDistance);
        */
         //angleX = getAverageAngle();
-        System.out.println("Angle: " + angleX);
-        move = angleX/5;
-        drivetrain.panX.goToAngle(drivetrain.getPosition() - (move));
+       // System.out.println("Angle: " + angleX);
+       // move = angleX/5;
+    //    drivetrain.panX.goToAngle(drivetrain.getPosition() - (move));
         
         //vision.panX.goToAngle(position - (move/2));
        // System.out.println("Panning Angle: "+ servoAngle);
         //System.out.println("Panning Position: "+ servoPos);
-        
+      //  turnXDegrees(vision.calculateHorizontalAngle(target, targetDistance));
         aimed = true;
-        drivetrain.setPosition(drivetrain.getPosition()-move);
+        //drivetrain.setPosition(drivetrain.getPosition()-move);
        // position = vision.getPosition(); //- (move) - move/3;
-        System.out.println("Position: " + drivetrain.getPosition());
+       // System.out.println("Position: " + drivetrain.getPosition());
     }
     private double getAverageAngle(){
         double average = 0, a = 0, b = 0, c = 0;
