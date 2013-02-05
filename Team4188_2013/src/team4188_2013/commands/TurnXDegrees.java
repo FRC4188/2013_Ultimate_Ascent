@@ -13,8 +13,8 @@ import team4188_2013.Robot;
 /**
  *
  */
-public class  DrivewithJoystick extends Command {
-    public DrivewithJoystick() {
+public class  TurnXDegrees extends Command {
+    public TurnXDegrees() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	
@@ -27,7 +27,6 @@ public class  DrivewithJoystick extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        drivetrain.driveCartesianGyro(x*oi.stick.getThrottle(), y*oi.stick.getThrottle(), z*oi.stick.getThrottle(), direction);
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
