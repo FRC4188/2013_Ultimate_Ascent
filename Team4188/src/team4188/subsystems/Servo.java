@@ -3,11 +3,10 @@
  * and open the template in the editor.
  */
 package team4188.subsystems;
-import team4188.CorpsServo;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import team4188.RobotMap;
-import team4188.commands.*;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import team4188.CorpsServo;
+import team4188.RobotMap;
 
 /**
  *

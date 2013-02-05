@@ -23,12 +23,10 @@ public class FieldOrient extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (RobotMap.fOM){
-            RobotMap.fOM = false;
-        }
-        else{
-            RobotMap.fOM = true;
-        }        
+        RobotMap.fOM=true;
+        //else{
+        //    RobotMap.fOM = true;
+        //} 
     }
 
     // Make this return true when this Command no longer needs to run execute()

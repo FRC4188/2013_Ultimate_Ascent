@@ -35,8 +35,10 @@ public class RobotMap {
             TALL_TOP_FORWARD = 5,
             TALL_TOP_REVERSE = 6,
             SLIDER_FORWARD = 7,
-            SLIDER_REVERSE = 8;
-
+            SLIDER_REVERSE = 8,
+            SHOOTER_PUSH=9,  //pneumatic to push frisbee out of loading bay for frisbees
+            SHOOTER_RETRACT=10; //to pull frisbee pusher back in
+            
  
     public static final double
             aS=0.2,
