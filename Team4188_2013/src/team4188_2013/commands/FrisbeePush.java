@@ -8,13 +8,15 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package team4188_2013.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *
  */
-public class  SpinupShooter extends Command {
-    public SpinupShooter() {
+public class  FrisbeePush extends Command {
+    boolean shot;
+    public FrisbeePush() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	
@@ -27,10 +29,16 @@ public class  SpinupShooter extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    if(Robot.shooter.isOn)
+        {
+            /*Robot.shooter.push();
+            Timer.delay(0.1);
+            Robot.shooter.retract();*/
+        }   
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
     // Called once after isFinished returns true
     protected void end() {
