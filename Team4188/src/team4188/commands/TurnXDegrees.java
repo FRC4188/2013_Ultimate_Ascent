@@ -5,10 +5,10 @@ package team4188.commands;
  *
  * @author Sarah
  */
-public class turnXDegrees extends CommandBase {
+public class TurnXDegrees extends CommandBase {
     private double angle;
     private boolean isAimed;
-    public turnXDegrees(double angle) {
+    public TurnXDegrees(double angle) {
         requires(drivetrain);
         this.angle=angle;
         System.out.println("im in the constructor");

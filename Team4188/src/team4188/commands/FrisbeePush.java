@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author Sarah
  */
-public class FrisbeeLaunch extends CommandBase {
+public class FrisbeePush extends CommandBase {
     boolean shot;
-    public FrisbeeLaunch() {
+    public FrisbeePush() {
         requires(shooter);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
