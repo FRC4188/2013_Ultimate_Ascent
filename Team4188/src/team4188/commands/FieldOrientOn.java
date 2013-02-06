@@ -10,9 +10,9 @@ import team4188.RobotMap;
  *
  * @author toboretasker
  */
-public class FieldOrient extends CommandBase {
+public class FieldOrientOn extends CommandBase {
     
-    public FieldOrient() {
+    public FieldOrientOn() {
         // Use requires() here to declare subsystem dependencies
       //  requires(drivetrain);
     }

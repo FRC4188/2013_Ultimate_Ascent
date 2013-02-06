@@ -17,8 +17,8 @@ public class OI {
     public CorpsJoystick pilot, copilot;
     //public CorpsJoystick joystick;
     
-    public JoystickButton autonomousButton, aimButton, fieldOrient, shoot
-            ,resetGyro,fieldOrientOff, launchFrisbee;
+    public JoystickButton pilotOne, pilotThree, pilotTwelve, pilotNine
+            ,pilotFour,pilotEleven;
     public OI(){
         CorpsLog.log("xNegDZ",RobotMap.xNegDeadZone,true,false); 
         CorpsLog.log("xPosDZ",RobotMap.xPosDeadZone,true,false); 
@@ -35,16 +35,16 @@ public class OI {
         //    double XDZMax, int XMult, double XMax, double YDZMin, double YDZMax, int YMult,
         //    double YMax, double twistDZMin, double twistDZMax,
         //    int twistMult, double twistMax)
-        launchFrisbee = new JoystickButton(pilot, 1);
-        aimButton = new JoystickButton(pilot, 3);
-        resetGyro = new JoystickButton(pilot, 4);
-        shoot = new JoystickButton(pilot, 9);
-        fieldOrientOff=new JoystickButton(pilot,11);
-        fieldOrient =new JoystickButton(pilot,12);
+        pilotOne = new JoystickButton(pilot, 1);
+        pilotThree = new JoystickButton(pilot, 3);
+        pilotFour = new JoystickButton(pilot, 4);
+        pilotNine = new JoystickButton(pilot, 9);
+        pilotEleven=new JoystickButton(pilot,11);
+        pilotTwelve =new JoystickButton(pilot,12);
         //aimButton.whenPressed(new AutoAim());
-        resetGyro.whenPressed( new ResetGyro());
-        fieldOrient.whenPressed(new FieldOrient());
-        fieldOrientOff.whenPressed(new FieldOrientOff());
+        pilotFour.whenPressed( new ResetGyro());
+        pilotTwelve.whenPressed(new FieldOrientOn());
+        pilotEleven.whenPressed(new FieldOrientOff());
         //launchFrisbee.whenPressed(new FrisbeeLaunch());
         //shoot.whileHeld(new ShooterOn());
         
