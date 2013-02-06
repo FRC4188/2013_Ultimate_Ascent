@@ -1,18 +1,12 @@
 package team4188.subsystems;
 
-import edu.wpi.first.wpilibj.camera.AxisCameraException;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
+import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import team4188.commands.*;
 import edu.wpi.first.wpilibj.image.*;
 import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 import edu.wpi.first.wpilibj.image.NIVision.Rect;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-import team4188.RobotMap;
-import team4188.OI;
-import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * Sample program to use NIVision to find rectangles in the scene that are illuminated
