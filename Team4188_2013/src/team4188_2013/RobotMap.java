@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
 import edu.wpi.first.wpilibj.can.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import java.util.Vector;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -40,10 +40,12 @@ public class RobotMap {
     public static Encoder shootertiltEncoder;
     public static DigitalInput shootertiltBottomSw;
     public static DigitalInput shootertiltTopSw;
+    public static Relay shooterfeederSol;
     public static DigitalInput shooterfeederIn;
     public static DigitalInput shooterfeederOut;
     public static DigitalInput shooterfrisbeeLoadedSw;
     public static DigitalInput shooterfrisbeeOutSw;
+    public static Relay shooterfrisbeePushSol;
     public static Relay retrieverSpike1;
     public static Relay retrieverSpike2;
     public static DigitalInput retrieverhopperIn;
@@ -124,7 +126,7 @@ public class RobotMap {
         drivetrainRobotDrive.setSafetyEnabled(true);
         drivetrainRobotDrive.setExpiration(0.1);
         drivetrainRobotDrive.setSensitivity(0.5);
-        drivetrainRobotDrive.setMaxOutput(1.0);
+        drivetrainRobotDrive.setMaxOutput(0.6);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         drivetrainEncoder1 = new Encoder(2, 1, 2, 2, false, EncodingType.k2X);
@@ -179,6 +181,9 @@ public class RobotMap {
         shootertiltTopSw = new DigitalInput(1, 5);
 	LiveWindow.addSensor("Shooter", "tiltTopSw", shootertiltTopSw);
         
+        shooterfeederSol = new Relay(1, 6);
+	LiveWindow.addActuator("Shooter", "feederSol", shooterfeederSol);
+        
         shooterfeederIn = new DigitalInput(1, 6);
 	LiveWindow.addSensor("Shooter", "feederIn", shooterfeederIn);
         
@@ -190,6 +195,9 @@ public class RobotMap {
         
         shooterfrisbeeOutSw = new DigitalInput(1, 14);
 	LiveWindow.addSensor("Shooter", "frisbeeOutSw", shooterfrisbeeOutSw);
+        
+        shooterfrisbeePushSol = new Relay(1, 7);
+	LiveWindow.addActuator("Shooter", "frisbeePushSol", shooterfrisbeePushSol);
         
         retrieverSpike1 = new Relay(1, 2);
 	LiveWindow.addActuator("Retriever", "Spike1", retrieverSpike1);
