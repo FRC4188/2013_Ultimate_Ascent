@@ -8,6 +8,7 @@ package team4188_2013;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  * @author Erin
@@ -17,6 +18,7 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
     static final int kFrontRight_val = 1;
     static final int kRearLeft_val = 2;
     static final int kRearRight_val = 3;
+    static double minValue = .15;
     
     public CorpsRobotDrive(final int leftMotorChannel, final int rightMotorChannel) {
         super(leftMotorChannel, rightMotorChannel);
@@ -37,7 +39,7 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
     }
 
     public void pidWrite(double output) {
-   
+        SmartDashboard.putNumber("Minimum drive PID", minValue);
         //if(RobotMap.getDriveTrainMode()==RobotMap.GYRO_MODE) {
         // NOT - on practice bot...
         System.out.println(output);

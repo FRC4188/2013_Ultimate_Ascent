@@ -24,7 +24,7 @@ public class  AutoAim extends Command {
             xMax = 58,
             yMin = 0,
             yMax = 100,
-            TOLERANCE = 1.0,
+            TOLERANCE =0.01,
             //BoardDistance = 60.0, //60.0 inches 
             X_RANGE = 116;
   //  static double position = 90.0;
