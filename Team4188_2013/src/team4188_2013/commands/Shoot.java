@@ -38,7 +38,9 @@ public class  Shoot extends Command {
         if(Robot.shooter.isOn())
         {
             Robot.shooter.shooterOff();
-            adj.end();
+            if(adj != null){
+                adj.end();
+            }
         }
         else
         {
