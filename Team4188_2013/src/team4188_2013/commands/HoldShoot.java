@@ -14,7 +14,7 @@ import team4188_2013.Robot;
  *
  */
 public class  HoldShoot extends Command {
-    
+    double throttle = 0.0;
     public HoldShoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,9 +28,18 @@ public class  HoldShoot extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!Robot.shooter.isOn){
-            Robot.shooter.shooterOn();
+        throttle = Robot.oi.copilotStick.getThrottle();
+        if(throttle <= .2){
+            throttle = 0;
         }
+        System.out.println("Throttle = " + throttle);
+        Robot.shooter.shooterOn(throttle);
+//        if(!Robot.shooter.isOn){
+//            Robot.shooter.shooterOn(throttle);
+//        }
+//        else{
+//            Robot.shooter.shooterOn(throttle);
+//        }
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

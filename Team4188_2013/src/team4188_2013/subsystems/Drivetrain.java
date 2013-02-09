@@ -47,10 +47,17 @@ public class Drivetrain extends Subsystem {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+    
     public void init(){
         SmartDashboard.putNumber("driveP", Pg);
         SmartDashboard.putNumber("driveI", Ig);
         SmartDashboard.putNumber("driveD", Dg);
+        try{
+            frontLeft.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            frontRight.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rearLeft.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            rearRight.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            } catch (CANTimeoutException ex) {ex.printStackTrace();}
         gyro.reset();
         timer = new Timer();
         gyroPID = new PIDController(Pg,Ig,Dg,gyro,robotDrive,PID_LOOP_TIME);

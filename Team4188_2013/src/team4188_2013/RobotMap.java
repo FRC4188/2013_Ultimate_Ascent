@@ -52,10 +52,10 @@ public class RobotMap {
     public static DigitalInput retrieverdeployIn;
     public static DigitalInput retrieverdeployOut;
     public static DigitalInput retrieverfrisbeeInSw;
-    public static Relay retrieverdeplySol;
+    public static Relay retrieverdeploySol;
     public static Relay retrieverhopperSol;
-    public static DoubleSolenoid climbersmallSol;
     public static Compressor climberCompressor;
+    public static DoubleSolenoid climbersmallSol;
     public static DigitalInput climbersmallIn;
     public static DigitalInput climbersmallOut;
     public static DoubleSolenoid climbertallBottomSol;
@@ -125,7 +125,7 @@ public class RobotMap {
         drivetrainRobotDrive.setSafetyEnabled(false);
         drivetrainRobotDrive.setExpiration(0.1);
         drivetrainRobotDrive.setSensitivity(0.5);
-        drivetrainRobotDrive.setMaxOutput(0.6);
+        drivetrainRobotDrive.setMaxOutput(1.0);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         drivetrainEncoder1 = new Encoder(2, 1, 2, 2, false, EncodingType.k2X);
@@ -219,16 +219,16 @@ public class RobotMap {
         retrieverfrisbeeInSw = new DigitalInput(1, 12);
 	LiveWindow.addSensor("Retriever", "frisbeeInSw", retrieverfrisbeeInSw);
         
-        retrieverdeplySol = new Relay(1, 4);
-	LiveWindow.addActuator("Retriever", "deplySol", retrieverdeplySol);
+        retrieverdeploySol = new Relay(1, 4);
+	LiveWindow.addActuator("Retriever", "deploySol", retrieverdeploySol);
         
         retrieverhopperSol = new Relay(1, 5);
 	LiveWindow.addActuator("Retriever", "hopperSol", retrieverhopperSol);
         
-        climbersmallSol = new DoubleSolenoid(1, 1, 2);      
+        climberCompressor = new Compressor(1, 1, 1, 1);
 	
         
-        climberCompressor = new Compressor(1, 1, 1, 1);
+        climbersmallSol = new DoubleSolenoid(1, 1, 2);      
 	
         
         climbersmallIn = new DigitalInput(2, 9);
