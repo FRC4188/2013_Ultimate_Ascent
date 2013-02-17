@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
- * @author Erin
+ * @author Erin King
  */
 public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
     static final int kFrontLeft_val = 0;

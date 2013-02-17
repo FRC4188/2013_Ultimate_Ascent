@@ -11,7 +11,7 @@ package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.*;
 /**
- *
+ *@author Tobore Tasker
  */
 public class  ManualDrive extends Command {
     double direction=0;
@@ -28,7 +28,7 @@ public class  ManualDrive extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
+       // System.out.println("Encoder Count: " + Robot.drivetrain.getEncoder1());
         //x strafe value
         //y move forward value
         //z twist value

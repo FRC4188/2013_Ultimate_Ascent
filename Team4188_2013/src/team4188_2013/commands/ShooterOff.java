@@ -11,7 +11,7 @@ package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
- *
+ *@author Tobore Tasker
  */
 public class  ShooterOff extends Command {
     public ShooterOff() {

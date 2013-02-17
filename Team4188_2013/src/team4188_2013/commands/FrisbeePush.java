@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
- *
+ *@author Tobore Tasker
  */
 public class  FrisbeePush extends Command {
     boolean shot;

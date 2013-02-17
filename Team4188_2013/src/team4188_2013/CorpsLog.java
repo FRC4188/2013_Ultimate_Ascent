@@ -7,7 +7,7 @@ package team4188_2013;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * @author Erin
+ * @author Erin King
  * modifications by David Rush 2012 Mar 12
  */
 public class CorpsLog {
