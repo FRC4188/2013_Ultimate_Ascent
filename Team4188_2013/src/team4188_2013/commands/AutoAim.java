@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import team4188_2013.Robot;
 /**
- *
+ *@author Tobore Tasker
  */
 public class  AutoAim extends Command {
     private ParticleAnalysisReport target;
@@ -46,6 +46,7 @@ public class  AutoAim extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         System.out.println("AutoAim Initializing");
+        Robot.servo.yUp();
         aimed = false;
         isTargeted = false;
         angleX = 0.0;

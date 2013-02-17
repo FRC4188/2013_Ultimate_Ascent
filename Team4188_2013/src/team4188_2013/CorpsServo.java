@@ -1,6 +1,7 @@
 /*CorpsServo
  * Designed to extend the capabilities of servos
  * to use acutally degrees, and joystick input
+ * unfinished.
  */
 package team4188_2013;
 import edu.wpi.first.wpilibj.Servo;
