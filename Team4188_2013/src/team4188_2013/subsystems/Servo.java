@@ -38,21 +38,21 @@ public class Servo extends Subsystem {
     final static double 
             panXMin = 0,
             panXMax = 58,
-            panYMin = -1,
-            panYMax = 0,
+            panYMin =.5,
+            panYMax = 1,
             TOLERANCE = 5.0,
             //BoardDistance = 60.0, //60.0 inches 
             X_RANGE = 116;
  
     
     public void init(){
-        System.out.println("Initializing Drivetrain");
+        System.out.println("Initializing Servos");
         
        // panX = new CorpsServo(panXMin, panXMax, RobotMap.panX);
         panY = new CorpsServo(panYMin, panYMax, RobotMap.panY);    
         //panX.goToAngle(position);
         //servoX = new PIDController(2.0, .005, 0.0, position, panX, .05);
-        panY.set(0);
+        panY.set(panYMin);
     }
     public void manualControl(double input, int x){
         //if(x == 1)panX.goToPosition(input);

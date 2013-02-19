@@ -26,7 +26,7 @@ public class  PushFrisbee extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(Robot.shooter.isPusherRetracted()){
+        if(!Robot.shooter.isPusherExtended()){
             Robot.shooter.extendPusher();
         }
         else if(Robot.shooter.isPusherExtended()){
