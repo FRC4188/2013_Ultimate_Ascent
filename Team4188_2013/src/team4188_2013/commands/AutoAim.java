@@ -20,18 +20,14 @@ public class  AutoAim extends Command {
     private double angle;
     private boolean isAimed;
     final static double 
-            xMin = 0,
-            xMax = 58,
-            yMin = 0,
-            yMax = 100,
-            TOLERANCE =0.01,
-            //BoardDistance = 60.0, //60.0 inches 
-            X_RANGE = 116;
-  //  static double position = 90.0;
-    
-    boolean isTargeted = false, aimed = false;
+            TOLERANCE =0.01;
+    boolean 
+            isTargeted = false, 
+            aimed = false;
     double 
-        targetDistance = 0.0, angleX = 0.0, angleY = 0.0;
+        targetDistance = 0.0, 
+        angleX = 0.0, 
+        angleY = 0.0;
     int input = 0;
     Timer timer = new Timer();
   
