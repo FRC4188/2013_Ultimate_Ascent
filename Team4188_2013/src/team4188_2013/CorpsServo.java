@@ -37,7 +37,7 @@ public class CorpsServo extends Servo{
  * @param max Maximum value of servo
  * @param port port number of servo
  * 
- */
+ *//*
     public CorpsServo(double min, double max, int port, int mid)
     {
         
@@ -45,7 +45,7 @@ public class CorpsServo extends Servo{
         high = max;
         low = min;
         range = high - low;
-    }
+    }*/
     /*Go to actual angle value, between 0 and 180 degrees
      * @param input angle 0 - 180
      */
@@ -58,6 +58,7 @@ public class CorpsServo extends Servo{
      * &param input -1 to 1
      * 
      */
+    /*
     public void goToPosition(double input){
         double adjustRange; 
         adjustRange = (range - (range/2));
@@ -74,7 +75,7 @@ public class CorpsServo extends Servo{
         
         }
             
-    }
+    }*/
     public void moveToPosition(double input){
         double adjustRange;
         adjustRange = (range - (range/2));

@@ -27,11 +27,13 @@ public class  Climb extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //System.out.println("IsExtended: " + Robot.climber.isExtended());
+        //System.out.println("IsRetracted: " + Robot.climber.isRetracted());
         if(Robot.climber.isExtended()){
-            Robot.climber.retractClimber();
+            Robot.climber.extendClimber();
         }
         else if(Robot.climber.isRetracted()){
-            Robot.climber.extendClimber();
+            Robot.climber.retractClimber();
         }
         else{
             Robot.climber.retractClimber();

@@ -26,7 +26,7 @@ public class  LoadFrisbee extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(Robot.shooter.isLoaderRetracted()){
+        if(!Robot.shooter.isLoaderExtended()){
             Robot.shooter.extendLoader();
         }
         else if(Robot.shooter.isLoaderExtended()){

@@ -16,6 +16,7 @@ import team4188_2013.Robot;
 public class  ManualTilt extends Command {
     double adjustment = 0.0;
     public ManualTilt() {
+        requires(Robot.shooter);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 	
@@ -29,9 +30,9 @@ public class  ManualTilt extends Command {
     protected void execute() {
         //System.out.println("Manual Tilt Running...");
         //System.out.println("Pot. Voltage = " + Robot.shooter.getTiltVoltage());
-        //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
+        System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
         Robot.shooter.manualAim(Robot.oi.copilotStick.getY());
-        if(Robot.shooter.getBottowSw()){
+        if(Robot.shooter.getTopSw()){
             adjustment = Robot.shooter.getCalibrateValue();
         }
         //System.out.println("Switched Status= " + Robot.shooter.getBottowSw());

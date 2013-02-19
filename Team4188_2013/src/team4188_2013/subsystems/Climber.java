@@ -37,6 +37,7 @@ public class Climber extends Subsystem {
     }
     public void init(){
         compressor.start();
+        doNothing();
     }
     public void extendClimber(){
         climbSol.set(DoubleSolenoid.Value.kForward);
@@ -59,6 +60,9 @@ public class Climber extends Subsystem {
     }
     public boolean hitRight(){
         return hitRight.get();
+    }
+    public void doNothing(){
+        climbSol.set(DoubleSolenoid.Value.kOff);
     }
     /*
     public void extendSmall(){

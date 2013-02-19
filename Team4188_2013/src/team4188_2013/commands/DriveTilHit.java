@@ -27,18 +27,34 @@ public class  DriveTilHit extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!Robot.climber.hitRight())
-        {
+//        if(Robot.climber.hitRight())
+//        {
+//            Robot.drivetrain.rightBackward();
+//        }
+//        else{
+//            Robot.drivetrain.stopRight();
+//        }
+//        if(Robot.climber.hitLeft()){
+//            Robot.drivetrain.leftBackward();
+//        }
+//        else{
+//            Robot.drivetrain.stopLeft();
+//        }
+        if(Robot.climber.hitRight() && Robot.climber.hitLeft()){
             Robot.drivetrain.rightBackward();
+            Robot.drivetrain.leftBackward();
         }
-        else{
+        else if(!Robot.climber.hitRight() && Robot.climber.hitLeft()){
+            Robot.drivetrain.fastLeftBackward();
             Robot.drivetrain.stopRight();
         }
-        if(!Robot.climber.hitLeft()){
-            Robot.drivetrain.leftBackward();
+        else if(Robot.climber.hitRight() && !Robot.climber.hitLeft()){
+            Robot.drivetrain.fastRightBackward();
+            Robot.drivetrain.stopLeft();
         }
         else{
             Robot.drivetrain.stopLeft();
+            Robot.drivetrain.stopRight();
         }
     }
     // Make this return true when this Command no longer needs to run execute()

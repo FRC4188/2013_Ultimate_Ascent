@@ -46,7 +46,7 @@ public class  AutoAim extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         System.out.println("AutoAim Initializing");
-        Robot.servo.yUp();
+        Robot.servo.yDown();
         aimed = false;
         isTargeted = false;
         angleX = 0.0;
