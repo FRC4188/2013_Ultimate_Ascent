@@ -46,11 +46,11 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
         if(Math.abs(output)<0.12){
             if(output<0)
             {
-                output=-0.12;
+                output=-0.17;
             }
             else
             {
-                output=0.12;
+                output= 0.17;
             }
             System.out.println(" >"+output);
         }

@@ -30,7 +30,7 @@ public class  ManualTilt extends Command {
     protected void execute() {
         //System.out.println("Manual Tilt Running...");
         //System.out.println("Pot. Voltage = " + Robot.shooter.getTiltVoltage());
-        System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
+        //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
         Robot.shooter.manualAim(Robot.oi.copilotStick.getY());
         if(Robot.shooter.getTopSw()){
             adjustment = Robot.shooter.getCalibrateValue();

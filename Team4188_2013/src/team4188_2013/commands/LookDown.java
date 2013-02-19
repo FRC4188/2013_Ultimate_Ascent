@@ -14,7 +14,6 @@ import team4188_2013.Robot;
  *@author Tobore Tasker
  */
 public class  LookDown extends Command {
-    boolean down = false;
     public LookDown() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

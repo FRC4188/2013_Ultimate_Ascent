@@ -57,9 +57,9 @@ public class RobotMap {
             zNegDeadZone=-1,
             zPosDeadZone=1;        
     public static final int
-            xMult=2,
-            yMult=2,
-            twistMult=3;
+            xMult=1,
+            yMult=1,
+            twistMult=2;
     public static boolean 
             fOM=false,
             onTarget=false;
@@ -106,12 +106,12 @@ public class RobotMap {
         drivetrainRobotDrive.setMaxOutput(0.6);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
         drivetrainRobotDrive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
-        drivetrainleftEnc = new Encoder(1, 6, 1, 7, false, EncodingType.k1X);
+        drivetrainleftEnc = new Encoder(1, 7, 1, 8, false, EncodingType.k4X);
 	LiveWindow.addSensor("Drivetrain", "leftEnc", drivetrainleftEnc);
         drivetrainleftEnc.setDistancePerPulse(1.0);
         drivetrainleftEnc.setPIDSourceParameter(PIDSourceParameter.kDistance);
         drivetrainleftEnc.start();
-        drivetrainrightEnc = new Encoder(1, 8, 1, 9, false, EncodingType.k1X);
+        drivetrainrightEnc = new Encoder(1, 9, 1, 10, false, EncodingType.k4X);
 	LiveWindow.addSensor("Drivetrain", "rightEnc", drivetrainrightEnc);
         drivetrainrightEnc.setDistancePerPulse(1.0);
         drivetrainrightEnc.setPIDSourceParameter(PIDSourceParameter.kDistance);

@@ -24,11 +24,12 @@ public class Drivetrain extends Subsystem {
     double 
         circumference = 0, 
         revolutions = 0;
+        
     private PIDController gyroPID, leftEncPID, rightEncPID;
     Timer timer;
     private boolean timerRunning=false;
     public static final double 
-        gyroTOLERANCE = 0.5,
+        gyroTOLERANCE = 1.0,
         Pg = 0.025, 
         Ig = 0.000, 
         Dg = 0.0,     
@@ -47,7 +48,7 @@ public class Drivetrain extends Subsystem {
     CANJaguar rearLeft = RobotMap.drivetrainRearLeft;
     CANJaguar frontRight = RobotMap.drivetrainFrontRight;
     CANJaguar rearRight = RobotMap.drivetrainRearRight;
-    Gyro gyro = RobotMap.drivetrainGyro;
+    public Gyro gyro = RobotMap.drivetrainGyro;
     public CorpsRobotDrive robotDrive = RobotMap.drivetrainRobotDrive;
     Encoder leftEnc = RobotMap.drivetrainleftEnc;
     Encoder rightEnc = RobotMap.drivetrainrightEnc;
@@ -78,7 +79,7 @@ public class Drivetrain extends Subsystem {
         timer = new Timer();
         gyroPID = new PIDController(Pg,Ig,Dg,gyro,robotDrive,PID_LOOP_TIME);
         gyroPID.setInputRange(-90.0, 90.0);
-        gyroPID.setOutputRange(-0.6, 0.6);
+        gyroPID.setOutputRange(-0.65, 0.65);
         temperature = new AnalogChannel(2);
     }
     public void initDefaultCommand() {
@@ -198,10 +199,10 @@ public class Drivetrain extends Subsystem {
        
    }
    public double getLeftEnc(){
-       return leftEnc.get();
+       return leftEnc.getRaw();
    }
    public double getRightEnc(){
-       return rightEnc.get();
+       return rightEnc.getRaw();
    }
   
     

@@ -50,10 +50,10 @@ public class Climber extends Subsystem {
         climbSol.set(DoubleSolenoid.Value.kOff);
     }
     public boolean isExtended(){
-        return climbOut.get();
+        return !climbOut.get();
     }
     public boolean isRetracted(){
-        return climbIn.get();
+        return !climbIn.get();
     }
     public boolean hitLeft(){
         return hitLeft.get();
