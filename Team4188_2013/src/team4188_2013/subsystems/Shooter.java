@@ -29,7 +29,7 @@ public class Shooter extends Subsystem {
     final static double 
         MAX_VOLT_FIRST = 12.0,
         MAX_VOLT_SECOND = 12.0,
-        MAX_VOLT_TILT = 9.0,    
+        MAX_VOLT_TILT = 12.0,    
         FORWARD = 1.0, 
         OFF = 0.0,
         M = -2.2117,

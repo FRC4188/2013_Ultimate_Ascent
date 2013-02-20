@@ -99,10 +99,9 @@ public class OI {
         copilot6 = new JoystickButton(copilotStick, 6);
         
         copilot5 = new JoystickButton(copilotStick, 5);
-        copilot5.whenPressed(new TurnXDegrees(-90));
+        //copilot5.whileHeld(new TurnXDegrees(90));
         copilot4 = new JoystickButton(copilotStick, 4);
-        //copilot4.whileHeld(new AutoAim());
-        copilot4.whenPressed(new TurnXDegrees(90));
+        copilot4.whileHeld(new AutoAim());
         copilot3 = new JoystickButton(copilotStick, 3);
         copilot3.whenPressed(new Climb());
         copilot2 = new JoystickButton(copilotStick, 2);
@@ -151,7 +150,7 @@ public class OI {
         SmartDashboard.putData("Shoot", new Shoot());
         SmartDashboard.putData("ShooterOff", new ShooterOff());
         SmartDashboard.putData("ShooterOn", new ShooterOn());
-       // SmartDashboard.putData("TurnXDegrees", new TurnXDegrees());
+        //SmartDashboard.putData("TurnXDegrees", new TurnXDegrees());
         SmartDashboard.putData("HoldShoot", new HoldShoot());
         SmartDashboard.putData("ManualTilt", new ManualTilt());
         SmartDashboard.putData("Autonomous", new Autonomous());

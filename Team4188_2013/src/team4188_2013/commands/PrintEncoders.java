@@ -34,15 +34,15 @@ public class  PrintEncoders extends Command {
             isRunning = false;
         }
         if(isRunning){
-          //  System.out.println("Left Encoder: " + Robot.drivetrain.getLeftEnc());
-           // System.out.println("Right Encoder: " + Robot.drivetrain.getRightEnc());
-            System.out.println("Gyro: " + Robot.drivetrain.gyro.getAngle());
+           System.out.println("Left Encoder: " + Robot.drivetrain.getLeftEnc());
+           System.out.println("Right Encoder: " + Robot.drivetrain.getRightEnc());
+           // System.out.println("Gyro: " + Robot.drivetrain.gyro.getAngle());
         }
         
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isRunning;
+        return !isRunning;
     }
     // Called once after isFinished returns true
     protected void end() {

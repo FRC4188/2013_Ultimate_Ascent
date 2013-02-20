@@ -47,11 +47,15 @@ public class  AutoAim extends Command {
         isTargeted = false;
         angleX = 0.0;
         angleY = 0.0;
+        
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-         if(Robot.vision.getReports())
-         {   
+        if(!Robot.vision.areLightsOn()){
+            Robot.vision.turnlightsOn();
+        }
+        if(Robot.vision.getReports())
+        {   
             //SmartDashboard.putInt("Targets", vision.getFound());
             //TargetDistance = vision.getDistance();
             isTargeted = Robot.vision.getTargeted();
@@ -76,7 +80,6 @@ public class  AutoAim extends Command {
                 {
                  aim();
                 }
-    
             }        
         }        
     }
