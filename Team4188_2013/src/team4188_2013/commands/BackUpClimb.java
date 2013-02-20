@@ -14,6 +14,7 @@ import team4188_2013.Robot;
  *@author Tobore Tasker
  */
 public class  BackUpClimb extends Command {
+
     public BackUpClimb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,31 +25,35 @@ public class  BackUpClimb extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        if(Robot.climber.isRetracted()){
+            Robot.climber.extendClimber();
+        }
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!Robot.climber.isExtended()){
-            Robot.climber.extendClimber();
+        if(Robot.climber.isExtended())
+        {
+            if(Robot.climber.hitRight() && Robot.climber.hitLeft()){
+                Robot.drivetrain.rightBackward();
+                Robot.drivetrain.leftBackward();
+            }
+            else if(!Robot.climber.hitRight() && Robot.climber.hitLeft()){
+                Robot.drivetrain.fastLeftBackward();
+                Robot.drivetrain.stopRight();
+            }
+            else if(Robot.climber.hitRight() && !Robot.climber.hitLeft()){
+                Robot.drivetrain.fastRightBackward();
+                Robot.drivetrain.stopLeft();
+            }
+            else{
+                Robot.drivetrain.stopLeft();
+                Robot.drivetrain.stopRight();
+                if(Robot.climber.isExtended()){
+                    Robot.climber.retractClimber();
+
+                }            
+            }       
         }
-        if(Robot.climber.hitRight() && Robot.climber.hitLeft()){
-            Robot.drivetrain.rightBackward();
-            Robot.drivetrain.leftBackward();
-        }
-        else if(!Robot.climber.hitRight() && Robot.climber.hitLeft()){
-            Robot.drivetrain.fastLeftBackward();
-            Robot.drivetrain.stopRight();
-        }
-        else if(Robot.climber.hitRight() && !Robot.climber.hitLeft()){
-            Robot.drivetrain.fastRightBackward();
-            Robot.drivetrain.stopLeft();
-        }
-        else{
-            Robot.drivetrain.stopLeft();
-            Robot.drivetrain.stopRight();
-            if(!Robot.climber.isRetracted()){
-                Robot.climber.retractClimber();
-            }            
-        }        
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

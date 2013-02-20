@@ -21,8 +21,11 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class Vision extends Subsystem {
         
-    boolean targeted = false;
-    boolean hasRun = false;
+    boolean 
+            targeted = false,
+            hasRun = false,
+            lightsOn = false;
+    
     final int 
             XMAXSIZE = 24,
             XMINSIZE = 24,
@@ -128,6 +131,7 @@ public class Vision extends Subsystem {
     }
     public void init() {
         System.out.println("Initializing Vision");
+        lights.set(Relay.Value.kOff);
         reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS]; //new targets array
         camera = AxisCamera.getInstance();  // get an instance of the camera
         cc = new CriteriaCollection();      // create the criteria for the particle filter
@@ -559,5 +563,16 @@ public class Vision extends Subsystem {
         answer  = (-0.69813170079773212 * x * x - 0.87266462599716477) * x + 1.5707963267948966;
         answer = Math.toDegrees(answer);
         return answer;
+    }
+    public void turnlightsOn(){
+        lights.set(Relay.Value.kForward);
+        lightsOn = true;
+    }
+    public void turnlightsOff(){
+        lights.set(Relay.Value.kOff);
+        lightsOn = false;
+    }
+    public boolean areLightsOn(){
+        return lightsOn;
     }
 }
