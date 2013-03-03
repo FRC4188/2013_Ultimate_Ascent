@@ -73,36 +73,50 @@ public class Shooter extends Subsystem {
             secondWheel.configNeutralMode(CANJaguar.NeutralMode.kCoast);
            } catch (CANTimeoutException ex) {ex.printStackTrace();}
         tiltPID = new PIDController(P,I,D,tiltPot,tilt,PID_LOOP_TIME);
-        tiltPID.setInputRange(0, 90.0);
+        tiltPID.setInputRange(0, 180.0);
         tiltPID.setOutputRange(-0.6, 0.6);    
         timer = new Timer();        
     }
-//    public void aim(double angle){
-//        double potValue = 0.0;
-//        if(!tiltPID.isEnable())tiltPID.enable();
-//        potValue = angle * M + B;
-//        tiltPID.setSetpoint(potValue);
-//    }
-//   public boolean thereYet(double target) 
-//   {
-//        if(onTarget(target) && !timerRunning) 
-//        {
-//            timer.start();
-//            timerRunning = true;
-//        }
-//        else if (!onTarget(target) && timerRunning)
-//        {
-//            timer.stop();
-//            timer.reset();
-//            timerRunning = false;
-//        }
-//        return timer.get() >= SETTLED_TIME;
-//    }    
-//   public boolean onTarget(double potValue){
-//       boolean toReturn = false;
-//       if(potvalue > )
-//       
-//   }
+    public boolean autoTilt(double angle){
+        double potValue = 0.0;
+        if(!tiltPID.isEnable())tiltPID.enable();
+        potValue = angle * M + B;
+        tiltPID.setSetpoint(potValue);
+        if(thereYet(potValue)) {
+            tiltPID.disable();
+            return true;
+        }
+        return false;        
+    }
+   public boolean thereYet(double target) 
+   {
+        if(onTarget(target) && !timerRunning) 
+        {
+            timer.start();
+            timerRunning = true;
+        }
+        else if (!onTarget(target) && timerRunning)
+        {
+            timer.stop();
+            timer.reset();
+            timerRunning = false;
+        }
+        return timer.get() >= SETTLED_TIME;
+    }    
+   public boolean onTarget(double potValue){
+       boolean toReturn = false;
+       double difference = 0;
+       difference = Math.abs(potValue - getTiltVoltage());
+       
+       if(difference > tiltTolerance){
+           toReturn = true;
+       }
+       else{
+           toReturn = false;
+       }
+       return toReturn;
+       
+   }
     public void setVoltageFirstWheel(double adjust){
         try{
         firstWheel.configMaxOutputVoltage(adjust);

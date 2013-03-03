@@ -137,7 +137,7 @@ public class OI {
 	    
         // SmartDashboard Buttons
         SmartDashboard.putData("PickupFrisbees", new PickupFrisbees());
-        SmartDashboard.putData("TiltYDegrees", new TiltYDegrees());
+       // SmartDashboard.putData("TiltYDegrees", new TiltYDegrees());
         SmartDashboard.putData("AutoAim", new AutoAim());
         SmartDashboard.putData("FieldOrientOff", new FieldOrientOff());
         SmartDashboard.putData("FieldOrientOn", new FieldOrientOn());
