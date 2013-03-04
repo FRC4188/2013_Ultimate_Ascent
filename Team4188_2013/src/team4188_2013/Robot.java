@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (Autonomous != null) Autonomous.cancel();
-        //tilt.start();
+        shooter.setMaxVoltages();
     }
     /**
      * This function is called periodically during operator control

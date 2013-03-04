@@ -27,7 +27,7 @@ public class  ShooterOn extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.shooter.shooterOn(.0);
+        Robot.shooter.shooterOn(1.0);
         
     }
     // Make this return true when this Command no longer needs to run execute()

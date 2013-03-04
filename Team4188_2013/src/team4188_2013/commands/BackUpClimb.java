@@ -14,7 +14,6 @@ import team4188_2013.Robot;
  *@author Tobore Tasker
  */
 public class  BackUpClimb extends Command {
-
     public BackUpClimb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -50,7 +49,6 @@ public class  BackUpClimb extends Command {
                 Robot.drivetrain.stopRight();
                 if(Robot.climber.isExtended()){
                     Robot.climber.retractClimber();
-
                 }            
             }       
         }
