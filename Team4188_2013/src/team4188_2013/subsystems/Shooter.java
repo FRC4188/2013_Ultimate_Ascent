@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType; import edu.wpi.first.wpilibj.Encoder.PIDSourceParameter;
 import edu.wpi.first.wpilibj.can.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *@author Tobore Tasker
  */
@@ -26,10 +27,14 @@ public class Shooter extends Subsystem {
             isLoaderExtended = false,
             isPusherExtended = false;
     public double increment = 0.0;
-    final static double 
+    static double //for testing, improper format for variables
         MAX_VOLT_FIRST = 12.0,
         MAX_VOLT_SECOND = 12.0,
-        MAX_VOLT_TILT = 12.0,    
+        MAX_VOLT_TILT = 12.0;             
+    final static double 
+        //MAX_VOLT_FIRST = 12.0,
+        //MAX_VOLT_SECOND = 12.0,
+       // MAX_VOLT_TILT = 12.0,    
         FORWARD = 1.0, 
         OFF = 0.0,
         M = -2.2117,
@@ -64,6 +69,9 @@ public class Shooter extends Subsystem {
     public void init(){
         pushDoNothing();
         loaderDoNothing();
+        SmartDashboard.putNumber("First", MAX_VOLT_FIRST);
+        SmartDashboard.putNumber("Second", MAX_VOLT_SECOND);
+        SmartDashboard.putNumber("Tilt", MAX_VOLT_TILT);
         try{
             firstWheel.configMaxOutputVoltage(MAX_VOLT_FIRST);
             secondWheel.configMaxOutputVoltage(MAX_VOLT_SECOND);
@@ -77,6 +85,13 @@ public class Shooter extends Subsystem {
         tiltPID.setOutputRange(-0.6, 0.6);    
         timer = new Timer();        
     }
+    public void setMaxVoltages(){
+        try{
+            firstWheel.configMaxOutputVoltage(MAX_VOLT_FIRST);
+            secondWheel.configMaxOutputVoltage(MAX_VOLT_SECOND);
+            tilt.configMaxOutputVoltage(MAX_VOLT_TILT);    
+           } catch (CANTimeoutException ex) {ex.printStackTrace();}            
+    }    
     public boolean autoTilt(double angle){
         double potValue = 0.0;
         if(!tiltPID.isEnable())tiltPID.enable();

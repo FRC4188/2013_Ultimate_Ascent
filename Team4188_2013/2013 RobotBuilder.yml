@@ -1311,7 +1311,7 @@ Properties:
   Autonomous Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
     name: Autonomous Command, type: Command, validators: null, value: None}
   Wiring File: !!robotbuilder.data.properties.FileProperty {default: '', extension: html,
-    folder: false, name: Wiring File, validators: null, value: /Users/toboretasker/Desktop/FRC4188 Wiring Details.html}
+    folder: false, name: Wiring File, validators: null, value: /Users/toboretasker/NetBeansProjects/Team4188_2013/FRC4188 Wiring Details.html}
   C++ Windriver Workspace: !!robotbuilder.data.properties.FileProperty {default: 'C:\Windriver\workspace',
     extension: null, folder: true, name: C++ Windriver Workspace, validators: null,
     value: 'C:\Windriver\workspace'}
