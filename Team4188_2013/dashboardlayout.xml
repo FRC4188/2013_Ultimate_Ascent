@@ -1,0 +1,161 @@
+<xml version="1.0">
+<dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="806" y="5"/>
+		<property name="Text" value="Connection Status:"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1125" y="516"/>
+		<property name="Text" value="ShooterPID"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="924" y="512"/>
+		<property name="Text" value="AutoTurn/Tilt"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="765" y="511"/>
+		<property name="Text" value="ShooterVoltage"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="648" y="510"/>
+		<property name="Text" value="DrivePID"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="750" y="25"/>
+		<width>207</width>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.camera.WPICameraExtension">
+		<location x="600" y="59"/>
+		<width>524</width>
+		<height>426</height>
+	</static-widget>
+	<widget field="ResetGyro" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="-5" y="279"/>
+	</widget>
+	<widget field="TurnXDegrees" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="885" y="521"/>
+	</widget>
+	<widget field="ResetEncoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="835" y="664"/>
+	</widget>
+	<widget field="PrintPotentiometer" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="903" y="633"/>
+	</widget>
+	<widget field="BackUpClimb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="137" y="61"/>
+	</widget>
+	<widget field="driveD" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="604" y="602"/>
+	</widget>
+	<widget field="AutoAim" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="254"/>
+	</widget>
+	<widget field="driveI" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="606" y="563"/>
+	</widget>
+	<widget field="TurnAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="892" y="550"/>
+	</widget>
+	<widget field="PickupFrisbees" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="138" y="29"/>
+	</widget>
+	<widget field="DriveTilHit" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="2" y="163"/>
+	</widget>
+	<widget field="driveP" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="604" y="528"/>
+	</widget>
+	<widget field="Tilt" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="751" y="596"/>
+	</widget>
+	<widget field="PrintEncoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="736" y="633"/>
+	</widget>
+	<widget field="FieldOrientOff" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="146" y="0"/>
+	</widget>
+	<widget field="Climb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="-2" y="324"/>
+	</widget>
+	<widget field="TiltYDegrees" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="888" y="565"/>
+	</widget>
+	<widget field="ManualTilt" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="-5" y="348"/>
+	</widget>
+	<widget field="ShooterOn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="574"/>
+	</widget>
+	<widget field="HoldShoot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="670"/>
+	</widget>
+	<widget field="Shoot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="636"/>
+	</widget>
+	<widget field="ManualDrive" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="602"/>
+	</widget>
+	<widget field="TiltAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="898" y="596"/>
+	</widget>
+	<widget field="LookDown" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="547"/>
+	</widget>
+	<widget field="LoadFrisbee" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="513"/>
+	</widget>
+	<widget field="ManualServo" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="479"/>
+	</widget>
+	<widget field="PanServo" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="445"/>
+	</widget>
+	<widget field="ExtendPusher" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="411"/>
+	</widget>
+	<widget field="FieldOrientOn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="377"/>
+	</widget>
+	<widget field="First" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="742" y="530"/>
+	</widget>
+	<widget field="shooterD" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1078" y="595"/>
+	</widget>
+	<widget field="Autonomous" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="301"/>
+	</widget>
+	<widget field="Second" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="731" y="564"/>
+	</widget>
+	<widget field="shooterI" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1079" y="566"/>
+	</widget>
+	<widget field="FrisbeePush" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="225"/>
+	</widget>
+	<widget field="IncrementVoltage" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="191"/>
+	</widget>
+	<widget field="shooterP" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1076" y="535"/>
+	</widget>
+	<widget field="DecrementVoltage" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="136"/>
+	</widget>
+	<widget field="RetractPusher" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="102"/>
+	</widget>
+	<widget field="ShooterOff" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="68"/>
+	</widget>
+	<widget field="ManaulAim" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="34"/>
+	</widget>
+	<widget field="PushFrisbee" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="0"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
