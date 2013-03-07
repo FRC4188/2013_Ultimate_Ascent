@@ -30,7 +30,10 @@ public class Shooter extends Subsystem {
     static double //for testing, improper format for variables
         MAX_VOLT_FIRST = 12.0,
         MAX_VOLT_SECOND = 12.0,
-        MAX_VOLT_TILT = 12.0;             
+        MAX_VOLT_TILT = 12.0, 
+        P = 0.025,
+        I = 0.000,
+        D = 0.000;
     final static double 
         //MAX_VOLT_FIRST = 12.0,
         //MAX_VOLT_SECOND = 12.0,
@@ -40,9 +43,9 @@ public class Shooter extends Subsystem {
         M = -2.2117,
         B = 160.22,
         tiltTolerance = 5.0,
-        P = 0.025, 
-        I = 0.000, 
-        D = 0.0,     
+//        P = 0.025, 
+//        I = 0.000, 
+//        D = 0.0,     
         PID_LOOP_TIME = .05,
         SETTLED_TIME = 1.0;            ;
     private static final double PNEUMATIC_DELAY_SECONDS = 0.1;
@@ -67,11 +70,14 @@ public class Shooter extends Subsystem {
         
     }
     public void init(){
-        pushDoNothing();
-        loaderDoNothing();
         SmartDashboard.putNumber("First", MAX_VOLT_FIRST);
         SmartDashboard.putNumber("Second", MAX_VOLT_SECOND);
         SmartDashboard.putNumber("Tilt", MAX_VOLT_TILT);
+        SmartDashboard.putNumber("shooterP", P);
+        SmartDashboard.putNumber("shooterI", I);
+        SmartDashboard.putNumber("shooterD", D);
+        pushDoNothing();
+        loaderDoNothing();
         try{
             firstWheel.configMaxOutputVoltage(MAX_VOLT_FIRST);
             secondWheel.configMaxOutputVoltage(MAX_VOLT_SECOND);
@@ -85,7 +91,15 @@ public class Shooter extends Subsystem {
         tiltPID.setOutputRange(-0.6, 0.6);    
         timer = new Timer();        
     }
+    public void setShooterPID(){
+        P = SmartDashboard.getNumber("shooterP");
+        I = SmartDashboard.getNumber("shooterI");
+        D = SmartDashboard.getNumber("shooterD");
+     }
     public void setMaxVoltages(){
+        MAX_VOLT_FIRST = SmartDashboard.getNumber("First");
+        MAX_VOLT_SECOND = SmartDashboard.getNumber("Second");
+        MAX_VOLT_TILT = SmartDashboard.getNumber("Tilt");
         try{
             firstWheel.configMaxOutputVoltage(MAX_VOLT_FIRST);
             secondWheel.configMaxOutputVoltage(MAX_VOLT_SECOND);
