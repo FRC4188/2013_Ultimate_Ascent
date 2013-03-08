@@ -822,7 +822,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: ExtendPusher}
+          name: Command, type: Command, validators: null, value: PushFrisbee}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id033
           default: '1'
