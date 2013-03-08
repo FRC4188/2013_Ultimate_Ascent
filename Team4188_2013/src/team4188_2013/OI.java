@@ -113,7 +113,7 @@ public class OI {
         copilot2 = new JoystickButton(copilotStick, 2);
         copilot2.whileHeld(new DriveTilHit());
         copilot1 = new JoystickButton(copilotStick, 1);
-        copilot1.whenPressed(new ExtendPusher());
+        copilot1.whenPressed(new PushFrisbee());
         //pilotStick = new CorpsJoystick(1);
         
         pilot12 = new JoystickButton(pilotStick, 12);
@@ -143,7 +143,7 @@ public class OI {
 	    
         // SmartDashboard Buttons
         SmartDashboard.putData("PickupFrisbees", new PickupFrisbees());
-        SmartDashboard.putData("TiltYDegrees", new TiltYDegrees(turnAngle));
+        SmartDashboard.putData("TiltYDegrees", new TiltYDegrees(tiltAngle));
         SmartDashboard.putData("AutoAim", new AutoAim());
         SmartDashboard.putData("FieldOrientOff", new FieldOrientOff());
         SmartDashboard.putData("FieldOrientOn", new FieldOrientOn());
@@ -156,7 +156,7 @@ public class OI {
         SmartDashboard.putData("Shoot", new Shoot());
         SmartDashboard.putData("ShooterOff", new ShooterOff());
         SmartDashboard.putData("ShooterOn", new ShooterOn());
-        SmartDashboard.putData("TurnXDegrees", new TurnXDegrees(tiltAngle));
+        SmartDashboard.putData("TurnXDegrees", new TurnXDegrees(turnAngle));
         SmartDashboard.putData("HoldShoot", new HoldShoot());
         SmartDashboard.putData("ManualTilt", new ManualTilt());
         SmartDashboard.putData("Autonomous", new Autonomous());
