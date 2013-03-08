@@ -14,6 +14,7 @@ import team4188_2013.Robot;
  *
  */
 public class  ResetEncoders extends Command {
+    boolean isRunning = false;
     public ResetEncoders() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,6 +24,12 @@ public class  ResetEncoders extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        if(!isRunning){
+            isRunning = true;
+        }
+        else{
+            isRunning = false;
+        }
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -30,7 +37,7 @@ public class  ResetEncoders extends Command {
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isRunning;
     }
     // Called once after isFinished returns true
     protected void end() {
