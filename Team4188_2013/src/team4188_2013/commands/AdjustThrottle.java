@@ -9,6 +9,7 @@
 // it from being updated in th future.
 package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
@@ -33,6 +34,7 @@ public class  AdjustThrottle extends Command {
         if(throttle <= .2){
             throttle = 0;
         }
+        SmartDashboard.putNumber("Throttle", throttle);
         System.out.println("AdjustThrottle= " + throttle);
         if(Robot.shooter.isOn){
             Robot.shooter.adjustSpeed(throttle);
