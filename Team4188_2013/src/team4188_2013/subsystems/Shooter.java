@@ -33,7 +33,8 @@ public class Shooter extends Subsystem {
         MAX_VOLT_TILT = 12.0, 
         P = 0.025,
         I = 0.000,
-        D = 0.000;
+        D = 0.000,
+        adjustment = 0.0;
     final static double 
         //MAX_VOLT_FIRST = 12.0,
         //MAX_VOLT_SECOND = 12.0,
@@ -194,8 +195,11 @@ public class Shooter extends Subsystem {
     public double getTiltValue(){
         return tiltPot.getValue();
     }
-    public double getCalibrateValue(){
-        return Math.abs(tiltPot.getValue() - 370);
+    public double getCalibratedValue(){
+        return Math.abs(tiltPot.getValue() - adjustment);
+    }
+    public void setCalibration(double input){
+        adjustment = input;
     }
     //returns true when limit swich is pressed
     public boolean getBottowSw(){
