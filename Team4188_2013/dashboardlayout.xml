@@ -1,5 +1,11 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Potentiometer" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="997" y="675"/>
+	</widget>
+	<widget field="Throttle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="701" y="676"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="806" y="5"/>
 		<property name="Text" value="Connection Status:"/>

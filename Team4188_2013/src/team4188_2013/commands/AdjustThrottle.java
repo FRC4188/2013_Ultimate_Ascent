@@ -34,7 +34,7 @@ public class  AdjustThrottle extends Command {
         if(throttle <= .2){
             throttle = 0;
         }
-        SmartDashboard.putNumber("Throttle", throttle);
+        SmartDashboard.putNumber("Throttle", throttle*100);
         System.out.println("AdjustThrottle= " + throttle);
         if(Robot.shooter.isOn){
             Robot.shooter.adjustSpeed(throttle);
