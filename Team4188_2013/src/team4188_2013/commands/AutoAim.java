@@ -130,6 +130,7 @@ public class  AutoAim extends Command {
     protected void end() {
         Robot.drivetrain.disablePID();
         isAimed=false;
+        Robot.vision.turnlightsOff();
     }
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

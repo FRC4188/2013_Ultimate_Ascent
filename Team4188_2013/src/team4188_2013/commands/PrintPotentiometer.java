@@ -35,8 +35,8 @@ public class  PrintPotentiometer extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        SmartDashboard.putNumber("Potentiometer", Robot.shooter.getTiltValue());
-        System.out.println("Pot.= " + Robot.shooter.getTiltValue());
+        SmartDashboard.putNumber("Potentiometer", Robot.shooter.getCalibratedValue());
+        System.out.println("Pot.= " + Robot.shooter.getCalibratedValue());
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

@@ -33,7 +33,8 @@ public class  ManualTilt extends Command {
         //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
         Robot.shooter.manualAim(Robot.oi.copilotStick.getY());
         if(Robot.shooter.getTopSw()){
-            adjustment = Robot.shooter.getCalibrateValue();
+            adjustment = Robot.shooter.getCalibratedValue();
+            Robot.shooter.setCalibration(adjustment);
         }
         //System.out.println("Switched Status= " + Robot.shooter.getBottowSw());
     }
