@@ -9,6 +9,7 @@
 // it from being updated in th future.
 package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import team4188_2013.Robot;
 /**
  *
@@ -34,6 +35,7 @@ public class  PrintPotentiometer extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        SmartDashboard.putNumber("Potentiometer", Robot.shooter.getTiltValue());
         System.out.println("Pot.= " + Robot.shooter.getTiltValue());
     }
     // Make this return true when this Command no longer needs to run execute()
