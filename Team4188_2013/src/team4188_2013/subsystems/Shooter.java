@@ -28,13 +28,14 @@ public class Shooter extends Subsystem {
             isPusherExtended = false;
     public double increment = 0.0;
     static double //for testing, improper format for variables
-        MAX_VOLT_FIRST = 12.0,
+        MAX_VOLT_FIRST = 9.0,
         MAX_VOLT_SECOND = 12.0,
         MAX_VOLT_TILT = 12.0, 
         P = 0.025,
         I = 0.000,
         D = 0.000,
-        adjustment = 0.0;
+        adjustment = 0.0,
+        idle = 3.0;
     final static double 
         //MAX_VOLT_FIRST = 12.0,
         //MAX_VOLT_SECOND = 12.0,
@@ -182,12 +183,18 @@ public class Shooter extends Subsystem {
             tilt.setX(input);   
         } catch (CANTimeoutException ex) {ex.printStackTrace();}
     }    
+    public void idleTilt(){
+        try{
+            tilt.setX(idle);
+        } catch (CANTimeoutException ex) {ex.printStackTrace();}    
+    
+    }
     public void adjustSpeed(double throttle){
             try{
             firstWheel.setX(FORWARD * throttle);
             secondWheel.setX(FORWARD * throttle);
           } catch (CANTimeoutException ex) {ex.printStackTrace();} 
-        
+
     }
     public double getTiltVoltage(){
         return tiltPot.getVoltage();

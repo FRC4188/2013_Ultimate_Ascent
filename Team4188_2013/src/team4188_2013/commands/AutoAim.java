@@ -11,6 +11,7 @@ package team4188_2013.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
@@ -56,6 +57,7 @@ public class  AutoAim extends Command {
         }
         if(Robot.vision.getReports())
         {   
+            
             //SmartDashboard.putInt("Targets", vision.getFound());
             //TargetDistance = vision.getDistance();
             isTargeted = Robot.vision.getTargeted();
@@ -69,16 +71,19 @@ public class  AutoAim extends Command {
             }
             else{
                System.out.println("Aiming...");
+               
                target = Robot.vision.getTopTarget();
                targetDistance = Robot.vision.getDistance();
                angleX = Robot.vision.calculateHorizontalAngle(target, targetDistance);
+               SmartDashboard.putNumber("AngleX", angleX);
                angleY = Robot.vision.calculateTiltAngle(target, targetDistance);
+               SmartDashboard.putNumber("AngleX", angleY);
                 isAimed();
-                //System.out.println("Angle X: "+ angleX);
+               //System.out.println("Angle X: "+ angleX);
                System.out.println("Angle Y: " + angleY);
                 if(aimed == false)
                 {
-                 aim();
+                 //aim();
                 }
             }        
         }        
@@ -102,6 +107,7 @@ public class  AutoAim extends Command {
        // System.out.println("Panning Angle: "+ servoAngle);
         //System.out.println("Panning Position: "+ servoPos);
       //  turnXDegrees(vision.calculateHorizontalAngle(target, targetDistance));
+        
         isAimed=Robot.drivetrain.autoAimPan(angleX);
         aimed = true;
         //drivetrain.setPosition(drivetrain.getPosition()-move);
