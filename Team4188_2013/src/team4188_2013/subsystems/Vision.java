@@ -16,6 +16,7 @@ import team4188_2013.commands.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.image.*;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *@author Tobore Tasker
  */
@@ -57,8 +58,8 @@ public class Vision extends Subsystem {
             REAL_TARGET_WIDTH = 62, 
             //REAL_TARGET_WIDTH = 1.3716, 
             REAL_TARGET_HEIGHT = 104.125,
-            CAMERA_HEIGHT = 35,
-            topGoalWidth = 550,            //adjust! 
+            CAMERA_HEIGHT = 22.5,
+            topGoalWidth = 682,            //adjust! 
             topGoalHeight = 640,           //adjust!
             FOV_RADS = 0.92729,
             DIST_FULL_VIEW_W = (REAL_TARGET_WIDTH/2.0)/Math.tan(FOV_RADS/2.0),
@@ -96,7 +97,7 @@ public class Vision extends Subsystem {
             distance = 0.0,
             lowdistance = 0;
     final static int 
-            RECTANGULARITY_LIMIT = 60,
+            RECTANGULARITY_LIMIT = 25,
             ASPECT_RATIO_LIMIT = 75,
             X_EDGE_LIMIT = 40,
             Y_EDGE_LIMIT = 60,
@@ -192,6 +193,7 @@ public class Vision extends Subsystem {
                         System.out.println("particle: " + (j -1)  + " is a High Goal  centerX: " + report.center_mass_x + " centerY: " + report.center_mass_y);
                         //distance = computeDistance(thresholdImage, report, i, false);
                         distance = getDistanceToTarget(report);
+                        SmartDashboard.putNumber("Distance", distance);
                         System.out.println("Distance: " + distance);
                         // if(topdistance == 0) distance = topDistance;
                         //if(topdistance < distance) distance = topDistance;

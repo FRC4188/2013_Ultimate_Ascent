@@ -9,6 +9,7 @@
 // it from being updated in th future.
 package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
@@ -32,6 +33,7 @@ public class  ManualTilt extends Command {
         //System.out.println("Pot. Voltage = " + Robot.shooter.getTiltVoltage());
         //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
         Robot.shooter.manualAim(Robot.oi.copilotStick.getY());
+        SmartDashboard.putNumber("Potentiometer", Robot.shooter.getCalibratedValue());
         if(Robot.shooter.getTopSw()){
             adjustment = Robot.shooter.getCalibratedValue();
             Robot.shooter.setCalibration(adjustment);
