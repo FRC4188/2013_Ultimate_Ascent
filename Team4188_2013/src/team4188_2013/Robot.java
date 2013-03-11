@@ -79,7 +79,6 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (Autonomous != null) Autonomous.cancel();
-        System.out.println("Setting Max Voltages...");
         shooter.setMaxVoltages();
         oi.setAngles();
         drivetrain.setDrivePID();

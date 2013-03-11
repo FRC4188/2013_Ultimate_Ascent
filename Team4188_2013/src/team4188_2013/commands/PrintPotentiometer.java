@@ -37,7 +37,7 @@ public class  PrintPotentiometer extends Command {
     protected void execute() {
         
         if(isRunning){
-            //System.out.println("Pot.= " + Robot.shooter.getCalibratedValue());
+            System.out.println("Pot.= " + Robot.shooter.getCalibratedValue());
         }
     }
     // Make this return true when this Command no longer needs to run execute()

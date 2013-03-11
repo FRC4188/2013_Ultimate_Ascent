@@ -37,14 +37,14 @@ public class Shooter extends Subsystem {
         adjustment = 0.0,
         idle = 3.0;
     final static double 
-        //MAX_VOLT_FIRST = 12.0,
+        //MAX_VOLT_FIRST = 9.0,
         //MAX_VOLT_SECOND = 12.0,
        // MAX_VOLT_TILT = 12.0,    
         FORWARD = 1.0, 
         OFF = 0.0,
         M = -2.2117,
         B = 160.22,
-        tiltTolerance = 5.0,
+        tiltTolerance = 2.0,
 //        P = 0.025, 
 //        I = 0.000, 
 //        D = 0.0,     
@@ -111,7 +111,8 @@ public class Shooter extends Subsystem {
     public boolean autoTilt(double angle){
         double potValue = 0.0;
         if(!tiltPID.isEnable())tiltPID.enable();
-        potValue = angle * M + B;
+       // potValue = angle * M + B;
+        potValue = angle + getCalibration();
         tiltPID.setSetpoint(potValue);
         if(thereYet(potValue)) {
             tiltPID.disable();
@@ -207,6 +208,9 @@ public class Shooter extends Subsystem {
     }
     public void setCalibration(double input){
         adjustment = input;
+    }
+    public double getCalibration(){
+        return adjustment;
     }
     //returns true when limit swich is pressed
     public boolean getBottowSw(){
