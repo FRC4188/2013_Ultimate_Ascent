@@ -16,6 +16,7 @@ import team4188_2013.Robot;
  */
 public class  ManualTilt extends Command {
     double adjustment = 0.0;
+    double setPoint = 0.0;
     public ManualTilt() {
         requires(Robot.shooter);
         // Use requires() here to declare subsystem dependencies
@@ -26,16 +27,36 @@ public class  ManualTilt extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        setPoint=Robot.shooter.getSetPoint();
+        Robot.shooter.autoTilt();
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         //System.out.println("Manual Tilt Running...");
         //System.out.println("Pot. Voltage = " + Robot.shooter.getTiltVoltage());
         //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
-        Robot.shooter.manualAim(Robot.oi.copilotStick.getY());
+        //Robot.shooter.manualAim(-Robot.oi.copilotStick.getY());
+       // 
+        setPoint-=Robot.oi.copilotStick.getY();
+        if(setPoint < 0)setPoint = 0;
+        if(setPoint > 150)setPoint =150;
+        if(Robot.oi.copilot7.get()){
+            setPoint-=2;
+        }
+        if(Robot.oi.copilot6.get()){
+            setPoint+=2;
+        }
+        if(setPoint!= 0){
+          Robot.shooter.updateSetPoint(setPoint);
+          //Robot.shooter.autoTilt();            
+        }
+        else{
+            Robot.shooter.disablePID();
+        }
+       // System.out.println("Setpoint = " + setPoint);
         SmartDashboard.putNumber("Potentiometer", Robot.shooter.getCalibratedValue());
-        if(Robot.shooter.getTopSw()){
-            adjustment = Robot.shooter.getCalibratedValue();
+        if(Robot.shooter.getBottowSw()){
+            adjustment = Robot.shooter.getTiltValue();
             Robot.shooter.setCalibration(adjustment);
         }
         //System.out.println("Switched Status= " + Robot.shooter.getBottowSw());
@@ -50,5 +71,6 @@ public class  ManualTilt extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        initialize();
     }
 }
