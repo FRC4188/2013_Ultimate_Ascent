@@ -11,7 +11,6 @@ package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-
 /**
  *@author Tobore Tasker
  */

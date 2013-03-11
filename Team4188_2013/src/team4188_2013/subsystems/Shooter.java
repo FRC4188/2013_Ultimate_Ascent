@@ -149,7 +149,6 @@ public class Shooter extends Subsystem {
             System.out.println("Calibration " + getCalibration());
         }
        // potValue = distance * M + B;
-
         
         
         System.out.println("Pot." + getTiltValue());
@@ -244,7 +243,6 @@ public class Shooter extends Subsystem {
             firstWheel.setX(FORWARD * throttle);
             secondWheel.setX(FORWARD * throttle);
           } catch (CANTimeoutException ex) {ex.printStackTrace();} 
-
     }
     public double getTiltVoltage(){
         return tiltPot.getVoltage();
