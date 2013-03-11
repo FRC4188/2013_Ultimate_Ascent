@@ -85,11 +85,11 @@ public class Vision extends Subsystem {
             SAT_HIGH = 255,   //with only one ring of LED's on real target
             VALUE_LOW = 148,
             VALUE_HIGH = 203;*/
-            HUE_LOW = 0, 
+            HUE_LOW = 121, 
             HUE_HIGH = 255 ,
-            SAT_LOW = 222,  //with three rings of LED's on real target
+            SAT_LOW = 47,  //with three rings of LED's on real target
             SAT_HIGH = 255,  
-            VALUE_LOW = 224,
+            VALUE_LOW = 174,
             VALUE_HIGH = 255;
     double 
             topdistance = 0,
@@ -97,7 +97,7 @@ public class Vision extends Subsystem {
             distance = 0.0,
             lowdistance = 0;
     final static int 
-            RECTANGULARITY_LIMIT = 25,
+            RECTANGULARITY_LIMIT = 60,
             ASPECT_RATIO_LIMIT = 75,
             X_EDGE_LIMIT = 40,
             Y_EDGE_LIMIT = 60,
@@ -160,7 +160,6 @@ public class Vision extends Subsystem {
                 reports = new ParticleAnalysisReport[PARTICLE_ANALYSIS_REPORTS];
                 camera = AxisCamera.getInstance(); //necessary?
                 image = camera.getImage();     // comment if using stored images
-                System.out.println("Image = " + image);
                 //ColorImage image;                           // next 2 lines read image from flash on cRIO
                 //image = new RGBImage("/testImage.jpg");		// get the sample image from the cRIO flash
                 thresholdImage = image.thresholdHSV(HUE_LOW, HUE_HIGH , SAT_LOW, SAT_HIGH,  VALUE_LOW, VALUE_HIGH);   // keep only red objects

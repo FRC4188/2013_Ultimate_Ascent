@@ -111,13 +111,18 @@ public class Drivetrain extends Subsystem {
         //encPID.disable();
         
         //accelPID.disable();
+        System.out.println("TargetAngle= " + targetAngle);
         if(!resetG) {
             gyro.reset();
             resetG = true;
         }
-        if(!gyroPID.isEnable()) gyroPID.enable();
         
-        gyroPID.setSetpoint(targetAngle);
+        if(!gyroPID.isEnable()){
+            gyroPID.setSetpoint(targetAngle);
+            gyroPID.enable();
+        }
+        
+        
         if(thereYet(targetAngle)) {
             disablePID();
             resetG = false;
