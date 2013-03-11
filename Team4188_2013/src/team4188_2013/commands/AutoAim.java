@@ -74,10 +74,11 @@ public class  AutoAim extends Command {
                
                target = Robot.vision.getTopTarget();
                targetDistance = Robot.vision.getDistance();
+               SmartDashboard.putNumber("Distance", targetDistance);
                angleX = Robot.vision.calculateHorizontalAngle(target, targetDistance);
                SmartDashboard.putNumber("AngleX", angleX);
                angleY = Robot.vision.calculateTiltAngle(target, targetDistance);
-               SmartDashboard.putNumber("AngleX", angleY);
+               SmartDashboard.putNumber("AngleY", angleY);
                 isAimed();
                //System.out.println("Angle X: "+ angleX);
                System.out.println("Angle Y: " + angleY);

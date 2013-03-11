@@ -193,7 +193,7 @@ public class Vision extends Subsystem {
                         System.out.println("particle: " + (j -1)  + " is a High Goal  centerX: " + report.center_mass_x + " centerY: " + report.center_mass_y);
                         //distance = computeDistance(thresholdImage, report, i, false);
                         distance = getDistanceToTarget(report);
-                        SmartDashboard.putNumber("Distance", distance);
+                        //SmartDashboard.putNumber("Distance", distance);
                         System.out.println("Distance: " + distance);
                         // if(topdistance == 0) distance = topDistance;
                         //if(topdistance < distance) distance = topDistance;
