@@ -27,8 +27,12 @@ public class  ManualTilt extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
-        setPoint=Robot.shooter.getSetPoint();
+      //  System.out.println("Manual Tilt Init");
+      //  System.out.println("Manual init Setpoint" + Robot.shooter.getSetPoint());
+        setPoint=Robot.shooter.getUnCalibratedSetPoint();
+        Robot.shooter.updateSetPoint(setPoint);
         Robot.shooter.autoTilt();
+        
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -37,18 +41,23 @@ public class  ManualTilt extends Command {
         //System.out.println("Pot. Value= " + (Robot.shooter.getCalibrateValue() - adjustment));
         //Robot.shooter.manualAim(-Robot.oi.copilotStick.getY());
        // 
-        setPoint-=Robot.oi.copilotStick.getY();
-        if(setPoint < 0)setPoint = 0;
-        if(setPoint > 150)setPoint =150;
+       // System.out.println("Setpoint from manual Tilt: " + setPoint);
+        setPoint-=(Robot.oi.copilotStick.getY() * 5 );
+        if(setPoint < 0){
+            setPoint = 0; //adjust
+        }
+        if(setPoint > 700){
+            setPoint =700; //adjust
+        }
         if(Robot.oi.copilot7.get()){
-            setPoint-=2;
+            setPoint-=3;
         }
         if(Robot.oi.copilot6.get()){
-            setPoint+=2;
+            setPoint+=3;
         }
         if(setPoint!= 0){
           Robot.shooter.updateSetPoint(setPoint);
-          //Robot.shooter.autoTilt();            
+          Robot.shooter.autoTilt();            
         }
         else{
             Robot.shooter.disablePID();
@@ -71,6 +80,6 @@ public class  ManualTilt extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        initialize();
+        //initialize();
     }
 }

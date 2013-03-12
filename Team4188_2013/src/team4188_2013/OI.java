@@ -101,7 +101,7 @@ public class OI {
         copilot9 = new JoystickButton(copilotStick, 9);
         copilot9.whenPressed(new Shoot());
         copilot8 = new JoystickButton(copilotStick, 8);
-        copilot8.whenPressed(new LoadFrisbee());
+        copilot8.whenPressed(new TurnXDegrees());
         copilot7 = new JoystickButton(copilotStick, 7);
         copilot7.whileHeld(new BackUpClimb());
         copilot6 = new JoystickButton(copilotStick, 6);
@@ -109,7 +109,7 @@ public class OI {
         copilot5 = new JoystickButton(copilotStick, 5);
         copilot5.whenPressed(new LightsToggle());
         copilot4 = new JoystickButton(copilotStick, 4);
-        copilot4.whileHeld(new AutoAim());
+        copilot4.whenPressed(new AutoAim());
         copilot3 = new JoystickButton(copilotStick, 3);
         copilot3.whenPressed(new Climb());
         copilot2 = new JoystickButton(copilotStick, 2);

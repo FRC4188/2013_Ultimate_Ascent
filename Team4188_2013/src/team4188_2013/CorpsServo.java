@@ -2,6 +2,8 @@
  * Designed to extend the capabilities of servos
  * to use acutally degrees, and joystick input
  * unfinished.
+ * Wasted time on this because I didnt read the java doc
+ * READ THE JAVA DOCS!!!
  */
 package team4188_2013;
 import edu.wpi.first.wpilibj.Servo;
