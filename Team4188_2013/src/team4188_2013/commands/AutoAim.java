@@ -85,13 +85,13 @@ public class  AutoAim extends Command {
                SmartDashboard.putNumber("AngleX", angleX);
                angleY = Robot.vision.calculateTiltAngle(target, targetDistance);
                SmartDashboard.putNumber("AngleY", angleY);
-                isAimed();
-               //System.out.println("Angle X: "+ angleX);
                System.out.println("Angle Y: " + angleY);
-                if(aimed == false)
-                {
-                  aim();
-                }
+               isAimed();
+               aim();
+//                if(aimed == false)
+//                {
+//                  aim();
+//                }
             }        
         }        
     }
@@ -125,8 +125,13 @@ public class  AutoAim extends Command {
             Robot.shooter.autoTilt();
         }
         //Robot.shooter.autoTilt(tiltValue);
-        //isAimed=Robot.drivetrain.autoAimPan(angleX);
-        aimed = true;
+        //Robot.drivetrain.autoAimPan(-angleX);
+        if(!aimed){
+            isAimed = Robot.drivetrain.autoAimPan(angleX);  
+            aimed = true;
+        }
+        
+        
         //drivetrain.setPosition(drivetrain.getPosition()-move);
        // position = vision.getPosition(); //- (move) - move/3;
        // System.out.println("Position: " + drivetrain.getPosition());
@@ -147,12 +152,13 @@ public class  AutoAim extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return aimed;
+        return isAimed;
     }
     // Called once after isFinished returns true
     protected void end() {
         Robot.drivetrain.disablePID();
         isAimed=false;
+        aimed = false;
         Robot.vision.turnlightsOff();
     }
     // Called when another command which requires one or more of the same

@@ -43,10 +43,10 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
         //if(RobotMap.getDriveTrainMode()==RobotMap.GYRO_MODE) {
         // NOT - on practice bot...
         System.out.println(output);
-        if(Math.abs(output)<0.12){
+        if(Math.abs(output)<0.17){
             if(output<0)
             {
-                output=-0.17;
+                output= -0.17;
             }
             else
             {
@@ -54,10 +54,10 @@ public class CorpsRobotDrive extends RobotDrive implements PIDOutput {
             }
             System.out.println(" >"+output);
         }
-        super.m_rearLeftMotor.pidWrite(-output*super.m_invertedMotors[kRearLeft_val]);
-        super.m_rearRightMotor.pidWrite(output*super.m_invertedMotors[kRearRight_val]);
-        super.m_frontLeftMotor.pidWrite(-output*super.m_invertedMotors[kFrontLeft_val]);
-        super.m_frontRightMotor.pidWrite(output*super.m_invertedMotors[kFrontRight_val]);
+        super.m_rearLeftMotor.pidWrite(output*super.m_invertedMotors[kRearLeft_val]);
+        super.m_frontLeftMotor.pidWrite(output*super.m_invertedMotors[kFrontLeft_val]);
+        super.m_rearRightMotor.pidWrite(-output*super.m_invertedMotors[kRearRight_val]);
+        super.m_frontRightMotor.pidWrite(-output*super.m_invertedMotors[kFrontRight_val]);
         //}
         /*else if(RobotMap.getDriveTrainMode()==RobotMap.ENCODER_MODE) {
             super.m_rearLeftMotor.pidWrite(output*super.m_invertedMotors[kRearLeft_val]);

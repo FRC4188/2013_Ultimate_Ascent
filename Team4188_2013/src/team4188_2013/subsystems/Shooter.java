@@ -96,9 +96,9 @@ public class Shooter extends Subsystem {
             secondWheel.configNeutralMode(CANJaguar.NeutralMode.kCoast);
            } catch (CANTimeoutException ex) {ex.printStackTrace();}
         tiltPID = new PIDController(P,I,D,tiltPot,tilt,PID_LOOP_TIME);
-        tiltPID.setPercentTolerance(2.0);
+        //tiltPID.setPercentTolerance(1.0);
         tiltPID.setInputRange(0, 700);
-        tiltPID.setOutputRange(-1.0, 1.0);    
+        tiltPID.setOutputRange(-0.2, 1.0);    
         
         timer = new Timer();        
     }
@@ -152,6 +152,8 @@ public class Shooter extends Subsystem {
         
         
         System.out.println("Pot." + getTiltValue());
+        System.out.println("Calibrated Pot. "+ getCalibratedValue());
+        
         System.out.println("pidOutput" + tiltPID.get());
 //        if(thereYet(potValue)) {
 //            System.out.println("Shooter PID done");
@@ -196,6 +198,9 @@ public class Shooter extends Subsystem {
     }
    public double getSetPoint(){
        return setPoint;
+   }
+   public double getUnCalibratedSetPoint(){
+       return setPoint - getCalibration();
    }
     public void setVoltageFirstWheel(double adjust){
         try{
@@ -248,10 +253,10 @@ public class Shooter extends Subsystem {
         return tiltPot.getVoltage();
     }
     public double getTiltValue(){
-        return tiltPot.getValue();
+        return tiltPot.getAverageValue();
     }
     public double getCalibratedValue(){
-        return Math.abs(tiltPot.getValue() - adjustment);
+        return Math.abs(getTiltValue() - adjustment);
     }
     public void setCalibration(double input){
         adjustment = input;
