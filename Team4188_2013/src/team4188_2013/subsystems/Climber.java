@@ -127,7 +127,7 @@ public class Climber extends Subsystem {
         return compressor.getPressureSwitchValue();
     }*/
     
-    public boolean getEnabled() {
+    public boolean isCompressorEnabled() {
         return compressor.enabled();
     }    
     public void disableCompressor(){

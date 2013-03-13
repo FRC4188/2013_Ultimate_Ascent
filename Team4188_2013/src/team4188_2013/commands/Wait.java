@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
- * @author Erin
+ * @author Erin King
  */
 public class Wait extends Command {
     private double time;
