@@ -11,12 +11,13 @@
 
 package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import team4188_2013.Robot;
 
 /**
  *@author Tobore Tasker
  */
 public class Autonomous extends CommandGroup {
-    
+    double adjustment = 0;
     public  Autonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -28,7 +29,24 @@ public class Autonomous extends CommandGroup {
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
-
+        addSequential(new ShooterOn());
+        //addParallel( new Wait(2.0));
+        adjustment = Robot.shooter.getTiltValue();
+        Robot.shooter.setCalibration(adjustment);
+        addSequential(new TiltYDegrees(92));
+        addSequential(new Wait(3.0));
+        addSequential(new PushFrisbee());
+        addSequential(new Wait(2.0));
+        addSequential(new PushFrisbee());
+        addSequential(new Wait(2.0));
+        addSequential(new PushFrisbee());
+        addSequential(new Wait(2.0));
+        addSequential(new PushFrisbee());
+        addSequential(new Wait(2.0));
+        addSequential(new PushFrisbee());
+        addSequential(new Wait(1.0));
+        addSequential(new ShooterOff()); //comment out
+        //addSequential(Robot.climber.enableCompressor());
         // A command group will require all of the subsystems that each member
         // would require.
         // e.g. if Command1 requires chassis, and Command2 requires arm,

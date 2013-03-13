@@ -130,4 +130,10 @@ public class Climber extends Subsystem {
     public boolean getEnabled() {
         return compressor.enabled();
     }    
+    public void disableCompressor(){
+        compressor.stop();
+    }
+    public void enableCompressor(){
+        compressor.start();
+    }
 }

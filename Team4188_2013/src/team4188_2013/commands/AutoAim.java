@@ -127,7 +127,7 @@ public class  AutoAim extends Command {
         //Robot.shooter.autoTilt(tiltValue);
         //Robot.drivetrain.autoAimPan(-angleX);
         if(!aimed){
-            isAimed = Robot.drivetrain.autoAimPan(angleX);  
+            //isAimed = Robot.drivetrain.autoAimPan(angleX);  
             aimed = true;
         }
         
@@ -152,7 +152,7 @@ public class  AutoAim extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isAimed;
+        return aimed;
     }
     // Called once after isFinished returns true
     protected void end() {

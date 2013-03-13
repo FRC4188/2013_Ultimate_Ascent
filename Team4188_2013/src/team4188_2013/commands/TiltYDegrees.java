@@ -29,16 +29,16 @@ public class  TiltYDegrees extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
-        isAimed = false;
+
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        
-     //   isAimed=Robot.shooter.autoTilt(angle);
+        Robot.shooter.updateSetPoint(angle);
+        Robot.shooter.autoTilt();
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isAimed;
+        return true;
     }
     // Called once after isFinished returns true
     protected void end() {
