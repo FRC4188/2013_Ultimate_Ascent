@@ -229,6 +229,7 @@ public class Shooter extends Subsystem {
         System.out.println("Shooter Off!");
     }
     public boolean isOn(){
+        SmartDashboard.putBoolean("Shooter On:", isOn);
         return isOn;
     }    
     public void manualAim(double input){
