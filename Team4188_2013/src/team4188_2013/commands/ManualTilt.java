@@ -62,6 +62,7 @@ public class  ManualTilt extends Command {
         else{
             Robot.shooter.disablePID();
         }
+        
        // System.out.println("Setpoint = " + setPoint);
         SmartDashboard.putNumber("Potentiometer", Robot.shooter.getCalibratedValue());
         if(Robot.shooter.getBottowSw()){

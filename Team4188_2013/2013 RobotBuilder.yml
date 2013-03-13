@@ -23,7 +23,7 @@ Children:
             default: '2'
             name: CAN ID
             validators: &id002 [CANID]
-            value: '11'
+            value: '12'
       - Name: RearLeft
         Base: CAN Jaguar
         Children: []
@@ -33,7 +33,7 @@ Children:
             default: '2'
             name: CAN ID
             validators: *id002
-            value: '12'
+            value: '11'
       - Name: FrontRight
         Base: CAN Jaguar
         Children: []
@@ -76,11 +76,11 @@ Children:
         Sensitivity: !!robotbuilder.data.properties.DoubleProperty {default: 0.5,
           name: Sensitivity, validators: null, value: 0.5}
         Right Front Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {
-          default: false, name: Right Front Motor Inverted, validators: null, value: false}
+          default: false, name: Right Front Motor Inverted, validators: null, value: true}
         Safety Enabled: !!robotbuilder.data.properties.BooleanProperty {default: true,
           name: Safety Enabled, validators: null, value: false}
         Left Front Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {
-          default: false, name: Left Front Motor Inverted, validators: null, value: true}
+          default: false, name: Left Front Motor Inverted, validators: null, value: false}
         Right Front Motor: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 2
           name: Right Front Motor
@@ -90,9 +90,9 @@ Children:
         Maximum Output: !!robotbuilder.data.properties.DoubleProperty {default: 1,
           name: Maximum Output, validators: null, value: 0.6}
         Right Rear Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {
-          default: false, name: Right Rear Motor Inverted, validators: null, value: false}
+          default: false, name: Right Rear Motor Inverted, validators: null, value: true}
         Left Rear Motor Inverted: !!robotbuilder.data.properties.BooleanProperty {
-          default: false, name: Left Rear Motor Inverted, validators: null, value: true}
+          default: false, name: Left Rear Motor Inverted, validators: null, value: false}
         Right Rear Motor: !!robotbuilder.data.properties.ChildSelectionProperty
           default: 3
           name: Right Rear Motor
@@ -942,7 +942,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: BackUpClimb}
+          name: Command, type: Command, validators: null, value: None}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id033
           default: '1'
@@ -962,7 +962,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: LoadFrisbee}
+          name: Command, type: Command, validators: null, value: None}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id033
           default: '1'
@@ -1002,7 +1002,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: PrintPotentiometer}
+          name: Command, type: Command, validators: null, value: LoadFrisbee}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id033
           default: '1'
@@ -1022,7 +1022,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: None}
+          name: Command, type: Command, validators: null, value: BackUpClimb}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: *id033
           default: '1'
@@ -1036,7 +1036,7 @@ Children:
           default: whileHeld
           name: When to Run
           validators: null
-          value: whenPressed
+          value: whileHeld
     - Name: copilot12
       Base: Joystick Button
       Children: []
@@ -1307,6 +1307,14 @@ Children:
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
   - Name: LightsToggle
+    Base: Command
+    Children: []
+    Properties:
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: None}
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+  - Name: ''
     Base: Command
     Children: []
     Properties:

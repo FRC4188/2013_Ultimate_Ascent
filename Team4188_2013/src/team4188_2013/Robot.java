@@ -91,7 +91,8 @@ public class Robot extends IterativeRobot {
         oi.setAngles();
         drivetrain.setDrivePID();
         shooter.setShooterPID();
-       
+        climber.enableCompressor();
+        shooter.shooterOff();
     }
     /**
      * This function is called periodically during operator control

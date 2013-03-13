@@ -29,30 +29,29 @@ public class Shooter extends Subsystem {
             automaticTilt = true;
     public double increment = 0.0;
     static double //for testing, improper format for variables
-        MAX_VOLT_FIRST = 9.0,
-        MAX_VOLT_SECOND = 12.0,
-        MAX_VOLT_TILT = 12.0, 
-        P = 0.05,
-        I = 0.000,
-        D = 0.000,
+//        MAX_VOLT_FIRST = 9.0,
+//        MAX_VOLT_SECOND = 12.0,
+//        MAX_VOLT_TILT = 12.0, 
+//        P = 0.05,
+//        I = 0.000,
+//        D = 0.000,
         adjustment = 0.0,
         potValue = 0.0,
-        idle = 3.0,
         setPoint = 0,
         turnAngle = 0,
         tiltAngle = 0;
     final static double 
-        //MAX_VOLT_FIRST = 9.0,
-        //MAX_VOLT_SECOND = 12.0,
-       // MAX_VOLT_TILT = 12.0,    
+        MAX_VOLT_FIRST = 9.0,
+        MAX_VOLT_SECOND = 12.0,
+        MAX_VOLT_TILT = 12.0,    
         FORWARD = 1.0, 
         OFF = 0.0,
-        M = -2.46,
-        B = 393.1,
+//        M = -2.46,
+//        B = 393.1,
         tiltTolerance = 3.0,
-//        P = 0.025, 
-//        I = 0.000, 
-//        D = 0.0,     
+        P = 0.05, 
+        I = 0.000, 
+        D = 0.0,     
         PID_LOOP_TIME = .05,
         SETTLED_TIME = 2.0;            ;
     private static final double PNEUMATIC_DELAY_SECONDS = 0.1;
@@ -100,6 +99,7 @@ public class Shooter extends Subsystem {
         tiltPID.setInputRange(0, 700);
         tiltPID.setOutputRange(-0.2, 1.0);    
         isOn = false;
+        isLoaderExtended = false;
         timer = new Timer();        
     }
     public boolean getAutoTiltMode(){
@@ -121,15 +121,15 @@ public class Shooter extends Subsystem {
         return tiltPID.isEnable();
     }
     public void setShooterPID(){
-        P = SmartDashboard.getNumber("shooterP");
-        I = SmartDashboard.getNumber("shooterI");
-        D = SmartDashboard.getNumber("shooterD");
+//        P = SmartDashboard.getNumber("shooterP");
+//        I = SmartDashboard.getNumber("shooterI");
+//        D = SmartDashboard.getNumber("shooterD");
         tiltPID.setPID(P, I, D);
      }
     public void setMaxVoltages(){
-        MAX_VOLT_FIRST = SmartDashboard.getNumber("First");
-        MAX_VOLT_SECOND = SmartDashboard.getNumber("Second");
-        MAX_VOLT_TILT = SmartDashboard.getNumber("Tilt");
+//        MAX_VOLT_FIRST = SmartDashboard.getNumber("First");
+//        MAX_VOLT_SECOND = SmartDashboard.getNumber("Second");
+//        MAX_VOLT_TILT = SmartDashboard.getNumber("Tilt");
         try{
             firstWheel.configMaxOutputVoltage(MAX_VOLT_FIRST);
             secondWheel.configMaxOutputVoltage(MAX_VOLT_SECOND);
@@ -137,7 +137,7 @@ public class Shooter extends Subsystem {
            } catch (CANTimeoutException ex) {ex.printStackTrace();}            
     }    
     public boolean autoTilt(){
-        System.out.println("Current SetPoint: " + getSetPoint());
+       // System.out.println("Current SetPoint: " + getSetPoint());
         tiltPID.setSetpoint(getSetPoint());
         if(!tiltPID.isEnable()){
             //potValue = angle + getCalibration();
@@ -151,10 +151,10 @@ public class Shooter extends Subsystem {
        // potValue = distance * M + B;
         
         
-        System.out.println("Pot." + getTiltValue());
-        System.out.println("Calibrated Pot. "+ getCalibratedValue());
+        //System.out.println("Pot." + getTiltValue());
+       // System.out.println("Calibrated Pot. "+ getCalibratedValue());
         
-        System.out.println("pidOutput" + tiltPID.get());
+        //System.out.println("pidOutput" + tiltPID.get());
 //        if(thereYet(potValue)) {
 //            System.out.println("Shooter PID done");
 //             //tiltPID.disable();
@@ -238,12 +238,12 @@ public class Shooter extends Subsystem {
             tilt.setX(input);   
         } catch (CANTimeoutException ex) {ex.printStackTrace();}
     }    
-    public void idleTilt(){
-        try{
-            tilt.setX(idle);
-        } catch (CANTimeoutException ex) {ex.printStackTrace();}    
-    
-    }
+//    public void idleTilt(){
+//        try{
+//            tilt.setX(idle);
+//        } catch (CANTimeoutException ex) {ex.printStackTrace();}    
+//    
+//    }
     public void adjustSpeed(double throttle){
             try{
             firstWheel.setX(FORWARD * throttle);

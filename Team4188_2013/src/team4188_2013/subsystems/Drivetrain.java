@@ -28,16 +28,16 @@ public class Drivetrain extends Subsystem {
     private PIDController gyroPID, leftEncPID, rightEncPID;
     Timer timer;
     private boolean timerRunning=false;
-    public double 
-        gyroTOLERANCE = 1.0,
-        Pg = 0.025, 
-        Ig = 0.000,    //change when final
-        Dg = 0.0;
-    public static final double 
+//    public double 
 //        gyroTOLERANCE = 1.0,
 //        Pg = 0.025, 
-//        Ig = 0.000, 
-//        Dg = 0.0,     
+//        Ig = 0.000,    //change when final
+//        Dg = 0.0;
+    public static final double 
+        gyroTOLERANCE = 1.0,
+        Pg = 0.025, 
+        Ig = 0.000, 
+        Dg = 0.0,     
         Pe = 0.025, 
         Ie = 0.000, 
         De = 0.0,                
@@ -96,13 +96,13 @@ public class Drivetrain extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     public void setDrivePID(){
-        Pg = SmartDashboard.getNumber("driveP");
-        Ig = SmartDashboard.getNumber("driveI");
-        Dg = SmartDashboard.getNumber("driveD");
+//        Pg = SmartDashboard.getNumber("driveP");
+//        Ig = SmartDashboard.getNumber("driveI");
+//        Dg = SmartDashboard.getNumber("driveD");
     }
     public void driveWithJoystick(double x, double y, double z, double throttle, double direction){
         //drive mecanum wheels with negative x and twist inputs
-        robotDrive.mecanumDrive_Cartesian(-x * throttle, y*throttle, -z*throttle, direction); 
+        robotDrive.mecanumDrive_Cartesian(x * throttle, -y*throttle, z*throttle, direction); 
     }
    public boolean autoAimPan(double targetAngle) {
         
