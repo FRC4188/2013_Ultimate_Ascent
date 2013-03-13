@@ -29,23 +29,29 @@ public class Autonomous extends CommandGroup {
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
+       // System.out.println("IsCompressorEnabled?" + Robot.climber.isCompressorEnabled());
+        addSequential(new EnableCompressor());
+        addSequential( new Wait(5.0));
         addSequential(new ShooterOn());
-        //addParallel( new Wait(2.0));
         adjustment = Robot.shooter.getTiltValue();
         Robot.shooter.setCalibration(adjustment);
         addSequential(new TiltYDegrees(92));
         addSequential(new Wait(3.0));
+        addSequential(new DisableCompressor());
         addSequential(new PushFrisbee());
-        addSequential(new Wait(2.0));
+        addSequential(new Wait(1.0));
         addSequential(new PushFrisbee());
-        addSequential(new Wait(2.0));
+        addSequential(new Wait(1.0));
         addSequential(new PushFrisbee());
-        addSequential(new Wait(2.0));
+        addSequential(new Wait(1.0));
         addSequential(new PushFrisbee());
-        addSequential(new Wait(2.0));
+        addSequential(new Wait(1.0));
         addSequential(new PushFrisbee());
         addSequential(new Wait(1.0));
         addSequential(new ShooterOff()); //comment out
+        addSequential(new TiltYDegrees(0));
+        addSequential(new EnableCompressor());
+       // System.out.println("IsCompressorEnabled?" + Robot.climber.isCompressorEnabled());
         //addSequential(Robot.climber.enableCompressor());
         // A command group will require all of the subsystems that each member
         // would require.

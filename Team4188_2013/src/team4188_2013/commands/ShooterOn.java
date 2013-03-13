@@ -30,7 +30,7 @@ public class  ShooterOn extends Command {
         if(!Robot.shooter.isOn){
            Robot.shooter.shooterOn(1.0); 
         }
-        System.out.println("Shooter on in Command");
+        //System.out.println("Shooter on in Command");
         
     }
     // Make this return true when this Command no longer needs to run execute()

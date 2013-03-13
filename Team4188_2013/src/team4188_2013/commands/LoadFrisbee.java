@@ -14,6 +14,7 @@ import team4188_2013.Robot;
  *@author Tobore Tasker
  */
 public class  LoadFrisbee extends Command {
+    boolean isDone;
     public LoadFrisbee() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,23 +24,19 @@ public class  LoadFrisbee extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        isDone = false;
+        
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!Robot.shooter.isLoaderExtended()){
-            Robot.shooter.extendLoader();
-        }
-        else if(Robot.shooter.isLoaderExtended()){
-            Robot.shooter.retractLoader();
-        }
-        else{
-            Robot.shooter.retractLoader();
-        }
+        Robot.shooter.extendLoader();
+        Robot.shooter.retractLoader();
+        isDone = !Robot.shooter.isLoaderExtended;
         
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return isDone;
     }
     // Called once after isFinished returns true
     protected void end() {
