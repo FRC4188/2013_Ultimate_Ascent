@@ -101,7 +101,7 @@ public class OI {
         copilot9 = new JoystickButton(copilotStick, 9);
         copilot9.whenPressed(new Shoot());
         copilot8 = new JoystickButton(copilotStick, 8);
-        copilot8.whenPressed(new TurnXDegrees());
+        //copilot8.whenPressed(new TurnXDegrees());
         copilot7 = new JoystickButton(copilotStick, 7);
         copilot7.whileHeld(new BackUpClimb());
         copilot6 = new JoystickButton(copilotStick, 6);
