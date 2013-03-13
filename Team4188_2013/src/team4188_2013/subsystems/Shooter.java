@@ -99,7 +99,7 @@ public class Shooter extends Subsystem {
         //tiltPID.setPercentTolerance(1.0);
         tiltPID.setInputRange(0, 700);
         tiltPID.setOutputRange(-0.2, 1.0);    
-        
+        isOn = false;
         timer = new Timer();        
     }
     public boolean getAutoTiltMode(){
