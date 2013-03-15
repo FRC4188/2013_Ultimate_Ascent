@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
 //        MAX_VOLT_FIRST = 9.0,
 //        MAX_VOLT_SECOND = 12.0,
 //        MAX_VOLT_TILT = 12.0, 
-//        P = 0.05,
+//        P = 0.04,
 //        I = 0.000,
 //        D = 0.000,
         adjustment = 0.0,
@@ -49,7 +49,7 @@ public class Shooter extends Subsystem {
 //        M = -2.46,
 //        B = 393.1,
         tiltTolerance = 3.0,
-        P = 0.05, 
+        P = 0.04, 
         I = 0.000, 
         D = 0.0,     
         PID_LOOP_TIME = .05,
@@ -143,18 +143,18 @@ public class Shooter extends Subsystem {
             //potValue = angle + getCalibration();
             tiltPID.setSetpoint(getSetPoint());
             tiltPID.enable();
-            System.out.println("pidGet " + tiltPot.pidGet());
+            //System.out.println("pidGet " + tiltPot.pidGet());
            // System.out.println("Input: " + angle);
-            System.out.println("PotValue" + potValue);
-            System.out.println("Calibration " + getCalibration());
+            //System.out.println("PotValue" + potValue);
+            //System.out.println("Calibration " + getCalibration());
         }
        // potValue = distance * M + B;
         
         
         //System.out.println("Pot." + getTiltValue());
        // System.out.println("Calibrated Pot. "+ getCalibratedValue());
-        
-        //System.out.println("pidOutput" + tiltPID.get());
+        SmartDashboard.putNumber("Setpoint", getSetPoint());
+        System.out.println("pidOutput" + tiltPID.get());
 //        if(thereYet(potValue)) {
 //            System.out.println("Shooter PID done");
 //             //tiltPID.disable();
@@ -285,6 +285,16 @@ public class Shooter extends Subsystem {
         Timer.delay(PNEUMATIC_DELAY_SECONDS);
         feederSol.set(DoubleSolenoid.Value.kOff);
         isLoaderExtended = true;
+    }
+    public void extendRetractLoader(){
+        feederSol.set(DoubleSolenoid.Value.kForward);
+        Timer.delay(PNEUMATIC_DELAY_SECONDS);
+        feederSol.set(DoubleSolenoid.Value.kOff);
+        timer.delay(.3);
+        feederSol.set(DoubleSolenoid.Value.kReverse);
+        Timer.delay(PNEUMATIC_DELAY_SECONDS);
+        feederSol.set(DoubleSolenoid.Value.kOff);
+        isLoaderExtended = false;
     }
     public void retractLoader(){
         feederSol.set(DoubleSolenoid.Value.kReverse);
