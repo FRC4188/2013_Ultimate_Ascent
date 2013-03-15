@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *
- * @author toboretasker
+ * @author tobore tasker
  */
 public class DisableCompressor extends Command{
     
@@ -22,6 +22,8 @@ public class DisableCompressor extends Command{
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //Robot.shooter.extendLoader();
+        //Robot.shooter.retractLoader();
         if(Robot.climber.isCompressorEnabled()){
             Robot.climber.disableCompressor();
         }
