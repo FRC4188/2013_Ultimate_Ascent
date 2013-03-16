@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    Command Autonomous;
+    Command Autonomous, Shoot;
    // double autoAngle = 0.0;
     
    // ManualTilt tilt = new ManualTilt();
@@ -68,17 +68,25 @@ public class Robot extends IterativeRobot {
         climber.init();
         servo.init();
         Autonomous = new Autonomous();
+        Shoot = new ShooterOn();
     }
     public void autonomousInit() {
-        System.out.println("Autonomous Init");
+        //System.out.println("Autonomous Init");
+       // shooter.isOn = false;
         // schedule the autonomous command (example)
        // autoAngle = SmartDashboard.getNumber("AutoAngle");
-        if (Autonomous != null) Autonomous.start();
+        if (Autonomous != null){
+           // shooter.shooterOn(1.0);
+            Autonomous.start();
+        }
     }
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        Robot.shooter.rampUpFirst();
+        Robot.shooter.rampUpSecond();
+        //System.out.println("Autonomous Running");
         Scheduler.getInstance().run();
     }
     public void teleopInit() {
@@ -93,6 +101,7 @@ public class Robot extends IterativeRobot {
         shooter.setShooterPID();
         climber.enableCompressor();
         shooter.shooterOff();
+        shooter.disableRampUp();
     }
     /**
      * This function is called periodically during operator control

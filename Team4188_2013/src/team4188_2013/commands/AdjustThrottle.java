@@ -15,8 +15,9 @@ import team4188_2013.Robot;
  *@author Tobore Tasker
  */
 public class  AdjustThrottle extends Command {
-    double throttle = 0.0;
+    double throttle = 1.0;
     boolean done = false;
+    boolean fullThrottle = false;
     public AdjustThrottle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,6 +36,13 @@ public class  AdjustThrottle extends Command {
             throttle = 0;
         }
         SmartDashboard.putNumber("Throttle", throttle*100);
+        SmartDashboard.putBoolean("Full Throttle", fullThrottle);
+        if(throttle > .98){
+            fullThrottle = true;    
+        }
+        else{
+            fullThrottle = false;
+        }
         //System.out.println("AdjustThrottle= " + throttle);
         if(Robot.shooter.isOn){
             Robot.shooter.adjustSpeed(throttle);

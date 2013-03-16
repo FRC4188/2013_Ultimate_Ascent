@@ -31,6 +31,7 @@ public class  SafeShoot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if(Robot.shooter.isOn){
+            System.out.println("Firing");
             Robot.shooter.extendPusher();
             Robot.shooter.retractPusher();    
             hasShot = true;

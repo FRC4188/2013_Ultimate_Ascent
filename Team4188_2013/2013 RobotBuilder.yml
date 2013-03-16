@@ -571,7 +571,7 @@ Children:
       Children: []
       Properties:
         Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-          name: Command, type: Command, validators: null, value: LookDown}
+          name: Command, type: Command, validators: null, value: None}
         Button: !!robotbuilder.data.properties.ChoicesProperty
           choices: &id033 ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
             '12']
@@ -1083,7 +1083,7 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Shooter}
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
-        name: Button on SmartDashboard, validators: null, value: true}
+        name: Button on SmartDashboard, validators: null, value: false}
   - Name: AutoAim
     Base: Command
     Children: []
