@@ -8,12 +8,14 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package team4188_2013.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
  */
 public class  ShooterOn extends Command {
+    boolean isDone = false;
     public ShooterOn() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,18 +26,27 @@ public class  ShooterOn extends Command {
     }
     // Called just before this Command runs the first time
     protected void initialize() {
+        isDone = false;
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(!Robot.shooter.isOn){
-           Robot.shooter.shooterOn(1.0); 
+//        if(!Robot.shooter.isOn){
+//           Robot.shooter.shooterOn(1.0); 
+//           isDone = Robot.shooter.isOn;
+//          // Timer.delay(.2);
+//        }
+        for(int i = 0; i<1.0; i++){
+         Robot.shooter.shooterOn(i); 
+         isDone = true;
         }
+        
+        
         //System.out.println("Shooter on in Command");
         
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.shooter.isOn;
+        return isDone;
     }
     // Called once after isFinished returns true
     protected void end() {

@@ -16,6 +16,9 @@ import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
  */
+//setpoint 112.5, pot 104 back left`
+// set 136, pot 128 front left
+//set 122, pot 134 middle
 public class Autonomous extends CommandGroup {
     double adjustment = 0;
     public  Autonomous() {
@@ -30,12 +33,21 @@ public class Autonomous extends CommandGroup {
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
        // System.out.println("IsCompressorEnabled?" + Robot.climber.isCompressorEnabled());
+        
+//
+        //new ShooterOn().start();
+        //Robot.shooter.rampUp();
+       // addSequential(new ShooterOn());
+        //Robot.shooter.isOn = false;
+        //addParallel(new AutoShooterOn());
+       // System.out.println("Auto shooter on subsystem");
+        //Robot.shooter.shooterOn(1.0);
         addSequential(new EnableCompressor());
-        addSequential( new Wait(5.0));
-        addSequential(new ShooterOn());
+        addSequential(new Wait(5.0));
         adjustment = Robot.shooter.getTiltValue();
         Robot.shooter.setCalibration(adjustment);
-        addSequential(new TiltYDegrees(92));
+        addSequential(new TiltYDegrees(Robot.shooter.getBackLeft()));
+       // addSequential(new ShooterOn());
         addSequential(new Wait(3.0));
         addSequential(new DisableCompressor());
         addSequential(new PushFrisbee());
