@@ -8,6 +8,7 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in th future.
 package team4188_2013.commands;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
@@ -37,9 +38,12 @@ public class  LoadFrisbee extends Command {
 //        }
 //        Robot.shooter.extendLoader();
 //        Robot.shooter.retractLoader();
-        Robot.shooter.extendRetractLoader();
-        isDone = !Robot.shooter.isLoaderExtended;
-        
+        Robot.shooter.manualAim(-1.0);
+        if(Robot.shooter.getCalibratedValue() < 5){
+            Robot.shooter.extendRetractLoader();     
+            isDone = !Robot.shooter.isLoaderExtended;           
+        }
+       
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

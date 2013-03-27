@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *
- * @author toboretasker
+ * @author Tobore Tasker
  */
 public class AutoShooterOn extends Command {
     

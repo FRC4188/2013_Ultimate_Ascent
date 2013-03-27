@@ -30,15 +30,15 @@ public class  ShooterOn extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        if(!Robot.shooter.isOn){
-//           Robot.shooter.shooterOn(1.0); 
-//           isDone = Robot.shooter.isOn;
-//          // Timer.delay(.2);
-//        }
-        for(int i = 0; i<1.0; i++){
-         Robot.shooter.shooterOn(i); 
-         isDone = true;
+        if(!Robot.shooter.isOn){
+           Robot.shooter.shooterOn(1.0); 
+           isDone = Robot.shooter.isOn;
+          // Timer.delay(.2);
         }
+//        for(int i = 0; i<1.0; i++){
+//         Robot.shooter.shooterOn(i); 
+//         isDone = true;
+//        }
         
         
         //System.out.println("Shooter on in Command");

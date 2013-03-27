@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.*;
 /**
  *@author Tobore Tasker
+ * You can guess what this does...
  */
 public class  ManualDrive extends Command {
     double direction=0;

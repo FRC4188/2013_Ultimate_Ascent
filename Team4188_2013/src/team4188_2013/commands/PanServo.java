@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Used for pan/tilt for auto-aim, only ever panned. 
+ * refer to Java doc for help with interfacing with servos
  */
 public class  PanServo extends Command {
         private ParticleAnalysisReport target;

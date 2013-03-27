@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * While button is held the shooter will run.
+ * Not used on bot, but could be helpful for 
+ * other purposes.
  */
 public class  HoldShoot extends Command {
     double throttle = 0.0;

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ *when builders don't build, it makes programming easy
  */
 public class  PickupFrisbees extends Command {
     public PickupFrisbees() {
@@ -27,6 +28,7 @@ public class  PickupFrisbees extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        
     }
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

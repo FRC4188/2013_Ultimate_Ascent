@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Allows the driver to pan the camera down to see. 
+ * used for non-existent retriever on bot. 
+ * I think down is up and up is down, unless I fix it. 
  */
 public class  LookDown extends Command {
     public LookDown() {

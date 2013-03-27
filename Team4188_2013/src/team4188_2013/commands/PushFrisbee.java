@@ -26,6 +26,7 @@ public class  PushFrisbee extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //extends and retracts the frisbee pusher
         Robot.shooter.extendPusher();
         Robot.shooter.retractPusher();
     }

@@ -69,11 +69,11 @@ public class Servo extends Subsystem {
         return position;
     }
     public void yDown(){
-        panY.set(panYMin);
+        panY.set(panYMax);
         down = true;
     }
     public void yUp(){
-        panY.set(panYMax);
+        panY.set(panYMin);
         down = false;
     }
     public boolean isDown(){

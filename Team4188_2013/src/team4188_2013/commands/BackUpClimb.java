@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Automatically climb after backing up onto pole
  */
 public class  BackUpClimb extends Command {
     public BackUpClimb() {
