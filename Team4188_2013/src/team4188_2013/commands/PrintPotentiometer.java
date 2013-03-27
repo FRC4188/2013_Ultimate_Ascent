@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import team4188_2013.Robot;
 /**
- *
+ *@author Tobore Tasker
  */
 public class  PrintPotentiometer extends Command {
     boolean isRunning = false;

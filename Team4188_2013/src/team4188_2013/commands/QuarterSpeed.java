@@ -5,13 +5,13 @@
 package team4188_2013.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
+
 /**
- *
- * @author Tobore Tasker
+ *@author Tobore Tasker
  */
-public class EnableCompressor extends Command {
+public class QuarterSpeed extends Command {
     
-    public EnableCompressor() {
+    public QuarterSpeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,15 +22,13 @@ public class EnableCompressor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
-        if(!Robot.climber.isCompressorEnabled()){
-            Robot.climber.enableCompressor();
-        }
+        Robot.shooter.firstWheelQuarter();
+        Robot.shooter.secondWheelQuarter();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.climber.isCompressorEnabled();
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Increments the speed of the shooter by 10% each button push.
+ * Was used for testing shooter.
  */
 public class  IncrementShooter extends Command {
     

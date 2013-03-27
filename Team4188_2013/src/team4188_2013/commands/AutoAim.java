@@ -25,7 +25,8 @@ public class  AutoAim extends Command {
             mTilt = -.406,
             bTilt = 159.56,
             mPan = .56,
-            bPan = -1.63;
+            bPan = -1.63,
+            MID_DISTANCE = 210;
     boolean 
             isTargeted = false, 
             aimed = false;
@@ -86,7 +87,7 @@ public class  AutoAim extends Command {
                angleY = Robot.vision.calculateTiltAngle(target, targetDistance);
                SmartDashboard.putNumber("AngleY", angleY);
                System.out.println("Angle Y: " + angleY);
-               isAimed();
+               //isAimed();
                aim();
 //                if(aimed == false)
 //                {
@@ -114,7 +115,13 @@ public class  AutoAim extends Command {
        // System.out.println("Panning Angle: "+ servoAngle);
         //System.out.println("Panning Position: "+ servoPos);
       //  turnXDegrees(vision.calculateHorizontalAngle(target, targetDistance));
-        tiltValue = targetDistance * mTilt + bTilt;
+        //tiltValue = targetDistance * mTilt + bTilt;
+        if(targetDistance < (MID_DISTANCE)){
+            tiltValue = Robot.shooter.getFrontLeft();
+        }
+        else{
+            tiltValue = Robot.shooter.getBackLeft();
+        }
         System.out.println("TiltValue from AutoAim: " + tiltValue);
         //angleX = angleX + angleX * mPan + bPan;
         if(Robot.shooter.isPIDEnable()){

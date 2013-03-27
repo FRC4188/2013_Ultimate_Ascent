@@ -64,7 +64,7 @@ public class Climber extends Subsystem {
     public void doNothing(){
         climbSol.set(DoubleSolenoid.Value.kOff);
     }
-    /*
+    /*Complex climber code for Farita's thing, what a shame...
     public void extendSmall(){
         smallSol.set(DoubleSolenoid.Value.kForward);
         Timer.delay(PNEUMATIC_DELAY_SECONDS);

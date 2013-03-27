@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
- *
  * @author Erin King
  */
 public class Wait extends Command {

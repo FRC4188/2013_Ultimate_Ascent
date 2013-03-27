@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Backs up until both claws have hit the pole
  */
 public class  DriveTilHit extends Command {
     public DriveTilHit() {

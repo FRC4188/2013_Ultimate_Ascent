@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Use a joystick to control a servo. 
+ * I over complicated this.
  */
 public class  ManualServo extends Command {
     double throttle;

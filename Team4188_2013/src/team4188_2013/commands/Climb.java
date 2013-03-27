@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Just climbs (extends/retracts climbing pistons)
  */
 public class  Climb extends Command {
     public Climb() {

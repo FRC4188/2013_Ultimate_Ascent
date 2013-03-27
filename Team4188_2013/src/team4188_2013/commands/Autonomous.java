@@ -42,8 +42,14 @@ public class Autonomous extends CommandGroup {
         //addParallel(new AutoShooterOn());
        // System.out.println("Auto shooter on subsystem");
         //Robot.shooter.shooterOn(1.0);
+        addSequential(new RampUp());
         addSequential(new EnableCompressor());
-        addSequential(new Wait(5.0));
+        addSequential(new Wait(2.0));
+        addSequential(new QuarterSpeed());
+        addSequential(new Wait(2.0));
+        addSequential(new HalfSpeed());
+        addSequential(new Wait(1.0));
+        addSequential(new TurnOnWheels());
         adjustment = Robot.shooter.getTiltValue();
         Robot.shooter.setCalibration(adjustment);
         addSequential(new TiltYDegrees(Robot.shooter.getBackLeft()));
@@ -60,7 +66,7 @@ public class Autonomous extends CommandGroup {
         addSequential(new Wait(1.0));
         addSequential(new PushFrisbee());
         addSequential(new Wait(1.0));
-        addSequential(new ShooterOff()); //comment out
+        //addSequential(new ShooterOff()); //comment out
         addSequential(new TiltYDegrees(0));
         addSequential(new EnableCompressor());
        // System.out.println("IsCompressorEnabled?" + Robot.climber.isCompressorEnabled());

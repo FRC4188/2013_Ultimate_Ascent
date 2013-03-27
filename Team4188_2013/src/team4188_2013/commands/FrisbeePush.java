@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * delay between extending and retracting pusher
  */
 public class  FrisbeePush extends Command {
     boolean shot;
@@ -31,9 +32,9 @@ public class  FrisbeePush extends Command {
     protected void execute() {
     if(Robot.shooter.isOn)
         {
-            /*Robot.shooter.push();
+            Robot.shooter.extendPusher();
             Timer.delay(0.1);
-            Robot.shooter.retract();*/
+            Robot.shooter.retractPusher();
         }   
     }
     // Make this return true when this Command no longer needs to run execute()

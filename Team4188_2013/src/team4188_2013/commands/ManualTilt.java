@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
+ * Updates the setpoint for the tilt PID
  */
 public class  ManualTilt extends Command {
     double adjustment = 0.0;

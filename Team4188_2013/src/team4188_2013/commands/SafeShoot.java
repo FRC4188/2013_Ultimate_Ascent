@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import team4188_2013.Robot;
 /**
- *
+ *@author Tobore Tasker
+ * Checks to make sure shooter is running before pushing frisbee
  */
 public class  SafeShoot extends Command {
     boolean hasShot;
