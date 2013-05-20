@@ -8,6 +8,7 @@ import team4188_2013.Robot;
 
 /**
  *@author Tobore Tasker
+ * Do not use this, use ramp up
  */
 public class QuarterSpeed extends Command {
     

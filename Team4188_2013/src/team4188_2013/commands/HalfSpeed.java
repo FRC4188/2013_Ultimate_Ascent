@@ -10,6 +10,7 @@ import team4188_2013.Robot;
  *
  *@author Tobore Tasker
  * attempt to fix jaguar shutting down in autonomous
+ * do not use this, use ramp up 
  */
 public class HalfSpeed extends Command {
     

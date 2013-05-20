@@ -54,7 +54,7 @@ public class Shooter extends Subsystem {
         D = 0.0,     
         PID_LOOP_TIME = .05,
         SETTLED_TIME = 2.0,
-        RAMP_UP_RATE = .99,
+        RAMP_UP_RATE = 80,
         FRONT_LEFT = 123.0,
         FRONT_RIGHT = 123.0,
         BACK_LEFT = 113.0,
@@ -170,9 +170,9 @@ public class Shooter extends Subsystem {
     }
    public void rampUp(){
        try{
-           firstWheel.setVoltageRampRate(.98);
+           firstWheel.setVoltageRampRate(RAMP_UP_RATE);
            firstWheel.setX(FORWARD);
-           secondWheel.setVoltageRampRate(.98);
+           secondWheel.setVoltageRampRate(RAMP_UP_RATE);
            secondWheel.setX(FORWARD);
        } catch (CANTimeoutException ex) {ex.printStackTrace();}
    }

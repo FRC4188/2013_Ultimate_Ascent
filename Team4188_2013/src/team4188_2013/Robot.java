@@ -101,7 +101,7 @@ public class Robot extends IterativeRobot {
         shooter.setShooterPID();
         climber.enableCompressor();
         shooter.shooterOff();
-        shooter.disableRampUp();
+        //shooter.disableRampUp();
     }
     /**
      * This function is called periodically during operator control

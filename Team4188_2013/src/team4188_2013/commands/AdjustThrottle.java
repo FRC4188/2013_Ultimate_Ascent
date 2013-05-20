@@ -14,7 +14,7 @@ import team4188_2013.Robot;
 /**
  *@author Tobore Tasker
  * Adjusts throttle while shooter is running
- * Questions? Answers? Text: 6786870685, email: tobore@mit.edu
+ * Questions? Answers? Text: 6786870685, email: etasker@mit.edu
  */
 public class  AdjustThrottle extends Command {
     double throttle = 1.0;
